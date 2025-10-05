@@ -1,0 +1,454 @@
+{
+  "products": [
+    {
+      "id": "bag1",
+      "name": "Bag 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.22_90677959.jpg",
+      "category": "bags",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "bag2",
+      "name": "Bag 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.22_2bf94e19.jpg",
+      "category": "bags",
+      "price": "£75",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "bag3",
+      "name": "Bag 3",
+      "imagePath": "https://via.placeholder.com/150?text=Bag+3",
+      "category": "bags",
+      "price": "£80",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "belt1",
+      "name": "Belt 1",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+1",
+      "category": "belts",
+      "price": "£50",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "belt10",
+      "name": "Belt 10",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+10",
+      "category": "belts",
+      "price": "£95",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "belt12",
+      "name": "Belt 12",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+12",
+      "category": "belts",
+      "price": "£105",
+      "discount": true,
+      "discountPercent": 40
+    },
+    {
+      "id": "belt15",
+      "name": "Belt 15",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+15",
+      "category": "belts",
+      "price": "£120",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "belt20",
+      "name": "Belt 20",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+20",
+      "category": "belts",
+      "price": "£145",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "belt25",
+      "name": "Belt 25",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+25",
+      "category": "belts",
+      "price": "£170",
+      "discount": true,
+      "discountPercent": 40
+    },
+    {
+      "id": "belt3",
+      "name": "Belt 3",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+3",
+      "category": "belts",
+      "price": "£60",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "belt30",
+      "name": "Belt 30",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+30",
+      "category": "belts",
+      "price": "£195",
+      "discount": true,
+      "discountPercent": 45
+    },
+    {
+      "id": "belt35",
+      "name": "Belt 35",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+35",
+      "category": "belts",
+      "price": "£220",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "belt5",
+      "name": "Belt 5",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+5",
+      "category": "belts",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "belt8",
+      "name": "Belt 8",
+      "imagePath": "https://via.placeholder.com/150?text=Belt+8",
+      "category": "belts",
+      "price": "£85",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "footwear1",
+      "name": "Footwear 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_f2708529.jpg",
+      "category": "footwear",
+      "price": "£140",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "footwear2",
+      "name": "Footwear 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_65068fa5.jpg",
+      "category": "footwear",
+      "price": "£180",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "footwear3",
+      "name": "Footwear 3",
+      "imagePath": "https://via.placeholder.com/150?text=Footwear+3",
+      "category": "footwear",
+      "price": "£90",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "glove1",
+      "name": "Gloves 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_c4614d2d.jpg",
+      "category": "gloves",
+      "price": "£25",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "glove2",
+      "name": "Gloves 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_96f67bb0.jpg",
+      "category": "gloves",
+      "price": "£30",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "glove3",
+      "name": "Gloves 3",
+      "imagePath": "https://via.placeholder.com/150?text=Gloves+3",
+      "category": "gloves",
+      "price": "£35",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "glove4",
+      "name": "Gloves 4",
+      "imagePath": "https://via.placeholder.com/150?text=Gloves+4",
+      "category": "gloves",
+      "price": "£40",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "glove5",
+      "name": "Gloves 5",
+      "imagePath": "https://via.placeholder.com/150?text=Gloves+5",
+      "category": "gloves",
+      "price": "£45",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "hat1",
+      "name": "Cap 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.23_34edff8a.jpg",
+      "category": "hats",
+      "price": "£25",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "hat2",
+      "name": "Cap 2",
+      "imagePath": "https://via.placeholder.com/150?text=Cap+2",
+      "category": "hats",
+      "price": "£30",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "hat3",
+      "name": "Cap 3",
+      "imagePath": "https://via.placeholder.com/150?text=Cap+3",
+      "category": "hats",
+      "price": "£35",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "hat4",
+      "name": "Cap 4",
+      "imagePath": "https://via.placeholder.com/150?text=Cap+4",
+      "category": "hats",
+      "price": "£40",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "hat5",
+      "name": "Cap 5",
+      "imagePath": "https://via.placeholder.com/150?text=Cap+5",
+      "category": "hats",
+      "price": "£45",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "leather1",
+      "name": "Leather Jacket 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_4f9bf797.jpg",
+      "category": "leather",
+      "price": "£85",
+      "discount": true,
+      "discountPercent": 35
+    },
+    {
+      "id": "leather2",
+      "name": "Leather Jacket 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_07d3570b.jpg",
+      "category": "leather",
+      "price": "£75",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "leather3",
+      "name": "Leather Jacket 3",
+      "imagePath": "https://via.placeholder.com/150?text=Leather+3",
+      "category": "leather",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "leather4",
+      "name": "Leather Jacket 4",
+      "imagePath": "https://via.placeholder.com/150?text=Leather+4",
+      "category": "leather",
+      "price": "£260",
+      "discount": true,
+      "discountPercent": 35
+    },
+    {
+      "id": "leather5",
+      "name": "Leather Jacket 5",
+      "imagePath": "https://via.placeholder.com/150?text=Leather+5",
+      "category": "leather",
+      "price": "£280",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "scarf1",
+      "name": "Scarf 1",
+      "imagePath": "https://via.placeholder.com/150?text=Scarf+1",
+      "category": "scarves",
+      "price": "£50",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "scarf2",
+      "name": "Scarf 2",
+      "imagePath": "https://via.placeholder.com/150?text=Scarf+2",
+      "category": "scarves",
+      "price": "£55",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "scarf3",
+      "name": "Scarf 3",
+      "imagePath": "https://via.placeholder.com/150?text=Scarf+3",
+      "category": "scarves",
+      "price": "£60",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "scarf4",
+      "name": "Scarf 4",
+      "imagePath": "https://via.placeholder.com/150?text=Scarf+4",
+      "category": "scarves",
+      "price": "£65",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "scarf5",
+      "name": "Scarf 5",
+      "imagePath": "https://via.placeholder.com/150?text=Scarf+5",
+      "category": "scarves",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "sunglasses1",
+      "name": "Glasses 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_15f0a57a.jpg",
+      "category": "sunglasses",
+      "price": "£50",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "sunglasses2",
+      "name": "Glasses 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_0cecf64c.jpg",
+      "category": "sunglasses",
+      "price": "£55",
+      "discount": true,
+      "discountPercent": 30
+    },
+    {
+      "id": "sunglasses3",
+      "name": "Glasses 3",
+      "imagePath": "https://via.placeholder.com/150?text=Glasses+3",
+      "category": "sunglasses",
+      "price": "£60",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "sunglasses4",
+      "name": "Glasses 4",
+      "imagePath": "https://via.placeholder.com/150?text=Glasses+4",
+      "category": "sunglasses",
+      "price": "£35",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "sunglasses5",
+      "name": "Glasses 5",
+      "imagePath": "https://via.placeholder.com/150?text=Glasses+5",
+      "category": "sunglasses",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "wallet1",
+      "name": "Wallet 1",
+      "imagePath": "https://via.placeholder.com/300x300?text=Wallet+1",
+      "category": "wallets",
+      "price": "£20",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "wallet2",
+      "name": "Wallet 2",
+      "imagePath": "https://via.placeholder.com/300x300?text=Wallet+2",
+      "category": "wallets",
+      "price": "£23",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "wallet3",
+      "name": "Wallet 3",
+      "imagePath": "https://via.placeholder.com/300x300?text=Wallet+3",
+      "category": "wallets",
+      "price": "£25",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "wallet4",
+      "name": "Wallet 4",
+      "imagePath": "https://via.placeholder.com/300x300?text=Wallet+4",
+      "category": "wallets",
+      "price": "£30",
+      "discount": true,
+      "discountPercent": 25
+    },
+    {
+      "id": "wallet5",
+      "name": "Wallet 5",
+      "imagePath": "https://via.placeholder.com/300x300?text=Wallet+5",
+      "category": "wallets",
+      "price": "£35",
+      "discount": true,
+      "discountPercent": 64
+    },
+    {
+      "id": "watch1",
+      "name": "Watch 1",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.23_34edff8a.jpg",
+      "category": "watches",
+      "price": "£60",
+      "discount": true,
+      "discountPercent": 20
+    },
+    {
+      "id": "watch2",
+      "name": "Watch 2",
+      "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.23_c5e5e9a3.jpg",
+      "category": "watches",
+      "price": "£65",
+      "discount": true,
+      "discountPercent": 15
+    },
+    {
+      "id": "watch3",
+      "name": "Watch 3",
+      "imagePath": "https://via.placeholder.com/150?text=Watch+3",
+      "category": "watches",
+      "price": "£70",
+      "discount": true,
+      "discountPercent": 64
+    }
+  ]
+}

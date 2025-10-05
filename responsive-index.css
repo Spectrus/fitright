@@ -1,0 +1,285 @@
+/* Responsive Design Styles for index.html */
+
+/* Base responsive adjustments */
+@media screen and (max-width: 1200px) {
+  /* Adjustments for large screens and small laptops */
+  .carousel-container {
+    width: 90%;
+    max-width: 700px;
+  }
+  
+  .carousel-item {
+    flex: 0 0 180px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  /* Adjustments for tablets and medium screens */
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    padding-right: 25px;
+    box-sizing: border-box;
+  }
+  
+  header .logo {
+    margin-bottom: 0;
+    text-align: left;
+  }
+  
+  header nav {
+    margin-right: 0;
+  }
+  
+  .carousel-container {
+    width: 95%;
+    max-width: 650px;
+  }
+  
+  .carousel-item {
+    flex: 0 0 160px;
+    margin: 0 8px;
+  }
+  
+  .hero h2 {
+    font-size: 2.2em;
+  }
+  
+  .modal-content {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjustments for small tablets and large phones */
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  
+  header nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  header nav ul li {
+    margin: 5px 0;
+  }
+  
+  /* Hamburger menu handled in main CSS */
+  
+  .carousel-container {
+    width: 100%;
+    max-width: 500px;
+    top: 50%;
+  }
+  
+  .carousel-item {
+    flex: 0 0 140px;
+    margin: 0 6px;
+  }
+  
+  .carousel-btn {
+    padding: 8px 15px;
+    font-size: 1.2em;
+  }
+  
+  .hero h2 {
+    font-size: 2em;
+  }
+  
+  .modal-content {
+    width: 280px;
+    padding: 15px;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.4em;
+  }
+  
+  .modal-content button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  /* Adjustments for mobile phones */
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  
+  header .logo h1 {
+    font-size: 1.5em;
+  }
+  
+  header .logo p {
+    font-size: 0.8em;
+  }
+  
+  header nav ul {
+    gap: 5px;
+  }
+  
+  /* Hamburger menu handled in main CSS */
+  
+  header nav ul li a {
+    font-size: 0.9em;
+  }
+  
+  .carousel-container {
+    max-width: 320px;
+    padding: 10px 0;
+  }
+  
+  .carousel-item {
+    flex: 0 0 120px;
+    margin: 0 5px;
+  }
+  
+  .carousel-item p {
+    font-size: 0.8em;
+  }
+  
+  .carousel-btn {
+    padding: 5px 10px;
+    font-size: 1em;
+  }
+  
+  .hero h2 {
+    font-size: 1.8em;
+  }
+  
+  .modal-content {
+    width: 260px;
+    padding: 12px;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.2em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .modal-content p {
+    font-size: 0.9em;
+  }
+  
+  .modal-content button {
+    padding: 6px 10px;
+    margin: 8px 5px;
+    font-size: 0.85em;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    padding: 6px;
+    margin: 6px 0;
+    font-size: 0.9em;
+  }
+  
+  .forgot-password {
+    font-size: 0.75em;
+  }
+  
+  footer {
+    font-size: 0.8em;
+  }
+}
+
+/* Mobile menu adjustments for very small screens */
+@media screen and (max-width: 480px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  header nav ul li {
+    margin: 3px 0;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    position: relative;
+    z-index: 1001;
+    margin-left: auto;
+  }
+  
+  .carousel-container {
+    max-width: 280px;
+  }
+  
+  .carousel-item {
+    flex: 0 0 100px;
+  }
+  
+  .carousel-btn {
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+}
+
+/* Touch-friendly adjustments for all screen sizes */
+@media (hover: none) {
+  /* Increase tap target sizes for touch devices */
+  header nav ul li a,
+  .carousel-btn,
+  .modal-content button,
+  .back-button {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Make carousel items easier to tap */
+  .carousel-item {
+    padding: 5px;
+  }
+  
+  /* Ensure form elements are large enough for touch */
+  .modal-content input,
+  .modal-content textarea {
+    min-height: 44px;
+  }
+}
+
+/* Orientation-specific adjustments */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .carousel-container {
+    top: 60%;
+  }
+  
+  .hero {
+    padding: 20px;
+  }
+  
+  .modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}

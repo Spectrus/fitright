@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunglasses - Fitrite</title>
+  <!-- Google Font for heading and header -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Reset and Box Model Standardization */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header: Transparent with Special Elite font, black text */
+    header {
+      position: relative;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: transparent; /* was #333 */
+      width: 100%;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: black;
+    }
+    
+    header .logo h1 {
+      margin: 0;
+      font-size: 1.5em;
+      font-weight: normal;
+    }
+    
+    header .logo p {
+      margin: 3px 0 0;
+      font-size: 0.8em;
+      font-style: italic;
+    }
+    
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 20;
+      position: relative;
+    }
+    
+    .menu-toggle span {
+      display: block;
+      position: absolute;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: #000;
+      border-radius: 3px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .menu-toggle span:nth-child(1) { top: 0; }
+    .menu-toggle span:nth-child(2) { top: 9px; }
+    .menu-toggle span:nth-child(3) { top: 18px; }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    
+    header nav {
+      padding-right: 0;
+    }
+    
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header nav ul li a {
+      color: black; 
+      text-decoration: none;
+      font-weight: normal;
+      transition: color 0.3s;
+      padding: 5px 10px;
+      display: block;
+    }
+    
+    header nav ul li a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+
+    /* Search Bar: Transparent background */
+    #search-bar {
+      background-color: transparent;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      width: 100%;
+    }
+    
+    #searchInput {
+      width: 90%;
+      max-width: 600px;
+      padding: 10px 15px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+    
+    #searchInput:focus {
+      border-color: #333;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Products Grid - Now responsive like bargains page */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Default to 4 columns for desktop */
+      gap: 20px;
+      padding: 20px;
+      background-color: #f4f4f4;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    /* Product Box: Responsive version */
+    .product {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      touch-action: manipulation;
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+    }
+    
+    .product:hover {
+      transform: scale(1.02);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+    }
+    
+    /* Image container and image styling aligned with footwear */
+    .image-container {
+      width: 100%;
+      max-width: 230px;
+      height: 200px;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 15px;
+      overflow: hidden;
+      border-radius: 15px; /* Ensure rounded visible edges */
+    }
+
+    .image-container img {
+      max-width: 96%;
+      max-height: 96%;
+      object-fit: contain;
+      display: block;
+      border-radius: 15px; /* Rounded edges like footwear screenshot */
+    }
+
+    /* Keep visibility behavior for real images */
+    .product img { opacity: 0; }
+    
+    /* Real images should be visible */
+    .product img.real-image {
+      opacity: 1;
+    }
+    
+    /* Apply Special Elite to product names and prices */
+    .product p {
+      margin: 5px 0;
+      font-weight: bold;
+      font-size: 1.1em;
+      font-family: 'Special Elite', monospace;
+    }
+
+    /* Make the "AVAILABLE GLASSES" heading use Special Elite, uppercase, letter spacing */
+    #glasses h2 {
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      background-color: transparent;
+      color: #333;
+      font-size: 0.9em;
+      margin: 20px 0;
+      padding: 15px;
+      width: 100%;
+    }
+    
+    footer p {
+      margin: 5px 0;
+    }
+
+    /* Modal Styles - Responsive */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal.show {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 1.5rem;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 15px;
+      text-align: center;
+      position: relative;
+      animation: fadeInSlide 0.4s ease;
+    }
+    
+    @keyframes fadeInSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    
+    .close-btn:hover {
+      color: red;
+    }
+    
+    /* Updated Modal Image Style to match bags/gloves pages */
+    #modalProductImage {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      opacity: 0; /* Make placeholder images invisible in modal */
+    }
+    
+    /* Real images should be visible in modal */
+    #modalProductImage.real-image {
+      opacity: 1;
+    }
+    
+    .proceed-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 15px;
+      transition: background-color 0.3s;
+      touch-action: manipulation;
+      width: 100%;
+    }
+    
+    .proceed-btn:hover {
+      background-color: #333;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 10000;
+    }
+    
+    #toast.show {
+      opacity: 1;
+    }
+    
+    /* Discount Tag Styles - ADDED FOR DISCOUNT SYSTEM */
+    .discount-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-weight: bold;
+      z-index: 5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    /* Red Tag (≤ 55%) */
+    .discount-tag.red {
+      background-color: #ff0000;
+      color: white;
+      font-size: 0.9em;
+    }
+    
+    /* Gold Tag (> 55%) */
+    .discount-tag.gold {
+      background-color: gold;
+      color: #333;
+      font-size: 0.95em;
+      padding: 6px 10px;
+      font-weight: bold;
+    }
+    
+    /* Price Display for Discounted Products */
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 5px;
+    }
+    
+    .new-price {
+      color: green;
+      font-weight: bold;
+    }
+    
+    /* Media Queries for Responsive Design - Adapting like bags page */
+    /* Large screens */
+    @media (max-width: 1200px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+      }
+    }
+    
+    /* Medium screens */
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+      }
+      
+      header {
+        padding: 20px;
+      }
+      
+      header .logo h1 {
+        font-size: 1.8em;
+      }
+      
+      header .logo p {
+        font-size: 0.9em;
+        margin: 5px 0 0;
+      }
+      
+      #search-bar {
+        padding: 20px 15px;
+      }
+      
+      #searchInput {
+        width: 80%;
+      }
+      
+      .image-container {
+        height: 250px;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+        max-width: 350px;
+      }
+      
+      .proceed-btn {
+        width: auto;
+        min-width: 200px;
+      }
+    }
+    
+    /* Smartphone displays - 2 per line as requested */
+    @media (max-width: 600px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        padding: 10px;
+      }
+      
+      .product {
+        min-height: 250px;
+        padding: 10px;
+      }
+      
+      .image-container {
+        height: 120px;
+      }
+      
+      .modal-content {
+        max-width: 300px;
+      }
+    }
+    
+    /* Very small screens - 1 per line */
+    @media (max-width: 400px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+      
+      header .logo h1 {
+        font-size: 1.5em;
+      }
+    }
+    
+    /* Mobile Navigation */
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 5001;
+      }
+      
+      header nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: white;
+        z-index: 100;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        padding: 80px 20px 20px;
+      }
+      
+      header nav.active {
+        right: 0;
+      }
+      
+      header nav ul {
+        flex-direction: column;
+      }
+      
+      header nav ul li {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      
+      .basket-desktop { display: none !important; }
+      .basket-mobile { display: block !important; }
+      
+      /* Mobile basket dropdown positioning */
+      .basket-mobile {
+        position: relative !important;
+      }
+      
+      #basketDropdown {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        min-width: auto !important;
+        max-width: none !important;
+        border-radius: 0 0 15px 15px !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+        z-index: 2000 !important;
+        margin-top: 5px !important;
+      }
+    }
+
+    /* Basket Dropdown Styles */
+    #basketDropdown {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: block;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    #basketDropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    .basket-fade-out {
+      opacity: 0;
+      transform: translateX(-20px) scale(0.95);
+      background-color: rgba(255, 0, 0, 0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    
+    .basket-fade-in {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      background-color: transparent;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .basket-row .basket-minus-btn {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    
+    .basket-row:hover .basket-minus-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* DESKTOP: Hide minus button by default inside the main basket dropdown */
+    #basketDropdown .basket-minus-btn {
+      opacity: 0; /* Hidden by default */
+    }
+
+    /* DESKTOP: Show minus button on hover inside the main basket dropdown */
+    #basketDropdown .basket-row:hover .basket-minus-btn {
+      opacity: 1; /* Visible on hover */
+    }
+
+    .basket-desktop { display: block; }
+    .basket-mobile { display: none; }
+    
+    .basket-mobile-btn:hover span:first-child {
+      text-decoration: underline;
+      color: black;
+    }
+
+    /* Only add border-bottom to basket rows except the last */
+    .basket-row:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Clear Basket Button Slide-up Animation */
+    #basketDropdownFooter {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #basketDropdown:hover #basketDropdownFooter {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    #clearBasketBtn {
+      transition: all 0.2s ease;
+    }
+    
+    #clearBasketBtn:hover {
+      background: #a00 !important;
+      transform: scale(1.05);
+    }
+    
+    #basketDropdownFooterMobile {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #basketDropdownMobile:hover #basketDropdownFooterMobile {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    #clearBasketBtnMobile {
+      transition: all 0.2s ease;
+    }
+    
+    #clearBasketBtnMobile:hover {
+      background: #a00 !important;
+      transform: scale(1.05);
+    }
+
+    /* Mobile dropdown animation (cap size like belts/leather jackets) */
+    #basketDropdownMobile {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      max-height: 250px;                  /* Cap height */
+      overflow-y: auto;                   /* Scroll within dropdown */
+      -webkit-overflow-scrolling: touch;  /* Momentum scrolling on iOS */
+      overscroll-behavior: contain;       /* Keep scroll inside the basket */
+      max-width: 95vw;                    /* Constrain width */
+      margin-left: auto;                  /* Center if narrower */
+      margin-right: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    
+    #basketDropdownMobile.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      <h1>FITRITE</h1>
+      <p>Glasses</p>
+    </div>
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="mobileNav">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="page2.html">FITTING ROOM</a></li>
+        <li><a href="page3.html">CHECKOUT</a></li>
+        <li class="basket-desktop">
+          <button id="basketDropdownBtn" style="background:none;border:none;cursor:pointer;position:relative;">
+            🛒
+            <span id="basketCount" style="font-size:0.8em;background:#000;color:#fff;border-radius:50%;padding:2px 6px;position:absolute;top:-8px;right:-10px;display:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+              <div id="basketDropdown" style="display:none;position:absolute;right:0;top:40px;min-width:300px;max-width:350px;background:#fff;border:1px solid #ddd;border-radius:15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:2000;padding:15px 10px 10px 10px;">
+        <div id="basketDropdownContent" style="padding-top:20px;">Your basket is empty.</div>
+        <div id="basketDropdownFooter" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+            <button id="clearBasketBtn" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+        </div>
+    </div>
+        </li>
+        <li class="basket-mobile" style="display:none;width:100%;">
+          <button id="basketDropdownBtnMobile" class="basket-mobile-btn" style="background:none;border:none;cursor:pointer;width:100%;padding:5px 10px;text-align:left;display:block;">
+            <span style="font-family:'Special Elite',monospace;font-size:1.2em;letter-spacing:0.04em;vertical-align:middle;">BASKET</span>
+            <span id="basketCountMobile" style="font-size:1em;background:#000;color:#fff;border-radius:50%;padding:2px 8px;margin-left:10px;vertical-align:middle;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+          <div id="basketDropdownMobile" style="display:none;position:absolute;top:100%;left:0;right:0;width:100%;background:#fff;border:1px solid #ddd;border-radius:0 0 15px 15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:2000;padding:15px 10px 10px 10px;">
+            <div id="basketDropdownContentMobile" style="padding-top:20px;">Your basket is empty.</div>
+            <div id="basketDropdownFooterMobile" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+                <button id="clearBasketBtnMobile" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <section id="search-bar">
+    <input type="text" id="searchInput" placeholder="Search glasses by name or price..." onkeyup="filterProducts()" />
+  </section>
+
+  <!-- Products Section -->
+  <section id="glasses">
+    <h2>AVAILABLE GLASSES</h2>
+    <div class="products" id="products-container">
+      <!-- Products will be populated by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Fitrite. All rights reserved.</p>
+  </footer>
+
+  <!-- Modal (Pop-up) -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <img id="modalProductImage" src="" alt="Product Image">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductPrice"></p>
+      <p style="margin: 1rem 0;">Would you like to proceed with this product?</p>
+      <button id="addToBasket" class="proceed-btn">Add to Basket</button>
+      <button id="proceedToPayment" class="proceed-btn">Go to Payment Page</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">Product added to basket!</div>
+
+  <script>
+    // Mobile Menu Toggle (robust + X transform)
+    (function(){
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileNav = document.getElementById('mobileNav');
+      if (!menuToggle || !mobileNav) return;
+      function handleToggle(e){
+        e.stopPropagation();
+        e.preventDefault();
+        mobileNav.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+      }
+      menuToggle.addEventListener('click', handleToggle, { passive: false });
+      menuToggle.addEventListener('touchend', handleToggle, { passive: false });
+      document.addEventListener('click', function(e){
+        const btn = e.target.closest('#menuToggle');
+        if (!btn) return;
+        handleToggle(e);
+      }, true);
+      document.addEventListener('click', function(e){
+        if (!e.target.closest('#mobileNav') && !e.target.closest('#menuToggle')){
+          mobileNav.classList.remove('active');
+          menuToggle.classList.remove('active');
+        }
+      });
+    })();
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+    
+    if (menuToggle && mobileNav) {
+      menuToggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("active");
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest("#mobileNav") && !event.target.closest("#menuToggle")) {
+          if (mobileNav.classList.contains("active")) {
+            mobileNav.classList.remove("active");
+          }
+        }
+      });
+    }
+    
+    // Filter Products
+    function filterProducts() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const productElements = document.querySelectorAll(".product");
+      productElements.forEach((productEl) => {
+        const nameText = productEl.querySelector(".product-name")?.textContent.toLowerCase() || "";
+        const priceText = productEl.querySelector(".product-price")?.textContent.toLowerCase() || "";
+        productEl.style.display = (nameText.includes(searchInput) || priceText.includes(searchInput))
+          ? "flex"
+          : "none";
+      });
+    }
+    
+    // Modal Logic
+    const modal = document.getElementById("productModal");
+    const closeModalBtn = document.getElementById("closeModal");
+    const modalProductImage = document.getElementById("modalProductImage");
+    const modalProductName = document.getElementById("modalProductName");
+    const modalProductPrice = document.getElementById("modalProductPrice");
+    
+    function openModal(name, price, imgUrl, isDiscounted = false, originalPrice = null) {
+      modalProductName.textContent = name;
+      if (isDiscounted && originalPrice) {
+        modalProductPrice.innerHTML = `<span class="original-price">${originalPrice}</span> <span class="new-price">${price}</span>`;
+      } else {
+        modalProductPrice.textContent = price;
+      }
+      modalProductImage.src = imgUrl;
+      modalProductImage.alt = name;
+      // Show real-image for all sunglasses since they all have isRealImage: true
+      modalProductImage.classList.add('real-image');
+      modal.classList.add("show");
+      modal.style.display = "flex";
+    }
+    
+    function closeModal() {
+      modal.classList.remove("show");
+      setTimeout(() => { modal.style.display = "none"; }, 400);
+    }
+    closeModalBtn.onclick = () => closeModal();
+    modal.addEventListener("click", (event) => {
+      if (!event.target.closest(".modal-content")) {
+        closeModal();
+      }
+    });
+      // Basket Handling & Toast Notification
+    let basket = JSON.parse(localStorage.getItem("basket")) || [];
+
+    // Firebase Cart Integration
+    let currentProductData = null;
+    
+    // Function to extract product data from modal
+    function extractProductFromModal() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imgUrl = modalProductImage.src;
+      
+      // Convert price to cents (preserve decimals)
+      const numericPrice = parseFloat(price.replace(/[£,]/g, ''));
+      const priceInCents = Number.isFinite(numericPrice) ? Math.round(numericPrice * 100) : 0;
+      
+      return {
+        id: name.toLowerCase().replace(/\s+/g, '-'),
+        name: name,
+        price: priceInCents,
+        image: imgUrl,
+        category: 'sunglasses'
+      };
+    }
+    
+    // Firebase cart function
+    async function addToBasketFirebase() {
+      try {
+        if (!window.FitRightFirebase) {
+          console.error('FitRightFirebase not loaded');
+          return;
+        }
+        
+        const productData = extractProductFromModal();
+        await window.FitRightFirebase.addProductToCart(productData, 1);
+        showToast("Product added to basket!");
+        console.log("Product added to Firebase cart:", productData);
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        showToast("Error adding to basket: " + error.message);
+      }
+    }
+    
+    // Basket Handling & Toast Notification
+    function addToBasket(name, price, imgUrl, size, showMessage = true) {
+      let basket = JSON.parse(localStorage.getItem("basket")) || [];
+      const existingIndex = basket.findIndex(item => item.name === name);
+      if (existingIndex !== -1) {
+        const item = basket[existingIndex];
+        item.quantity = (item.quantity || 1) + 1;
+        localStorage.setItem("basket", JSON.stringify(basket));
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product quantity updated in basket!");
+      } else {
+        basket.push({ name, newPrice: price, imgUrl, size, quantity: 1 });
+        localStorage.setItem("basket", JSON.stringify(basket));
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product added to basket!");
+      }
+    }
+
+    document.getElementById("addToBasket").onclick = function() {
+      // Use Firebase if available, otherwise fallback to localStorage
+      if (window.FitRightFirebase) {
+        addToBasketFirebase();
+        closeModal();
+      } else {
+        const name = modalProductName.textContent;
+        const priceDisplayElement = document.getElementById("modalProductPrice");
+        let priceString = "";
+        const discountedPriceElement = priceDisplayElement.querySelector(".new-price");
+        if (discountedPriceElement && discountedPriceElement.textContent) {
+          priceString = discountedPriceElement.textContent;
+        } else if (priceDisplayElement.textContent) {
+          priceString = priceDisplayElement.textContent;
+        }
+        const imgUrl = modalProductImage.src;
+        const size = "Standard"; // Assuming a default size for sunglasses
+        addToBasket(name, priceString, imgUrl, size, true);
+        closeModal();
+      }
+    };
+
+    document.getElementById("proceedToPayment").onclick = function() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imageUrl = modalProductImage.src;
+      const queryString = `?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&imgUrl=${encodeURIComponent(imageUrl)}`;
+      window.location.href = "page3.html" + queryString;
+    };
+    
+
+    function showToast(message) {
+      const toastEl = document.getElementById("toast");
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2000);
+    }
+
+    // Basket Dropdown Logic
+    const basketDropdownBtn = document.getElementById('basketDropdownBtn');
+    const basketDropdownBtnMobile = document.getElementById('basketDropdownBtnMobile');
+    const basketDropdown = document.getElementById('basketDropdown');
+    const basketDropdownMobile = document.getElementById('basketDropdownMobile');
+    const basketDropdownContent = document.getElementById('basketDropdownContent');
+    const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+    const basketCount = document.getElementById('basketCount');
+    const basketCountMobile = document.getElementById('basketCountMobile');
+
+    // Firebase cart rendering
+    function renderCart() {
+      if (!window.FitRightFirebase) return;
+      
+      const cartItems = window.FitRightFirebase.getCartItems();
+      const cartCount = window.FitRightFirebase.getCartCount();
+      console.log(`Sunglasses: Rendering basket from ${window.FitRightFirebase.isLoggedIn() ? 'Firebase' : 'localStorage'} (items: ${cartItems.length}, count: ${cartCount})`);
+      
+      // Update counters
+      basketCount.textContent = cartCount;
+      basketCount.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Update dropdown content
+      if (cartItems.length === 0) {
+        basketDropdownContent.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (basketDropdownContentMobile) {
+          basketDropdownContentMobile.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        }
+        return;
+      }
+      
+      const basketHTML = cartItems.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;">${item.productName || item.name}</div>
+            <div style="font-size:1em;font-weight:bold;">${(window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || typeof item.price === 'number')) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || "£0.00")}</div>
+            <div style="font-size:0.95em;color:#555;">Qty: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+            ${(() => { const s = (item.selectedSize || item.size || '').toString(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;\">Size: ${s}</div>` : '' })()}
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+        </div>
+      `).join('');
+      
+      basketDropdownContent.innerHTML = basketHTML;
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.innerHTML = basketHTML;
+      }
+      
+      // Add event listeners for basket minus buttons
+      basketDropdownContent.querySelectorAll('.basket-minus-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          e.stopPropagation();
+          const itemId = this.getAttribute('data-id');
+          const currentQty = parseInt(this.parentElement.querySelector('.basket-qty').textContent);
+          
+          if (window.FitRightFirebase) {
+            if (currentQty > 1) {
+              await window.FitRightFirebase.updateQuantity(itemId, currentQty - 1);
+            } else {
+              await window.FitRightFirebase.removeFromCart(itemId);
+            }
+          } else {
+            // Fallback to localStorage
+            let basket = JSON.parse(localStorage.getItem("basket")) || [];
+            const index = parseInt(this.getAttribute('data-index'));
+            if (currentQty > 1) {
+              basket[index].quantity = currentQty - 1;
+            } else {
+              basket.splice(index, 1);
+            }
+            localStorage.setItem("basket", JSON.stringify(basket));
+            updateBasketDropdown();
+          }
+        });
+      });
+      
+      // Add event listeners for mobile basket minus buttons
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.querySelectorAll('.basket-minus-btn').forEach(btn => {
+          btn.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            const itemId = this.getAttribute('data-id');
+            const currentQty = parseInt(this.parentElement.querySelector('.basket-qty').textContent);
+            
+            if (window.FitRightFirebase) {
+              if (currentQty > 1) {
+                await window.FitRightFirebase.updateQuantity(itemId, currentQty - 1);
+              } else {
+                await window.FitRightFirebase.removeFromCart(itemId);
+              }
+            } else {
+              // Fallback to localStorage
+              let basket = JSON.parse(localStorage.getItem("basket")) || [];
+              const index = parseInt(this.getAttribute('data-index'));
+              if (currentQty > 1) {
+                basket[index].quantity = currentQty - 1;
+              } else {
+                basket.splice(index, 1);
+              }
+              localStorage.setItem("basket", JSON.stringify(basket));
+              updateBasketDropdown();
+            }
+          });
+        });
+      }
+    }
+    
+    // Listen for cart updates
+    window.addEventListener('cartUpdated', renderCart);
+    
+    // Load cart on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.FitRightFirebase) {
+        window.FitRightFirebase.loadCart().then(() => {
+          renderCart();
+        });
+      }
+    });
+
+    function updateBasketDropdown() {
+      // Get cart data from Firebase or localStorage fallback
+      let cartItems, cartCount;
+      
+      if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+        cartItems = window.FitRightFirebase.getCartItems();
+        cartCount = window.FitRightFirebase.getCartCount();
+      } else {
+        // Fallback to localStorage for guest mode
+        const basket = JSON.parse(localStorage.getItem("basket")) || [];
+        cartItems = basket;
+        cartCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      }
+      
+      if (cartItems.length === 0) {
+        basketDropdownContent.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (basketDropdownContentMobile) {
+          basketDropdownContentMobile.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        }
+        basketCount.style.display = 'none';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = '0';
+          basketCountMobile.style.display = 'none';
+        }
+        
+        // Hide clear basket buttons when basket is empty
+        const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+        const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+        if (basketDropdownFooter) basketDropdownFooter.style.display = 'none';
+        if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'none';
+        
+        return;
+      }
+      
+      // Update basket counters
+      basketCount.textContent = cartCount;
+      basketCount.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Generate basket HTML
+      const basketHTML = cartItems.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;">${item.productName || item.name}</div>
+            <div style="font-size:1em;font-weight:bold;">${(window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || typeof item.price === 'number')) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || "£0.00")}</div>
+            <div style="font-size:0.95em;color:#555;">Qty: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+            ${(() => { const s = (item.selectedSize || item.size || '').toString().trim(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;\">Size: ${s}</div>` : '' })()}
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+        </div>
+      `).join('');
+
+      basketDropdownContent.innerHTML = basketHTML;
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.innerHTML = basketHTML;
+      }
+
+      // Show clear basket buttons when basket has items
+      const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+      const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+      if (basketDropdownFooter) basketDropdownFooter.style.display = 'block';
+      if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'block';
+
+      // Add event listeners for minus buttons (desktop)
+      basketDropdownContent.querySelectorAll('.basket-minus-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          const cartItemId = this.getAttribute('data-id');
+          const row = this.closest('.basket-row');
+          
+          if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+            // Firebase mode
+            try {
+              // Get current quantity
+              const cartItems = window.FitRightFirebase.getCartItems();
+              const currentItem = cartItems.find(item => (item.id || item.productId) === cartItemId);
+              
+              if (currentItem && currentItem.quantity > 1) {
+                // Decrease quantity
+                await window.FitRightFirebase.updateQuantity(cartItemId, currentItem.quantity - 1);
+                console.log("Quantity decreased for item:", cartItemId);
+              } else {
+                // Remove item completely
+                row.classList.remove('basket-fade-in');
+                row.classList.add('basket-fade-out');
+                setTimeout(async () => {
+                  await window.FitRightFirebase.removeFromCart(cartItemId);
+                  console.log("Item removed from cart:", cartItemId);
+                }, 400);
+              }
+            } catch (error) {
+              console.error("Error updating cart:", error);
+              showToast("Error updating basket: " + error.message);
+            }
+          } else {
+            // localStorage mode
+            const idx = parseInt(this.getAttribute('data-index'));
+            let basket = JSON.parse(localStorage.getItem("basket")) || [];
+            
+            if (basket[idx] && basket[idx].quantity > 1) {
+              basket[idx].quantity -= 1;
+              localStorage.setItem("basket", JSON.stringify(basket));
+              // Update only the quantity number in the DOM
+              const qtySpan = row.querySelector('.basket-qty');
+              if (qtySpan) qtySpan.textContent = basket[idx].quantity;
+              // Also update the basket counters
+              const basketCount = document.getElementById('basketCount');
+              const basketCountMobile = document.getElementById('basketCountMobile');
+              const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+              if (basketCount) {
+                basketCount.textContent = totalCount;
+                basketCount.style.display = totalCount > 0 ? 'inline-block' : 'none';
+              }
+              if (basketCountMobile) basketCountMobile.textContent = totalCount;
+            } else {
+              row.classList.remove('basket-fade-in');
+              row.classList.add('basket-fade-out');
+              setTimeout(() => {
+                basket.splice(idx, 1);
+                localStorage.setItem("basket", JSON.stringify(basket));
+                updateBasketDropdown();
+              }, 400);
+            }
+          }
+        });
+      });
+
+      // Add event listeners for minus buttons (mobile)
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.querySelectorAll('.basket-minus-btn').forEach(btn => {
+          btn.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            
+            const cartItemId = this.getAttribute('data-id');
+            const row = this.closest('.basket-row');
+            
+            if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+              // Firebase mode
+              try {
+                // Get current quantity
+                const cartItems = window.FitRightFirebase.getCartItems();
+                const currentItem = cartItems.find(item => (item.id || item.productId) === cartItemId);
+                
+                if (currentItem && currentItem.quantity > 1) {
+                  // Decrease quantity
+                  await window.FitRightFirebase.updateQuantity(cartItemId, currentItem.quantity - 1);
+                  console.log("Quantity decreased for item:", cartItemId);
+                } else {
+                  // Remove item completely
+                  row.classList.remove('basket-fade-in');
+                  row.classList.add('basket-fade-out');
+                  setTimeout(async () => {
+                    await window.FitRightFirebase.removeFromCart(cartItemId);
+                    console.log("Item removed from cart:", cartItemId);
+                  }, 400);
+                }
+              } catch (error) {
+                console.error("Error updating cart:", error);
+                showToast("Error updating basket: " + error.message);
+              }
+            } else {
+              // localStorage mode
+              const idx = parseInt(this.getAttribute('data-index'));
+              let basket = JSON.parse(localStorage.getItem("basket")) || [];
+              
+              if (basket[idx] && basket[idx].quantity > 1) {
+                basket[idx].quantity -= 1;
+                localStorage.setItem("basket", JSON.stringify(basket));
+                // Update only the quantity number in the DOM
+                const qtySpan = row.querySelector('.basket-qty');
+                if (qtySpan) qtySpan.textContent = basket[idx].quantity;
+                // Also update the basket counters
+                const basketCount = document.getElementById('basketCount');
+                const basketCountMobile = document.getElementById('basketCountMobile');
+                const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                if (basketCount) {
+                  basketCount.textContent = totalCount;
+                  basketCount.style.display = totalCount > 0 ? 'inline-block' : 'none';
+                }
+                if (basketCountMobile) basketCountMobile.textContent = totalCount;
+              } else {
+                row.classList.remove('basket-fade-in');
+                row.classList.add('basket-fade-out');
+                setTimeout(() => {
+                  basket.splice(idx, 1);
+                  localStorage.setItem("basket", JSON.stringify(basket));
+                  updateBasketDropdown();
+                }, 400);
+              }
+            }
+          });
+        });
+      }
+    }
+
+      basketDropdownBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        updateBasketDropdown();
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        } else {
+          basketDropdown.style.display = 'block';
+          setTimeout(() => { basketDropdown.classList.add('show'); }, 10);
+        }
+      });
+
+    if (basketDropdownBtnMobile) {
+      basketDropdownBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        updateBasketDropdown();
+        if (basketDropdownMobile.classList.contains('show')) {
+          basketDropdownMobile.classList.remove('show');
+          setTimeout(() => { basketDropdownMobile.style.display = 'none'; }, 300);
+        } else {
+          basketDropdownMobile.style.display = 'block';
+          setTimeout(() => { basketDropdownMobile.classList.add('show'); }, 10);
+        }
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!basketDropdown.contains(e.target) && !basketDropdownMobile.contains(e.target) && 
+          e.target !== basketDropdownBtn && e.target !== basketDropdownBtnMobile) {
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        }
+        if (basketDropdownMobile.classList.contains('show')) {
+          basketDropdownMobile.classList.remove('show');
+          setTimeout(() => { basketDropdownMobile.style.display = 'none'; }, 300);
+        }
+      }
+        });
+
+    // Clear basket button functionality
+    const clearBasketBtn = document.getElementById('clearBasketBtn');
+    const clearBasketBtnMobile = document.getElementById('clearBasketBtnMobile');
+
+    function clearBasket() {
+      if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+        // Firebase mode
+        window.FitRightFirebase.clearCart().then(() => {
+          updateBasketDropdown();
+          showToast("Basket cleared!");
+        }).catch(error => {
+          console.error("Error clearing Firebase cart:", error);
+          showToast("Error clearing basket: " + error.message);
+        });
+      } else {
+        // localStorage mode
+        localStorage.removeItem("basket");
+        updateBasketDropdown();
+        showToast("Basket cleared!");
+      }
+    }
+
+    if (clearBasketBtn) {
+      clearBasketBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+
+    if (clearBasketBtnMobile) {
+      clearBasketBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+    
+    // Update basket count on page load
+    updateBasketDropdown();
+    // Update basket count when basket changes (listen to storage event for multi-tab)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'basket') updateBasketDropdown();
+    });
+
+    const staticSunglasses = [
+      {
+        id: "sunglasses1",
+        name: "Wayfarer Classic Black",
+        price: 28,
+        imgUrl: "Sunglasses47.jpg",
+        isRealImage: true
+      },
+      {
+        id: "sunglasses2",
+        name: "Aviator Silver Mirror",
+        price: 30,
+        imgUrl: "Sunglasses48.jpg",
+        isRealImage: true
+      },
+      {
+        id: "sunglasses3",
+        name: "Retro Round Brown",
+        price: 18,
+        imgUrl: "Sunglasses49.jpg",
+        isRealImage: true
+      },
+      {
+        id: "sunglasses4",
+        name: "Oversized Gradient",
+        price: 45,
+        imgUrl: "Sunglasses50.jpg",
+        isRealImage: true
+      }
+    ];
+    async function loadProducts() {
+      try {
+        // Instead of fetching from a file, we'll hardcode the products data to avoid CORS issues
+        const discountedProducts = [
+          {
+            "id": "belt1",
+            "name": "belt1",
+            "category": "belts",
+            "imagePath": "https://via.placeholder.com/150?text=Belt+1",
+            "price": 50,
+            "discount": true,
+            "discountPercent": 30
+          },
+          {
+            "id": "belt3",
+            "name": "belt3",
+            "category": "belts",
+            "imagePath": "https://via.placeholder.com/150?text=Belt+3",
+            "price": 60,
+            "discount": true,
+            "discountPercent": 40
+          },
+          {
+            "id": "belt5",
+            "name": "belt5",
+            "category": "belts",
+            "imagePath": "https://via.placeholder.com/150?text=Belt+5",
+            "price": 70,
+            "discount": true,
+            "discountPercent": 65
+          },
+          {
+            "id": "belt7",
+            "name": "belt7",
+            "category": "belts",
+            "imagePath": "https://via.placeholder.com/150?text=Belt+7",
+            "price": 80,
+            "discount": true,
+            "discountPercent": 25
+          },
+          {
+            "id": "cap/hat1",
+            "name": "cap/hat1",
+            "category": "hats",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.23_34edff8a.jpg",
+            "price": 25,
+            "discount": true,
+            "discountPercent": 20
+          },
+          {
+            "id": "footwear1",
+            "name": "footwear1",
+            "category": "footwear",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_f2708529.jpg",
+            "price": 120,
+            "discount": true,
+            "discountPercent": 50
+          },
+          {
+            "id": "glove1",
+            "name": "glove1",
+            "category": "gloves",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_c4614d2d.jpg",
+            "price": 35,
+            "discount": true,
+            "discountPercent": 45
+          },
+          {
+            "id": "leather_jacket1",
+            "name": "leather_jacket1",
+            "category": "leather jackets",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_4f9bf797.jpg",
+            "price": 200,
+            "discount": true,
+            "discountPercent": 60
+          },
+          {
+            "id": "scarf1",
+            "name": "scarf1",
+            "category": "scarves",
+            "imagePath": "https://via.placeholder.com/150?text=Scarf+1",
+            "price": 50,
+            "discount": true,
+            "discountPercent": 35
+          },
+          {
+            "id": "scarf3",
+            "name": "scarf3",
+            "category": "scarves",
+            "imagePath": "https://via.placeholder.com/150?text=Scarf+3",
+            "price": 60,
+            "discount": true,
+            "discountPercent": 40
+          },
+          {
+            "id": "scarf5",
+            "name": "scarf5",
+            "category": "scarves",
+            "imagePath": "https://via.placeholder.com/150?text=Scarf+5",
+            "price": 70,
+            "discount": true,
+            "discountPercent": 60
+          },
+          {
+            "id": "scarf7",
+            "name": "scarf7",
+            "category": "scarves",
+            "imagePath": "https://via.placeholder.com/150?text=Scarf+7",
+            "price": 80,
+            "discount": true,
+            "discountPercent": 25
+          },
+          {
+            "id": "sunglasses1",
+            "name": "sunglasses1",
+            "category": "sunglasses",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_15f0a57a.jpg",
+            "price": 80,
+            "discount": true,
+            "discountPercent": 55
+          },
+          {
+            "id": "sunglasses2",
+            "name": "sunglasses2",
+            "category": "sunglasses",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_0cecf64c.jpg",
+            "price": 55,
+            "discount": true,
+            "discountPercent": 30
+          },
+          {
+            "id": "sunglasses3",
+            "name": "sunglasses3",
+            "category": "sunglasses",
+            "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_03d2784a.jpg",
+            "price": 60,
+            "discount": true,
+            "discountPercent": 65
+          },
+          {
+            "id": "wallet1",
+            "name": "wallet1",
+            "category": "wallets",
+            "imagePath": "https://via.placeholder.com/300x300?text=Wallet+1",
+            "price": 40,
+            "discount": true,
+            "discountPercent": 25
+          },
+          {
+            "id": "wallet2",
+            "name": "wallet2",
+            "category": "wallets",
+            "imagePath": "https://via.placeholder.com/300x300?text=Wallet+2",
+            "price": 45,
+            "discount": true,
+            "discountPercent": 70
+          }
+        ];
+        
+        // Create a map of discounted products for easy lookup
+        const discountMap = {};
+        discountedProducts.forEach(product => {
+          discountMap[product.id] = product;
+        });
+        
+        // Define static sunglasses products with real images
+        const staticSunglasses = [
+                {
+        id: "sunglasses1",
+        name: "Wayfarer Classic Black",
+        price: 28,
+        imgUrl: "Sunglasses47.jpg",
+        isRealImage: true
+      },
+      {
+        id: "sunglasses2",
+        name: "Aviator Silver Mirror",
+        price: 30,
+        imgUrl: "Sunglasses48.jpg",
+        isRealImage: true
+      },
+          {
+            id: "sunglasses3",
+            name: "Retro Round Brown",
+            price: 60,
+            imgUrl: "Sunglasses49.jpg",
+            isRealImage: true
+          },
+                {
+        id: "sunglasses4",
+        name: "Oversized Gradient",
+        price: 45,
+            imgUrl: "Sunglasses50.jpg",
+            isRealImage: true
+          }
+        ];
+        
+        // Add the 44 Ray Flector sunglasses from the catalog
+        const rayFlectorSunglasses = [
+          {
+            id: "rf_aviador_classico_dourado",
+            name: "Classic Aviator Gold",
+            price: 28,
+            imgUrl: "Synglasses3.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_classico_degrade",
+            name: "Classic Aviator Gradient",
+            price: 27,
+            imgUrl: "Sunglasses4.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_fashion_listras",
+            name: "Fashion Aviator Stripes",
+            price: 25,
+            imgUrl: "Sunglasses5.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_oversized_marrom",
+            name: "Oversized Aviator Brown",
+            price: 25,
+            imgUrl: "Sunglasses6.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_oversized_tartaruga",
+            name: "Oversized Aviator Tortoise",
+            price: 27,
+            imgUrl: "Sunglasses7.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_fashion_preto",
+            name: "Fashion Aviator Black",
+            price: 25,
+            imgUrl: "Sunglasses8.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_dourado",
+            name: "Round Gold",
+            price: 22,
+            imgUrl: "Sunglasses9.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_vintage",
+            name: "Round Vintage",
+            price: 25,
+            imgUrl: "Sunglasses10.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_fashion",
+            name: "Retro Rectangle – Yellow",
+            price: 25,
+            imgUrl: "Sunglasses11.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_sport",
+            name: "Sport Aviator",
+            price: 28,
+            imgUrl: "Sunglasses12.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_fashion_retro",
+            name: "Cat-eye – Brown Gradient",
+            price: 25,
+            imgUrl: "Sunglasses13.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_classico_preto",
+            name: "Mirror Aviator – Blue",
+            price: 27,
+            imgUrl: "Sunglasses14.webp",
+            isRealImage: true
+          },
+
+          {
+            id: "rf_round_oversized",
+            name: "Mirror Aviator – Gold-Green",
+            price: 25,
+            imgUrl: "Sunglasses16.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_retro",
+            name: "Retro Rectangle – Green",
+            price: 25,
+            imgUrl: "Sunglasses17.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_fashion_preto",
+            name: "Mirror Aviator – Blue",
+            price: 22,
+            imgUrl: "Sunglases18.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_vintage_dourado",
+            name: "Retro Aviator – Black Frame",
+            price: 25,
+            imgUrl: "Sunglasses19.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_espelhado",
+            name: "Round Mirrored",
+            price: 25,
+            imgUrl: "Sunglasses20.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_fashion_2",
+            name: "Mirror Cat-eye – Blue/Yellow",
+            price: 27,
+            imgUrl: "Sunglasses21.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_classico",
+            name: "Flat-top Fashion – Brown",
+            price: 25,
+            imgUrl: "Sunglasses22.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_fashion_oversized",
+            name: "Coloured Round – Gold/Brown",
+            price: 25,
+            imgUrl: "Sunglasses23.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_premium",
+            name: "Cherokee Cat-eye – Gold",
+            price: 32,
+            imgUrl: "Sunglasses24.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_polarizado",
+            name: "Polarised Aviator – Brown",
+            price: 32,
+            imgUrl: "Sunglasses25.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_fashion_rosa",
+            name: "Polarised Aviator – Green",
+            price: 25,
+            imgUrl: "Sunglasses26.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_sport_azul",
+            name: "Wayfarer Sport – Black",
+            price: 28,
+            imgUrl: "Sunglasses27.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_vintage_preto",
+            name: "Coloured Round – Mint ",
+            price: 25,
+            imgUrl: "Sunglasses28.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_fashion_retro_dourado",
+            name: "Coloured Round – Gold/Brown",
+            price: 25,
+            imgUrl: "Sunglasses29.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_espelhado_roxo",
+            name: "Mirror Round – Purple",
+            price: 25,
+            imgUrl: "Sunglasses30.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_classico_verde",
+            name: "Retro Aviator – Smoke",
+            price: 27,
+            imgUrl: "Sunglasses31.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_fashion_prata",
+            name: "Polarised Aviator – Green",
+            price: 25,
+            imgUrl: "Sunglasses32.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_retro_marrom",
+            name: "Retro Rectangle – Brown",
+            price: 25,
+            imgUrl: "Sunglasses33.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_oversized_dourado",
+            name: "Retro Rectangle – Green",
+            price: 28,
+            imgUrl: "Sunglasses34.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_cat_eye_dourado",
+            name: "Cat Eye Gold",
+            price: 25,
+            imgUrl: "Sunglasses35.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_fashion_oversized_preto",
+            name: "Mirror Cat-eye – Blue/Yellow",
+            price: 25,
+            imgUrl: "Sunglasses36.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_vintage_amarelo",
+            name: "Cat-eye – Smoke Gradient",
+            price: 25,
+            imgUrl: "Sunglasses37.webp",
+            isRealImage: true
+          },
+
+          {
+            id: "rf_round_fashion_especial",
+            name: "Wayfarer Sport – Black",
+            price: 22,
+            imgUrl: "Sungçasses39.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_classico_azul",
+            name: "Classic Round Blue",
+            price: 25,
+            imgUrl: "Sunglasses40.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_fashion_retro_especial",
+            name: "Coloured Round – Rose",
+            price: 25,
+            imgUrl: "Singlasses41.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_premium_dourado",
+            name: "Coloured Round – Yellow",
+            price: 32,
+            imgUrl: "Sunglasses43.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_fashion_verde",
+            name: "Colored Round - Violet",
+            price: 25,
+            imgUrl: "Sunglasses44.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_aviador_sport_premium",
+            name: "Sport Oval – Sand",
+            price: 30,
+            imgUrl: "Sunglasses45.webp",
+            isRealImage: true
+          },
+          {
+            id: "rf_round_oversized_laranja",
+            name: "Coloured Round – Orange",
+            price: 25,
+            imgUrl: "Sunglasses46.webp",
+            isRealImage: true
+          }
+        ];
+        
+        // Combine static sunglasses with Ray Flector sunglasses
+        const allSunglasses = [...staticSunglasses, ...rayFlectorSunglasses];
+        
+        // Clear existing products
+        const productsContainer = document.getElementById("products-container");
+        productsContainer.innerHTML = '';
+        
+        // Add all sunglasses to the page
+        allSunglasses.forEach(glasses => {
+          const productDiv = document.createElement("div");
+          productDiv.className = "product";
+          
+          // Check if this sunglasses is in the discounted products
+          const discountInfo = discountMap[glasses.id];
+          let productHTML = '';
+          let priceDisplay = '';
+          let modalParams = '';
+          
+          if (discountInfo && discountInfo.discount) {
+            // Calculate discounted price
+            const discountedPrice = glasses.price * (1 - discountInfo.discountPercent / 100);
+            const formattedOriginalPrice = `£${glasses.price}`;
+            const formattedDiscountedPrice = `£${discountedPrice.toFixed(2)}`;
+            
+            // Determine tag type based on discount percentage
+            const tagType = discountInfo.discountPercent > 55 ? 'gold' : 'red';
+            const tagText = tagType === 'gold' 
+              ? `★★ ${discountInfo.discountPercent}% OFF – Bargain of the Day ★★`
+              : `★ ${discountInfo.discountPercent}% OFF ★`;
+            
+            // Add discount tag
+            productHTML += `<div class="discount-tag ${tagType}">${tagText}</div>`;
+            
+            // Price display with original and new price
+            priceDisplay = `<p class="product-price"><span class="original-price">${formattedOriginalPrice}</span> <span class="new-price">${formattedDiscountedPrice}</span></p>`;
+            
+            // Modal parameters
+            modalParams = `openModal('${glasses.name}', '${formattedDiscountedPrice}', '${glasses.imgUrl}', true, '${formattedOriginalPrice}')`;
+          } else {
+            // Regular price display
+            priceDisplay = `<p class="product-price">£${glasses.price}</p>`;
+            
+            // Modal parameters
+            modalParams = `openModal('${glasses.name}', '£${glasses.price}', '${glasses.imgUrl}')`;
+          }
+          
+          // Add real-image class if needed and check if it's a placeholder image
+          const isPlaceholder = glasses.imgUrl.includes('placeholder.com');
+          const imgStyle = isPlaceholder ? 'style="opacity: 0;"' : '';
+          const imgClass = glasses.isRealImage ? 'class="real-image"' : '';
+          
+          // Complete product HTML (wrap image like footwear to control size and rounding)
+          productHTML += `
+            <div class="image-container">
+              <img src="${glasses.imgUrl}" alt="${glasses.name}" ${imgClass} ${imgStyle}>
+            </div>
+            <p class="product-name">${glasses.name}</p>
+            ${priceDisplay}
+          `;
+          
+          productDiv.innerHTML = productHTML;
+          productDiv.onclick = function() {
+            eval(modalParams);
+          };
+          
+          productsContainer.appendChild(productDiv);
+        });
+        
+      } catch (error) {
+        console.error('Error loading products:', error);
+      }
+    }
+    
+    // Load products when page loads
+    document.addEventListener('DOMContentLoaded', loadProducts);
+  </script>
+
+  <!-- Firebase Cart System -->
+  <script type="module" src="./firebase.js?v=2"></script>
+  <script type="module" src="./fitright-cart-only.js?v=2"></script>
+  
+  <!-- Basket Button Fix -->
+
+</body>
+</html>

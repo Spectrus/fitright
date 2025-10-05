@@ -1,0 +1,72 @@
+{
+  "total_images": 5,
+  "collection_name": "Sample Personal Collection",
+  "description": "A sample collection for testing the personal collection feature",
+  "images": [
+    {
+      "id": "sample_1",
+      "filename": "sample1.jpg",
+      "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop",
+      "title": "Man in Sunglasses",
+      "description": "A man wearing stylish sunglasses",
+      "category": "sunglasses",
+      "tags": ["cool", "stylish", "vintage", "sunglasses"],
+      "celebrities": [],
+      "author": "Sample Collection",
+      "authorUrl": "#",
+      "img_number": 1
+    },
+    {
+      "id": "sample_2",
+      "filename": "sample2.jpg",
+      "url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop",
+      "title": "Leather Jacket",
+      "description": "A classic leather jacket",
+      "category": "jacket",
+      "tags": ["leather", "jacket", "vintage", "classic"],
+      "celebrities": [],
+      "author": "Sample Collection",
+      "authorUrl": "#",
+      "img_number": 2
+    },
+    {
+      "id": "sample_3",
+      "filename": "sample3.jpg",
+      "url": "https://images.unsplash.com/photo-1523381210434-271e8be1f6b1?w=300&h=300&fit=crop",
+      "title": "Classic Hat",
+      "description": "A vintage hat",
+      "category": "hat",
+      "tags": ["hat", "vintage", "classic", "elegant"],
+      "celebrities": [],
+      "author": "Sample Collection",
+      "authorUrl": "#",
+      "img_number": 3
+    },
+    {
+      "id": "sample_4",
+      "filename": "sample4.jpg",
+      "url": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=300&fit=crop",
+      "title": "Leather Bag",
+      "description": "A luxury leather bag",
+      "category": "bag",
+      "tags": ["bag", "leather", "luxury", "elegant"],
+      "celebrities": [],
+      "author": "Sample Collection",
+      "authorUrl": "#",
+      "img_number": 4
+    },
+    {
+      "id": "sample_5",
+      "filename": "sample5.jpg",
+      "url": "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=300&h=300&fit=crop",
+      "title": "Elegant Gloves",
+      "description": "A pair of elegant gloves",
+      "category": "gloves",
+      "tags": ["gloves", "elegant", "vintage", "formal"],
+      "celebrities": [],
+      "author": "Sample Collection",
+      "authorUrl": "#",
+      "img_number": 5
+    }
+  ]
+} 

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "belt1",
+    "name": "belt1",
+    "category": "belts",
+    "imagePath": "https://via.placeholder.com/150?text=Belt+1",
+    "price": 50,
+    "discount": true,
+    "discountPercent": 30
+  },
+  {
+    "id": "belt3",
+    "name": "belt3",
+    "category": "belts",
+    "imagePath": "https://via.placeholder.com/150?text=Belt+3",
+    "price": 60,
+    "discount": true,
+    "discountPercent": 40
+  },
+  {
+    "id": "belt5",
+    "name": "belt5",
+    "category": "belts",
+    "imagePath": "https://via.placeholder.com/150?text=Belt+5",
+    "price": 70,
+    "discount": true,
+    "discountPercent": 65
+  },
+  {
+    "id": "belt7",
+    "name": "belt7",
+    "category": "belts",
+    "imagePath": "https://via.placeholder.com/150?text=Belt+7",
+    "price": 80,
+    "discount": true,
+    "discountPercent": 25
+  },
+  {
+    "id": "cap/hat1",
+    "name": "cap/hat1",
+    "category": "hats",
+    "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.23_34edff8a.jpg",
+    "price": 25,
+    "discount": true,
+    "discountPercent": 20
+  },
+  {
+    "id": "footwear1",
+    "name": "footwear1",
+    "category": "footwear",
+    "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_f2708529.jpg",
+    "price": 140,
+    "discount": true,
+    "discountPercent": 50
+  },
+  {
+    "id": "glove1",
+    "name": "glove1",
+    "category": "gloves",
+    "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_c4614d2d.jpg",
+    "price": 35,
+    "discount": true,
+    "discountPercent": 45
+  },
+  {
+    "id": "leather_jacket1",
+    "name": "leather_jacket1",
+    "category": "leather jackets",
+    "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_4f9bf797.jpg",
+    "price": 85,
+    "discount": true,
+    "discountPercent": 60
+  },
+  {
+    "id": "scarf1",
+    "name": "scarf1",
+    "category": "scarves",
+    "imagePath": "https://via.placeholder.com/150?text=Scarf+1",
+    "price": 50,
+    "discount": true,
+    "discountPercent": 35
+  },
+  {
+    "id": "sunglasses1",
+    "name": "sunglasses1",
+    "category": "sunglasses",
+    "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_15f0a57a.jpg",
+    "price": 35,
+    "discount": true,
+    "discountPercent": 55
+  },
+  {
+    "id": "wallet1",
+    "name": "wallet1",
+    "category": "wallets",
+    "imagePath": "https://via.placeholder.com/300x300?text=Wallet+1",
+    "price": 40,
+    "discount": true,
+    "discountPercent": 25
+  },
+  {
+    "id": "wallet2",
+    "name": "wallet2",
+    "category": "wallets",
+    "imagePath": "https://via.placeholder.com/300x300?text=Wallet+2",
+    "price": 45,
+    "discount": true,
+    "discountPercent": 70
+  }
+]

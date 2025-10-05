@@ -1,0 +1,18 @@
+{
+  "name": "fitrite",
+  "version": "1.0.0",
+  "description": "Fitrite website",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
