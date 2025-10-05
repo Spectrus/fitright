@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo - Fitrite.me</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .summary h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-card {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .category {
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .category-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-info {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-number {
+            background: #3498db;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .price-original {
+            text-decoration: line-through;
+            color: #7f8c8d;
+            margin-right: 0.5rem;
+        }
+        
+        .discount-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .no-image {
+            background: #ecf0f1;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🛍️ Catálogo Completo Fitrite.me</h1>
+            <p>Todos os 313 produtos catalogados com imagens</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="summary">
+            <h2>📊 Resumo do Catálogo</h2>
+            <p><strong>Total de produtos:</strong> 313 produtos únicos numerados de 1 a 313</p>
+            <p><strong>Produtos com imagens:</strong> 263 produtos</p>
+            <p><strong>Produtos sem imagens:</strong> 50 produtos (apenas carteiras)</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div>Leather Jackets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div>Belts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">57</div>
+                    <div>Footwear</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div>Sunglasses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">32</div>
+                    <div>Caps & Hats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div>Bags</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">21</div>
+                    <div>Scarves</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50</div>
+                    <div>Gloves</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50</div>
+                    <div>Wallets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">17</div>
+                    <div>Accessories</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEATHER JACKETS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🧥 Leather Jackets</h2>
+                <div class="category-info">Produtos 1-6 • 6 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="rugged_green_field_jacket.jpg" alt="RUGGED GREY FIELD JACKET" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#1</span>
+                        <div class="product-name">RUGGED GREY FIELD JACKET</div>
+                        <div class="product-price">£140</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="vintage_brown_bomber.jpg" alt="VINTAGE BROWN BOMBER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#2</span>
+                        <div class="product-name">VINTAGE BROWN BOMBER</div>
+                        <div class="product-price">
+                            <span class="price-original">£185</span>£111
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="modern_blue_moto.jpg" alt="MODERN BLUE MOTO" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#3</span>
+                        <div class="product-name">MODERN BLUE MOTO</div>
+                        <div class="product-price">
+                            <span class="price-original">£225</span>£68
+                            <span class="discount-badge">70% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="sleek_red_racer.jpg" alt="SLEEK BLUE RACER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#4</span>
+                        <div class="product-name">SLEEK BLUE RACER</div>
+                        <div class="product-price">
+                            <span class="price-original">£170</span>£68
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="silver_streak_jacket.jpg" alt="SILVER STREAK JACKET" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#5</span>
+                        <div class="product-name">SILVER STREAK JACKET</div>
+                        <div class="product-price">£165</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="metallic_finish_racer.jpg" alt="METALLIC FINISH RACER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#6</span>
+                        <div class="product-name">METALLIC FINISH RACER</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BELTS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>👔 Belts</h2>
+                <div class="category-info">Produtos 7-17 • 11 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Belt1.jpg" alt="2 ROW DOUBLE PRONG EYELET STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#7</span>
+                        <div class="product-name">2 ROW DOUBLE PRONG EYELET STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£37.49</span>£26.24
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt2.webp" alt="2 ROW EYELET STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#8</span>
+                        <div class="product-name">2 ROW EYELET STUDDED BELT</div>
+                        <div class="product-price">£37.49</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt3.webp" alt="3 ROW SILVER/BLACK CHECK PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#9</span>
+                        <div class="product-name">3 ROW SILVER/BLACK CHECK PYRAMID STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£29.99</span>£17.99
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt4.webp" alt="3 ROW SILVER PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#10</span>
+                        <div class="product-name">3 ROW SILVER PYRAMID STUDDED BELT</div>
+                        <div class="product-price">£39.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt5.webp" alt="3 ROW BLACK PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#11</span>
+                        <div class="product-name">3 ROW BLACK PYRAMID STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£59.99</span>£20.99
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt6.webp" alt="3 ROW LONG SILVER PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#12</span>
+                        <div class="product-name">3 ROW LONG SILVER PYRAMID STUDDED BELT</div>
+                        <div class="product-price">£62.49</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt7.webp" alt="2 ROW BLACK SPIKE STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#13</span>
+                        <div class="product-name">2 ROW BLACK SPIKE STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£44.99</span>£33.74
+                            <span class="discount-badge">25% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt8.webp" alt="NICKEL BULLET BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#14</span>
+                        <div class="product-name">NICKEL BULLET BELT</div>
+                        <div class="product-price">£44.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt9.jpg" alt="REVERSIBLE ADJUSTABLE BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#15</span>
+                        <div class="product-name">REVERSIBLE ADJUSTABLE BELT</div>
+                        <div class="product-price">Login For Wholesale</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt10.jpg" alt="CLASSIC BLACK LEATHER BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#16</span>
+                        <div class="product-name">CLASSIC BLACK LEATHER BELT</div>
+                        <div class="product-price">£26.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt11.webp" alt="VINTAGE BROWN LEATHER BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#17</span>
+                        <div class="product-name">VINTAGE BROWN LEATHER BELT</div>
+                        <div class="product-price">£28.49</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>📋 Catálogo completo do site Fitrite.me • 313 produtos catalogados</p>
+            <p>🔍 Análise realizada em 21/08/2025</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+        <!-- FOOTWEAR -->
+        <div class="category">
+            <div class="category-header">
+                <h2>👢 Footwear</h2>
+                <div class="category-info">Produtos 18-74 • 57 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Cowboy0.jpg" alt="Ridgewalker Classic" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#18</span>
+                        <div class="product-name">Ridgewalker Classic</div>
+                        <div class="product-price">
+                            <span class="price-original">£95</span>£47.50
+                            <span class="discount-badge">50% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy1.jpg" alt="Rose Rebel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#19</span>
+                        <div class="product-name">Rose Rebel</div>
+                        <div class="product-price">
+                            <span class="price-original">£85</span>£59.50
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy2.jpg" alt="Midnight Marcher" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#20</span>
+                        <div class="product-name">Midnight Marcher</div>
+                        <div class="product-price">
+                            <span class="price-original">£135</span>£54.00
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy3.jpg" alt="Ladies Ankle Boots" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#21</span>
+                        <div class="product-name">Ladies Ankle Boots</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy4.jpg" alt="Goodyear Welted Suede Chelsea" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#22</span>
+                        <div class="product-name">Goodyear Welted Suede Chelsea</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy5.jpg" alt="Mens Leather Formal Comfort" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#23</span>
+                        <div class="product-name">Mens Leather Formal Comfort</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy6.jpg" alt="Mens Leather Formal Burgundy Casual" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#24</span>
+                        <div class="product-name">Mens Leather Formal Burgundy Casual</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy7.jpg" alt="Mens Leather Formal" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#25</span>
+                        <div class="product-name">Mens Leather Formal</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy8.jpg" alt="Mens Leather Casual Formal" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#26</span>
+                        <div class="product-name">Mens Leather Casual Formal</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy9.jpg" alt="Arizona Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#27</span>
+                        <div class="product-name">Arizona Lo</div>
+                        <div class="product-price">£70</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy10.jpg" alt="Arizona" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#28</span>
+                        <div class="product-name">Arizona</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy11.jpg" alt="Austin" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#29</span>
+                        <div class="product-name">Austin</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy12.jpg" alt="Bald Eagle" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#30</span>
+                        <div class="product-name">Bald Eagle</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy13.jpg" alt="Buffalo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#31</span>
+                        <div class="product-name">Buffalo</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy14.jpg" alt="Bulldog ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#32</span>
+                        <div class="product-name">Bulldog ACS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy15.jpg" alt="Bulldog CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#33</span>
+                        <div class="product-name">Bulldog CS</div>
+                        <div class="product-price">£95</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy16.jpg" alt="Camelot CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#34</span>
+                        <div class="product-name">Camelot CS</div>
+                        <div class="product-price">£105</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy17.jpg" alt="Cameron ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#35</span>
+                        <div class="product-name">Cameron ACS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy18.jpg" alt="Carolina" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#36</span>
+                        <div class="product-name">Carolina</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy19.jpg" alt="Cedric CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#37</span>
+                        <div class="product-name">Cedric CS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy20.jpg" alt="Charger" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#38</span>
+                        <div class="product-name">Charger</div>
+                        <div class="product-price">£155</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy21.jpg" alt="Charlie ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#39</span>
+                        <div class="product-name">Charlie ACS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy22.jpg" alt="Chelsea ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#40</span>
+                        <div class="product-name">Chelsea ACS</div>
+                        <div class="product-price">£130</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy23.jpg" alt="Dakota" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#41</span>
+                        <div class="product-name">Dakota</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy24.jpg" alt="Dallas" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#42</span>
+                        <div class="product-name">Dallas</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy25.jpg" alt="Eagle Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#43</span>
+                        <div class="product-name">Eagle Hi</div>
+                        <div class="product-price">£185</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy26.jpg" alt="Eagle Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#44</span>
+                        <div class="product-name">Eagle Lo</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy27.jpg" alt="El Paso" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#45</span>
+                        <div class="product-name">El Paso</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy28.jpg" alt="Falcon" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#46</span>
+                        <div class="product-name">Falcon</div>
+                        <div class="product-price">£110</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy29.jpg" alt="Frontier" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#47</span>
+                        <div class="product-name">Frontier</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy30.jpg" alt="Galveston" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#48</span>
+                        <div class="product-name">Galveston</div>
+                        <div class="product-price">£185</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy31.jpg" alt="Georgia" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#49</span>
+                        <div class="product-name">Georgia</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy32.jpg" alt="Harness Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#50</span>
+                        <div class="product-name">Harness Hi</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy33.jpg" alt="Harness Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#51</span>
+                        <div class="product-name">Harness Lo</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy34.jpg" alt="Herald CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#52</span>
+                        <div class="product-name">Herald CS</div>
+                        <div class="product-price">£190</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy35.jpg" alt="Hunter" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#53</span>
+                        <div class="product-name">Hunter</div>
+                        <div class="product-price">£195</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy36.jpg" alt="Indiana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#54</span>
+                        <div class="product-name">Indiana</div>
+                        <div class="product-price">£200</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy37.jpg" alt="Jodhpur" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#55</span>
+                        <div class="product-name">Jodhpur</div>
+                        <div class="product-price">£140</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy38.jpg" alt="Kansas" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#56</span>
+                        <div class="product-name">Kansas</div>
+                        <div class="product-price">£210</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy39.jpg" alt="Kestrel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#57</span>
+                        <div class="product-name">Kestrel</div>
+                        <div class="product-price">£120</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy40.jpg" alt="King CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#58</span>
+                        <div class="product-name">King CS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy41.jpg" alt="Louisiana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#59</span>
+                        <div class="product-name">Louisiana</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy42.jpg" alt="Maverick" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#60</span>
+                        <div class="product-name">Maverick</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy43.jpg" alt="Montana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#61</span>
+                        <div class="product-name">Montana</div>
+                        <div class="product-price">£225</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy44.jpg" alt="Mustang" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#62</span>
+                        <div class="product-name">Mustang</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy45.jpg" alt="Nevada" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#63</span>
+                        <div class="product-name">Nevada</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy46.jpg" alt="Quad CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#64</span>
+                        <div class="product-name">Quad CS</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy47.jpg" alt="Rebel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#65</span>
+                        <div class="product-name">Rebel</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy48.jpg" alt="Regent CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#66</span>
+                        <div class="product-name">Regent CS</div>
+                        <div class="product-price">£80</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy49.jpg" alt="Renegade Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#67</span>
+                        <div class="product-name">Renegade Hi</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy50.jpg" alt="Renegade Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#68</span>
+                        <div class="product-name">Renegade Lo</div>
+                        <div class="product-price">£135</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy51.jpg" alt="Ryan ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#69</span>
+                        <div class="product-name">Ryan ACS</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy52.jpg" alt="Stag ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#70</span>
+                        <div class="product-name">Stag ACS</div>
+                        <div class="product-price">£130</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy53.jpg" alt="Stag CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#71</span>
+                        <div class="product-name">Stag CS</div>
+                        <div class="product-price">£90</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy54.jpg" alt="Taylor CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#72</span>
+                        <div class="product-name">Taylor CS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy55.jpg" alt="Wild One" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#73</span>
+                        <div class="product-name">Wild One</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy-1.jpg" alt="Zip & Lace" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#74</span>
+                        <div class="product-name">Zip & Lace</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

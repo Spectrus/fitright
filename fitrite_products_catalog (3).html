@@ -1,0 +1,3222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo - Fitrite.me</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .summary h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-card {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .category {
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .category-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-info {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+        
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-number {
+            background: #3498db;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .price-original {
+            text-decoration: line-through;
+            color: #7f8c8d;
+            margin-right: 0.5rem;
+        }
+        
+        .discount-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .no-image {
+            background: #ecf0f1;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🛍️ Catálogo Completo Fitrite.me</h1>
+            <p>Todos os 313 produtos catalogados com imagens</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="summary">
+            <h2>📊 Resumo do Catálogo</h2>
+            <p><strong>Total de produtos:</strong> 313 produtos únicos numerados de 1 a 313</p>
+            <p><strong>Produtos com imagens:</strong> 263 produtos</p>
+            <p><strong>Produtos sem imagens:</strong> 50 produtos (apenas carteiras)</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div>Leather Jackets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div>Belts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">57</div>
+                    <div>Footwear</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div>Sunglasses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">32</div>
+                    <div>Caps & Hats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div>Bags</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">21</div>
+                    <div>Scarves</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50</div>
+                    <div>Gloves</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50</div>
+                    <div>Wallets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">17</div>
+                    <div>Accessories</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEATHER JACKETS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🧥 Leather Jackets</h2>
+                <div class="category-info">Produtos 1-6 • 6 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="rugged_green_field_jacket.jpg" alt="RUGGED GREY FIELD JACKET" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#1</span>
+                        <div class="product-name">RUGGED GREY FIELD JACKET</div>
+                        <div class="product-price">£140</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="vintage_brown_bomber.jpg" alt="VINTAGE BROWN BOMBER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#2</span>
+                        <div class="product-name">VINTAGE BROWN BOMBER</div>
+                        <div class="product-price">
+                            <span class="price-original">£185</span>£111
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="modern_blue_moto.jpg" alt="MODERN BLUE MOTO" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#3</span>
+                        <div class="product-name">MODERN BLUE MOTO</div>
+                        <div class="product-price">
+                            <span class="price-original">£225</span>£68
+                            <span class="discount-badge">70% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="sleek_red_racer.jpg" alt="SLEEK BLUE RACER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#4</span>
+                        <div class="product-name">SLEEK BLUE RACER</div>
+                        <div class="product-price">
+                            <span class="price-original">£170</span>£68
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="silver_streak_jacket.jpg" alt="SILVER STREAK JACKET" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#5</span>
+                        <div class="product-name">SILVER STREAK JACKET</div>
+                        <div class="product-price">£165</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="metallic_finish_racer.jpg" alt="METALLIC FINISH RACER" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#6</span>
+                        <div class="product-name">METALLIC FINISH RACER</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BELTS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>👔 Belts</h2>
+                <div class="category-info">Produtos 7-17 • 11 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Belt1.jpg" alt="2 ROW DOUBLE PRONG EYELET STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#7</span>
+                        <div class="product-name">2 ROW DOUBLE PRONG EYELET STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£37.49</span>£26.24
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt2.webp" alt="2 ROW EYELET STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#8</span>
+                        <div class="product-name">2 ROW EYELET STUDDED BELT</div>
+                        <div class="product-price">£37.49</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt3.webp" alt="3 ROW SILVER/BLACK CHECK PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#9</span>
+                        <div class="product-name">3 ROW SILVER/BLACK CHECK PYRAMID STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£29.99</span>£17.99
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt4.webp" alt="3 ROW SILVER PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#10</span>
+                        <div class="product-name">3 ROW SILVER PYRAMID STUDDED BELT</div>
+                        <div class="product-price">£39.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt5.webp" alt="3 ROW BLACK PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#11</span>
+                        <div class="product-name">3 ROW BLACK PYRAMID STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£59.99</span>£20.99
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt6.webp" alt="3 ROW LONG SILVER PYRAMID STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#12</span>
+                        <div class="product-name">3 ROW LONG SILVER PYRAMID STUDDED BELT</div>
+                        <div class="product-price">£62.49</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt7.webp" alt="2 ROW BLACK SPIKE STUDDED BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#13</span>
+                        <div class="product-name">2 ROW BLACK SPIKE STUDDED BELT</div>
+                        <div class="product-price">
+                            <span class="price-original">£44.99</span>£33.74
+                            <span class="discount-badge">25% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt8.webp" alt="NICKEL BULLET BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#14</span>
+                        <div class="product-name">NICKEL BULLET BELT</div>
+                        <div class="product-price">£44.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt9.jpg" alt="REVERSIBLE ADJUSTABLE BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#15</span>
+                        <div class="product-name">REVERSIBLE ADJUSTABLE BELT</div>
+                        <div class="product-price">Login For Wholesale</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt10.jpg" alt="CLASSIC BLACK LEATHER BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#16</span>
+                        <div class="product-name">CLASSIC BLACK LEATHER BELT</div>
+                        <div class="product-price">£26.99</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Belt11.webp" alt="VINTAGE BROWN LEATHER BELT" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#17</span>
+                        <div class="product-name">VINTAGE BROWN LEATHER BELT</div>
+                        <div class="product-price">£28.49</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>📋 Catálogo completo do site Fitrite.me • 313 produtos catalogados</p>
+            <p>🔍 Análise realizada em 21/08/2025</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+        <!-- FOOTWEAR -->
+        <div class="category">
+            <div class="category-header">
+                <h2>👢 Footwear</h2>
+                <div class="category-info">Produtos 18-74 • 57 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Cowboy0.jpg" alt="Ridgewalker Classic" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#18</span>
+                        <div class="product-name">Ridgewalker Classic</div>
+                        <div class="product-price">
+                            <span class="price-original">£95</span>£47.50
+                            <span class="discount-badge">50% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy1.jpg" alt="Rose Rebel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#19</span>
+                        <div class="product-name">Rose Rebel</div>
+                        <div class="product-price">
+                            <span class="price-original">£85</span>£59.50
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy2.jpg" alt="Midnight Marcher" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#20</span>
+                        <div class="product-name">Midnight Marcher</div>
+                        <div class="product-price">
+                            <span class="price-original">£135</span>£54.00
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy3.jpg" alt="Ladies Ankle Boots" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#21</span>
+                        <div class="product-name">Ladies Ankle Boots</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy4.jpg" alt="Goodyear Welted Suede Chelsea" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#22</span>
+                        <div class="product-name">Goodyear Welted Suede Chelsea</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy5.jpg" alt="Mens Leather Formal Comfort" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#23</span>
+                        <div class="product-name">Mens Leather Formal Comfort</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy6.jpg" alt="Mens Leather Formal Burgundy Casual" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#24</span>
+                        <div class="product-name">Mens Leather Formal Burgundy Casual</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy7.jpg" alt="Mens Leather Formal" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#25</span>
+                        <div class="product-name">Mens Leather Formal</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy8.jpg" alt="Mens Leather Casual Formal" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#26</span>
+                        <div class="product-name">Mens Leather Casual Formal</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy9.jpg" alt="Arizona Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#27</span>
+                        <div class="product-name">Arizona Lo</div>
+                        <div class="product-price">£70</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy10.jpg" alt="Arizona" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#28</span>
+                        <div class="product-name">Arizona</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy11.jpg" alt="Austin" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#29</span>
+                        <div class="product-name">Austin</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy12.jpg" alt="Bald Eagle" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#30</span>
+                        <div class="product-name">Bald Eagle</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy13.jpg" alt="Buffalo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#31</span>
+                        <div class="product-name">Buffalo</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy14.jpg" alt="Bulldog ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#32</span>
+                        <div class="product-name">Bulldog ACS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy15.jpg" alt="Bulldog CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#33</span>
+                        <div class="product-name">Bulldog CS</div>
+                        <div class="product-price">£95</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy16.jpg" alt="Camelot CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#34</span>
+                        <div class="product-name">Camelot CS</div>
+                        <div class="product-price">£105</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy17.jpg" alt="Cameron ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#35</span>
+                        <div class="product-name">Cameron ACS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy18.jpg" alt="Carolina" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#36</span>
+                        <div class="product-name">Carolina</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy19.jpg" alt="Cedric CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#37</span>
+                        <div class="product-name">Cedric CS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy20.jpg" alt="Charger" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#38</span>
+                        <div class="product-name">Charger</div>
+                        <div class="product-price">£155</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy21.jpg" alt="Charlie ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#39</span>
+                        <div class="product-name">Charlie ACS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy22.jpg" alt="Chelsea ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#40</span>
+                        <div class="product-name">Chelsea ACS</div>
+                        <div class="product-price">£130</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy23.jpg" alt="Dakota" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#41</span>
+                        <div class="product-name">Dakota</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy24.jpg" alt="Dallas" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#42</span>
+                        <div class="product-name">Dallas</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy25.jpg" alt="Eagle Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#43</span>
+                        <div class="product-name">Eagle Hi</div>
+                        <div class="product-price">£185</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy26.jpg" alt="Eagle Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#44</span>
+                        <div class="product-name">Eagle Lo</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy27.jpg" alt="El Paso" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#45</span>
+                        <div class="product-name">El Paso</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy28.jpg" alt="Falcon" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#46</span>
+                        <div class="product-name">Falcon</div>
+                        <div class="product-price">£110</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy29.jpg" alt="Frontier" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#47</span>
+                        <div class="product-name">Frontier</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy30.jpg" alt="Galveston" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#48</span>
+                        <div class="product-name">Galveston</div>
+                        <div class="product-price">£185</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy31.jpg" alt="Georgia" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#49</span>
+                        <div class="product-name">Georgia</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy32.jpg" alt="Harness Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#50</span>
+                        <div class="product-name">Harness Hi</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy33.jpg" alt="Harness Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#51</span>
+                        <div class="product-name">Harness Lo</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy34.jpg" alt="Herald CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#52</span>
+                        <div class="product-name">Herald CS</div>
+                        <div class="product-price">£190</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy35.jpg" alt="Hunter" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#53</span>
+                        <div class="product-name">Hunter</div>
+                        <div class="product-price">£195</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy36.jpg" alt="Indiana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#54</span>
+                        <div class="product-name">Indiana</div>
+                        <div class="product-price">£200</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy37.jpg" alt="Jodhpur" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#55</span>
+                        <div class="product-name">Jodhpur</div>
+                        <div class="product-price">£140</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy38.jpg" alt="Kansas" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#56</span>
+                        <div class="product-name">Kansas</div>
+                        <div class="product-price">£210</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy39.jpg" alt="Kestrel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#57</span>
+                        <div class="product-name">Kestrel</div>
+                        <div class="product-price">£120</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy40.jpg" alt="King CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#58</span>
+                        <div class="product-name">King CS</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy41.jpg" alt="Louisiana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#59</span>
+                        <div class="product-name">Louisiana</div>
+                        <div class="product-price">£180</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy42.jpg" alt="Maverick" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#60</span>
+                        <div class="product-name">Maverick</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy43.jpg" alt="Montana" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#61</span>
+                        <div class="product-name">Montana</div>
+                        <div class="product-price">£225</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy44.jpg" alt="Mustang" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#62</span>
+                        <div class="product-name">Mustang</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy45.jpg" alt="Nevada" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#63</span>
+                        <div class="product-name">Nevada</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy46.jpg" alt="Quad CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#64</span>
+                        <div class="product-name">Quad CS</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy47.jpg" alt="Rebel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#65</span>
+                        <div class="product-name">Rebel</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy48.jpg" alt="Regent CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#66</span>
+                        <div class="product-name">Regent CS</div>
+                        <div class="product-price">£80</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy49.jpg" alt="Renegade Hi" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#67</span>
+                        <div class="product-name">Renegade Hi</div>
+                        <div class="product-price">£170</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy50.jpg" alt="Renegade Lo" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#68</span>
+                        <div class="product-name">Renegade Lo</div>
+                        <div class="product-price">£135</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy51.jpg" alt="Ryan ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#69</span>
+                        <div class="product-name">Ryan ACS</div>
+                        <div class="product-price">£150</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy52.jpg" alt="Stag ACS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#70</span>
+                        <div class="product-name">Stag ACS</div>
+                        <div class="product-price">£130</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy53.jpg" alt="Stag CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#71</span>
+                        <div class="product-name">Stag CS</div>
+                        <div class="product-price">£90</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy54.jpg" alt="Taylor CS" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#72</span>
+                        <div class="product-name">Taylor CS</div>
+                        <div class="product-price">£145</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy55.jpg" alt="Wild One" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#73</span>
+                        <div class="product-name">Wild One</div>
+                        <div class="product-price">£175</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Cowboy-1.jpg" alt="Zip & Lace" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#74</span>
+                        <div class="product-name">Zip & Lace</div>
+                        <div class="product-price">£115</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- SUNGLASSES -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🕶️ Sunglasses</h2>
+                <div class="category-info">Produtos 75-119 • 45 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Sunglasses1.webp" alt="Wayfarer Classic Black" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#75</span>
+                        <div class="product-name">Wayfarer Classic Black</div>
+                        <div class="product-price">
+                            <span class="price-original">£28</span>£12.60
+                            <span class="discount-badge">55% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses2.webp" alt="Aviator Silver Mirror" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#76</span>
+                        <div class="product-name">Aviator Silver Mirror</div>
+                        <div class="product-price">
+                            <span class="price-original">£30</span>£21.00
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Synglasses3.webp" alt="Retro Round Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#77</span>
+                        <div class="product-name">Retro Round Brown</div>
+                        <div class="product-price">
+                            <span class="price-original">£60</span>£21.00
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses4.webp" alt="Oversized Gradient" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#78</span>
+                        <div class="product-name">Oversized Gradient</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses5.webp" alt="Classic Aviator Gold" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#79</span>
+                        <div class="product-name">Classic Aviator Gold</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses6.webp" alt="Classic Aviator Gradient" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#80</span>
+                        <div class="product-name">Classic Aviator Gradient</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses7.webp" alt="Fashion Aviator Stripes" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#81</span>
+                        <div class="product-name">Fashion Aviator Stripes</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses8.webp" alt="Oversized Aviator Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#82</span>
+                        <div class="product-name">Oversized Aviator Brown</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses9.webp" alt="Oversized Aviator Tortoise" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#83</span>
+                        <div class="product-name">Oversized Aviator Tortoise</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses10.webp" alt="Fashion Aviator Black" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#84</span>
+                        <div class="product-name">Fashion Aviator Black</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses11.webp" alt="Round Gold" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#85</span>
+                        <div class="product-name">Round Gold</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses12.webp" alt="Round Vintage" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#86</span>
+                        <div class="product-name">Round Vintage</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses13.webp" alt="Retro Rectangle – Yellow" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#87</span>
+                        <div class="product-name">Retro Rectangle – Yellow</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses14.webp" alt="Sport Aviator" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#88</span>
+                        <div class="product-name">Sport Aviator</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses15.webp" alt="Cat-eye – Brown Gradient" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#89</span>
+                        <div class="product-name">Cat-eye – Brown Gradient</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses16.webp" alt="Mirror Aviator – Blue" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#90</span>
+                        <div class="product-name">Mirror Aviator – Blue</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses17.webp" alt="Mirror Aviator – Gold-Green" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#91</span>
+                        <div class="product-name">Mirror Aviator – Gold-Green</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglases18.webp" alt="Retro Rectangle – Green" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#92</span>
+                        <div class="product-name">Retro Rectangle – Green</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses19.webp" alt="Mirror Aviator – Blue" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#93</span>
+                        <div class="product-name">Mirror Aviator – Blue</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses20.webp" alt="Retro Aviator – Black Frame" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#94</span>
+                        <div class="product-name">Retro Aviator – Black Frame</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses21.webp" alt="Round Mirrored" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#95</span>
+                        <div class="product-name">Round Mirrored</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses22.webp" alt="Mirror Cat-eye – Blue/Yellow" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#96</span>
+                        <div class="product-name">Mirror Cat-eye – Blue/Yellow</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses23.webp" alt="Flat-top Fashion – Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#97</span>
+                        <div class="product-name">Flat-top Fashion – Brown</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses24.webp" alt="Coloured Round – Gold/Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#98</span>
+                        <div class="product-name">Coloured Round – Gold/Brown</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses25.webp" alt="Cherokee Cat-eye – Gold" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#99</span>
+                        <div class="product-name">Cherokee Cat-eye – Gold</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses26.webp" alt="Polarised Aviator – Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#100</span>
+                        <div class="product-name">Polarised Aviator – Brown</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses27.webp" alt="Polarised Aviator – Green" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#101</span>
+                        <div class="product-name">Polarised Aviator – Green</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses28.webp" alt="Wayfarer Sport – Black" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#102</span>
+                        <div class="product-name">Wayfarer Sport – Black</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses29.webp" alt="Coloured Round – Mint" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#103</span>
+                        <div class="product-name">Coloured Round – Mint</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses30.webp" alt="Coloured Round – Gold/Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#104</span>
+                        <div class="product-name">Coloured Round – Gold/Brown</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses31.webp" alt="Mirror Round – Purple" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#105</span>
+                        <div class="product-name">Mirror Round – Purple</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses32.webp" alt="Retro Aviator – Smoke" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#106</span>
+                        <div class="product-name">Retro Aviator – Smoke</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses33.webp" alt="Polarised Aviator – Green" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#107</span>
+                        <div class="product-name">Polarised Aviator – Green</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses34.webp" alt="Retro Rectangle – Brown" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#108</span>
+                        <div class="product-name">Retro Rectangle – Brown</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses35.webp" alt="Retro Rectangle – Green" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#109</span>
+                        <div class="product-name">Retro Rectangle – Green</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses36.webp" alt="Cat Eye Gold" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#110</span>
+                        <div class="product-name">Cat Eye Gold</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses37.webp" alt="Mirror Cat-eye – Blue/Yellow" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#111</span>
+                        <div class="product-name">Mirror Cat-eye – Blue/Yellow</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses38.webp" alt="Cat-eye – Smoke Gradient" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#112</span>
+                        <div class="product-name">Cat-eye – Smoke Gradient</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sungçasses39.webp" alt="Wayfarer Sport – Black" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#113</span>
+                        <div class="product-name">Wayfarer Sport – Black</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses40.webp" alt="Classic Round Blue" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#114</span>
+                        <div class="product-name">Classic Round Blue</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Singlasses41.webp" alt="Coloured Round – Rose" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#115</span>
+                        <div class="product-name">Coloured Round – Rose</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses42.webp" alt="Coloured Round – Yellow" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#116</span>
+                        <div class="product-name">Coloured Round – Yellow</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses43.webp" alt="Colored Round - Violet" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#117</span>
+                        <div class="product-name">Colored Round - Violet</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses44.webp" alt="Sport Oval – Sand" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#118</span>
+                        <div class="product-name">Sport Oval – Sand</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Sunglasses45.webp" alt="Coloured Round – Orange" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#119</span>
+                        <div class="product-name">Coloured Round – Orange</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- CAPS AND HATS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🎩 Caps and Hats</h2>
+                <div class="category-info">Produtos 120-151 • 32 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Hat1.jpg" alt="Red Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#120</span>
+                        <div class="product-name">Red Wool Felt Trilby Hat</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat2.jpg" alt="Navy Blue Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#121</span>
+                        <div class="product-name">Navy Blue Wool Felt Trilby Hat</div>
+                        <div class="product-price">£33.6</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat4.jpg" alt="Purple Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#122</span>
+                        <div class="product-name">Purple Wool Felt Trilby Hat</div>
+                        <div class="product-price">£30.4</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat5.jpg" alt="Olive Green Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#123</span>
+                        <div class="product-name">Olive Green Wool Felt Trilby Hat</div>
+                        <div class="product-price">£36</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat6.jpg" alt="Brown Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#124</span>
+                        <div class="product-name">Brown Wool Felt Trilby Hat</div>
+                        <div class="product-price">£26.4</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat7.jpg" alt="Cream Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#125</span>
+                        <div class="product-name">Cream Wool Felt Trilby Hat</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat8.jpg" alt="Black Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#126</span>
+                        <div class="product-name">Black Wool Felt Trilby Hat</div>
+                        <div class="product-price">£29.6</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat9.jpg" alt="Beige Straw Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#127</span>
+                        <div class="product-name">Beige Straw Trilby Hat</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat10.jpg" alt="Brown Suede Cowboy Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#128</span>
+                        <div class="product-name">Brown Suede Cowboy Hat</div>
+                        <div class="product-price">£35.2</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hats11.jpg" alt="Charcoal Grey Wool Felt Trilby Hat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#129</span>
+                        <div class="product-name">Charcoal Grey Wool Felt Trilby Hat</div>
+                        <div class="product-price">£32.8</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat12.jpg" alt="Crimson Wool Elegance" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#130</span>
+                        <div class="product-name">Crimson Wool Elegance</div>
+                        <div class="product-price">
+                            <span class="price-original">£22</span>£17.60
+                            <span class="discount-badge">20% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat13.jpg" alt="Burgundy Faux-Fur Charm" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#131</span>
+                        <div class="product-name">Burgundy Faux-Fur Charm</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat14.jpg" alt="Sand Linen Classic" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#132</span>
+                        <div class="product-name">Sand Linen Classic</div>
+                        <div class="product-price">
+                            <span class="price-original">£32</span>£22.40
+                            <span class="discount-badge">30% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat15.jpg" alt="Amber Straw Flair" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#133</span>
+                        <div class="product-name">Amber Straw Flair</div>
+                        <div class="product-price">
+                            <span class="price-original">£28</span>£11.20
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat16.jpg" alt="Leopard Velvet Icon" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#134</span>
+                        <div class="product-name">Leopard Velvet Icon</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat17.jpg" alt="Brick Vintage Statement" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#135</span>
+                        <div class="product-name">Brick Vintage Statement</div>
+                        <div class="product-price">£30.4</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat18.jpg" alt="Midnight Mohair Mood" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#136</span>
+                        <div class="product-name">Midnight Mohair Mood</div>
+                        <div class="product-price">£26.4</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat19.jpg" alt="Steampunk Engineer's Touch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#137</span>
+                        <div class="product-name">Steampunk Engineer's Touch</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat20.jpg" alt="Jet Black Silhouette" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#138</span>
+                        <div class="product-name">Jet Black Silhouette</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat21.jpg" alt="Russet Winter Warmth" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#139</span>
+                        <div class="product-name">Russet Winter Warmth</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat22.jpg" alt="Charcoal Newsboy Classic" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#140</span>
+                        <div class="product-name">Charcoal Newsboy Classic</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat23.jpg" alt="Burgundy Plaid Revival" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#141</span>
+                        <div class="product-name">Burgundy Plaid Revival</div>
+                        <div class="product-price">£23</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat24.jpg" alt="Windsor Check Heritage" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#142</span>
+                        <div class="product-name">Windsor Check Heritage</div>
+                        <div class="product-price">£27.2</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat25.jpg" alt="Forest Tweed Tradition" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#143</span>
+                        <div class="product-name">Forest Tweed Tradition</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat26.jpg" alt="Oxford Glencheck Legacy" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#144</span>
+                        <div class="product-name">Oxford Glencheck Legacy</div>
+                        <div class="product-price">£31</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat27.jpg" alt="Highland Moss Texture" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#145</span>
+                        <div class="product-name">Highland Moss Texture</div>
+                        <div class="product-price">£29.6</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat28.jpg" alt="Navy Wool Sophistication" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#146</span>
+                        <div class="product-name">Navy Wool Sophistication</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat29.jpg" alt="Ash Tweed Heritage" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#147</span>
+                        <div class="product-name">Ash Tweed Heritage</div>
+                        <div class="product-price">£26.4</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat30.jpg" alt="Rustic Brown Herringbone" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#148</span>
+                        <div class="product-name">Rustic Brown Herringbone</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat31.jpg" alt="Emerald Plush Flair" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#149</span>
+                        <div class="product-name">Emerald Plush Flair</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat32.jpg" alt="Dual-Tone Patch Classic" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#150</span>
+                        <div class="product-name">Dual-Tone Patch Classic</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Hat33.jpg" alt="Sky Corduroy Touch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#151</span>
+                        <div class="product-name">Sky Corduroy Touch</div>
+                        <div class="product-price">£27</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BAGS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>👜 Bags</h2>
+                <div class="category-info">Produtos 152-175 • 24 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Bag1.jpg" alt="Classic Leather Messenger" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#152</span>
+                        <div class="product-name">Classic Leather Messenger</div>
+                        <div class="product-price">£85</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag2.jpg" alt="Vintage Canvas Backpack" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#153</span>
+                        <div class="product-name">Vintage Canvas Backpack</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag3.jpg" alt="Urban Explorer Tote" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#154</span>
+                        <div class="product-name">Urban Explorer Tote</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag4.jpg" alt="Professional Briefcase" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#155</span>
+                        <div class="product-name">Professional Briefcase</div>
+                        <div class="product-price">£120</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag5.jpg" alt="Casual Day Pack" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#156</span>
+                        <div class="product-name">Casual Day Pack</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag6.jpg" alt="Travel Duffel Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#157</span>
+                        <div class="product-name">Travel Duffel Bag</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag7.jpg" alt="Crossbody Satchel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#158</span>
+                        <div class="product-name">Crossbody Satchel</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag8.jpg" alt="Weekend Getaway Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#159</span>
+                        <div class="product-name">Weekend Getaway Bag</div>
+                        <div class="product-price">£90</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag9.jpg" alt="Laptop Carrier" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#160</span>
+                        <div class="product-name">Laptop Carrier</div>
+                        <div class="product-price">£60</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag10.jpg" alt="Gym Sports Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#161</span>
+                        <div class="product-name">Gym Sports Bag</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag11.jpg" alt="Designer Handbag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#162</span>
+                        <div class="product-name">Designer Handbag</div>
+                        <div class="product-price">£110</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag12.jpg" alt="Hiking Backpack" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#163</span>
+                        <div class="product-name">Hiking Backpack</div>
+                        <div class="product-price">£95</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag13.jpg" alt="Evening Clutch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#164</span>
+                        <div class="product-name">Evening Clutch</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag14.jpg" alt="School Backpack" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#165</span>
+                        <div class="product-name">School Backpack</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag15.jpg" alt="Camera Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#166</span>
+                        <div class="product-name">Camera Bag</div>
+                        <div class="product-price">£70</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag16.jpg" alt="Shopping Tote" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#167</span>
+                        <div class="product-name">Shopping Tote</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag17.jpg" alt="Business Portfolio" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#168</span>
+                        <div class="product-name">Business Portfolio</div>
+                        <div class="product-price">£80</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag18.jpg" alt="Casual Shoulder Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#169</span>
+                        <div class="product-name">Casual Shoulder Bag</div>
+                        <div class="product-price">£50</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag19.jpg" alt="Travel Organizer" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#170</span>
+                        <div class="product-name">Travel Organizer</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag20.jpg" alt="Vintage Leather Satchel" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#171</span>
+                        <div class="product-name">Vintage Leather Satchel</div>
+                        <div class="product-price">£95</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag21.jpg" alt="Compact Crossbody" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#172</span>
+                        <div class="product-name">Compact Crossbody</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Bag22.jpg" alt="Executive Briefcase" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#173</span>
+                        <div class="product-name">Executive Briefcase</div>
+                        <div class="product-price">£140</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="BagBlack.jpg" alt="Classic Black Tote" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#174</span>
+                        <div class="product-name">Classic Black Tote</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="SportsBag.jpg" alt="Athletic Sports Bag" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#175</span>
+                        <div class="product-name">Athletic Sports Bag</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SCARVES -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🧣 Scarves</h2>
+                <div class="category-info">Produtos 176-196 • 21 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Scarf1.jpg" alt="Silk Paisley Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#176</span>
+                        <div class="product-name">Silk Paisley Scarf</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf4.jpg" alt="Cashmere Blend Wrap" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#177</span>
+                        <div class="product-name">Cashmere Blend Wrap</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf5.jpg" alt="Wool Tartan Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#178</span>
+                        <div class="product-name">Wool Tartan Scarf</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf6.jpg" alt="Lightweight Summer Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#179</span>
+                        <div class="product-name">Lightweight Summer Scarf</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf7.jpg" alt="Vintage Floral Print" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#180</span>
+                        <div class="product-name">Vintage Floral Print</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf8.jpg" alt="Geometric Pattern Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#181</span>
+                        <div class="product-name">Geometric Pattern Scarf</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf9.jpg" alt="Striped Cotton Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#182</span>
+                        <div class="product-name">Striped Cotton Scarf</div>
+                        <div class="product-price">£18</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf10.jpg" alt="Luxury Silk Square" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#183</span>
+                        <div class="product-name">Luxury Silk Square</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf11.jpg" alt="Chunky Knit Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#184</span>
+                        <div class="product-name">Chunky Knit Scarf</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf12.jpg" alt="Plaid Wool Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#185</span>
+                        <div class="product-name">Plaid Wool Scarf</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf13.jpg" alt="Infinity Loop Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#186</span>
+                        <div class="product-name">Infinity Loop Scarf</div>
+                        <div class="product-price">£24</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf14.jpg" alt="Embroidered Pashmina" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#187</span>
+                        <div class="product-name">Embroidered Pashmina</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf15.jpg" alt="Fringed Blanket Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#188</span>
+                        <div class="product-name">Fringed Blanket Scarf</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf16.jpg" alt="Leopard Print Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#189</span>
+                        <div class="product-name">Leopard Print Scarf</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf17.jpg" alt="Cable Knit Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#190</span>
+                        <div class="product-name">Cable Knit Scarf</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf18.jpg" alt="Metallic Thread Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#191</span>
+                        <div class="product-name">Metallic Thread Scarf</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="ScarfandBeanie2.jpg" alt="Scarf and Beanie Set - Grey" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#192</span>
+                        <div class="product-name">Scarf and Beanie Set - Grey</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Scarf19.jpg" alt="Ombre Gradient Scarf" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#193</span>
+                        <div class="product-name">Ombre Gradient Scarf</div>
+                        <div class="product-price">£33</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="ScarfandBeanie3.jpg" alt="Scarf and Beanie Set - Navy" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#194</span>
+                        <div class="product-name">Scarf and Beanie Set - Navy</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="ScarfandBeanie20.jpg" alt="Scarf and Beanie Set - Black" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#195</span>
+                        <div class="product-name">Scarf and Beanie Set - Black</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="ScarfandBeanie21.jpg" alt="Scarf and Beanie Set - Burgundy" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#196</span>
+                        <div class="product-name">Scarf and Beanie Set - Burgundy</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- GLOVES -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🧤 Gloves</h2>
+                <div class="category-info">Produtos 197-246 • 50 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Gloves1.jpg" alt="Leather Driving Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#197</span>
+                        <div class="product-name">Leather Driving Gloves</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves2.jpg" alt="Wool Lined Winter Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#198</span>
+                        <div class="product-name">Wool Lined Winter Gloves</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves3.jpg" alt="Touchscreen Compatible Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#199</span>
+                        <div class="product-name">Touchscreen Compatible Gloves</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves4.jpg" alt="Cashmere Blend Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#200</span>
+                        <div class="product-name">Cashmere Blend Gloves</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves5.jpg" alt="Waterproof Ski Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#201</span>
+                        <div class="product-name">Waterproof Ski Gloves</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves6.jpg" alt="Fingerless Knit Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#202</span>
+                        <div class="product-name">Fingerless Knit Gloves</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves7.jpg" alt="Thermal Insulated Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#203</span>
+                        <div class="product-name">Thermal Insulated Gloves</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves8.jpg" alt="Suede Dress Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#204</span>
+                        <div class="product-name">Suede Dress Gloves</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves9.jpg" alt="Work Safety Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#205</span>
+                        <div class="product-name">Work Safety Gloves</div>
+                        <div class="product-price">£18</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves10.jpg" alt="Heated Electric Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#206</span>
+                        <div class="product-name">Heated Electric Gloves</div>
+                        <div class="product-price">£85</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves11.jpg" alt="Motorcycle Riding Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#207</span>
+                        <div class="product-name">Motorcycle Riding Gloves</div>
+                        <div class="product-price">£50</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves12.jpg" alt="Gardening Work Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#208</span>
+                        <div class="product-name">Gardening Work Gloves</div>
+                        <div class="product-price">£15</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves13.jpg" alt="Formal Evening Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#209</span>
+                        <div class="product-name">Formal Evening Gloves</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves14.jpg" alt="Cycling Sport Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#210</span>
+                        <div class="product-name">Cycling Sport Gloves</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves15.jpg" alt="Fleece Lined Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#211</span>
+                        <div class="product-name">Fleece Lined Gloves</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves16.jpg" alt="Vintage Lace Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#212</span>
+                        <div class="product-name">Vintage Lace Gloves</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves17.jpg" alt="Rubber Cleaning Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#213</span>
+                        <div class="product-name">Rubber Cleaning Gloves</div>
+                        <div class="product-price">£12</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves18.jpg" alt="Merino Wool Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#214</span>
+                        <div class="product-name">Merino Wool Gloves</div>
+                        <div class="product-price">£48</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves19.jpg" alt="Tactical Combat Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#215</span>
+                        <div class="product-name">Tactical Combat Gloves</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves20.jpg" alt="Silk Inner Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#216</span>
+                        <div class="product-name">Silk Inner Gloves</div>
+                        <div class="product-price">£20</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves21.jpg" alt="Mittens with Flap" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#217</span>
+                        <div class="product-name">Mittens with Flap</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves22.jpg" alt="Compression Arthritis Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#218</span>
+                        <div class="product-name">Compression Arthritis Gloves</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves23.jpg" alt="Heated Hand Warmers" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#219</span>
+                        <div class="product-name">Heated Hand Warmers</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves24.jpg" alt="Disposable Latex Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#220</span>
+                        <div class="product-name">Disposable Latex Gloves</div>
+                        <div class="product-price">£8</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves25.jpg" alt="Alpaca Wool Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#221</span>
+                        <div class="product-name">Alpaca Wool Gloves</div>
+                        <div class="product-price">£52</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves26.jpg" alt="Reflective Safety Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#222</span>
+                        <div class="product-name">Reflective Safety Gloves</div>
+                        <div class="product-price">£24</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves27.jpg" alt="Bamboo Fiber Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#223</span>
+                        <div class="product-name">Bamboo Fiber Gloves</div>
+                        <div class="product-price">£18</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves28.jpg" alt="Neoprene Diving Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#224</span>
+                        <div class="product-name">Neoprene Diving Gloves</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves29.jpg" alt="Cut Resistant Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#225</span>
+                        <div class="product-name">Cut Resistant Gloves</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves30.jpg" alt="Heated Motorcycle Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#226</span>
+                        <div class="product-name">Heated Motorcycle Gloves</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves31.jpg" alt="Vintage Driving Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#227</span>
+                        <div class="product-name">Vintage Driving Gloves</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves32.jpg" alt="Insulated Work Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#228</span>
+                        <div class="product-name">Insulated Work Gloves</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves33.jpg" alt="Nitrile Coated Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#229</span>
+                        <div class="product-name">Nitrile Coated Gloves</div>
+                        <div class="product-price">£16</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves34.jpg" alt="Heated Ski Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#230</span>
+                        <div class="product-name">Heated Ski Gloves</div>
+                        <div class="product-price">£95</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves35.jpg" alt="Compression Running Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#231</span>
+                        <div class="product-name">Compression Running Gloves</div>
+                        <div class="product-price">£20</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves36.jpg" alt="Waterproof Fishing Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#232</span>
+                        <div class="product-name">Waterproof Fishing Gloves</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves37.jpg" alt="Heated Hunting Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#233</span>
+                        <div class="product-name">Heated Hunting Gloves</div>
+                        <div class="product-price">£68</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves38.jpg" alt="Mechanic Work Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#234</span>
+                        <div class="product-name">Mechanic Work Gloves</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves39.jpg" alt="Heated Outdoor Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#235</span>
+                        <div class="product-name">Heated Outdoor Gloves</div>
+                        <div class="product-price">£58</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves40.jpg" alt="Grip Enhanced Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#236</span>
+                        <div class="product-name">Grip Enhanced Gloves</div>
+                        <div class="product-price">£24</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves41.jpg" alt="Heated Winter Mittens" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#237</span>
+                        <div class="product-name">Heated Winter Mittens</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves42.jpg" alt="Chemical Resistant Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#238</span>
+                        <div class="product-name">Chemical Resistant Gloves</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves43.jpg" alt="Heated Rechargeable Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#239</span>
+                        <div class="product-name">Heated Rechargeable Gloves</div>
+                        <div class="product-price">£88</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves44.jpg" alt="Puncture Resistant Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#240</span>
+                        <div class="product-name">Puncture Resistant Gloves</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves45.jpg" alt="Heated Snowboard Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#241</span>
+                        <div class="product-name">Heated Snowboard Gloves</div>
+                        <div class="product-price">£78</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves46.jpg" alt="Heat Resistant Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#242</span>
+                        <div class="product-name">Heat Resistant Gloves</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Golves47.jpg" alt="Heated Camping Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#243</span>
+                        <div class="product-name">Heated Camping Gloves</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves48.jpg" alt="Vibration Dampening Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#244</span>
+                        <div class="product-name">Vibration Dampening Gloves</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves49.jpg" alt="Heated Fishing Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#245</span>
+                        <div class="product-name">Heated Fishing Gloves</div>
+                        <div class="product-price">£48</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Gloves50.jpg" alt="Heated Photography Gloves" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#246</span>
+                        <div class="product-name">Heated Photography Gloves</div>
+                        <div class="product-price">£62</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- WALLETS -->
+        <div class="category">
+            <div class="category-header">
+                <h2>💼 Wallets</h2>
+                <div class="category-info">Produtos 247-296 • 50 produtos (sem imagens fornecidas)</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#247</span>
+                        <div class="product-name">Classic Leather Wallet</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#248</span>
+                        <div class="product-name">Bifold Card Holder</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#249</span>
+                        <div class="product-name">Minimalist Slim Wallet</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#250</span>
+                        <div class="product-name">RFID Blocking Wallet</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#251</span>
+                        <div class="product-name">Vintage Brown Wallet</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#252</span>
+                        <div class="product-name">Money Clip Wallet</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#253</span>
+                        <div class="product-name">Trifold Leather Wallet</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#254</span>
+                        <div class="product-name">Carbon Fiber Wallet</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#255</span>
+                        <div class="product-name">Smart Bluetooth Wallet</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#256</span>
+                        <div class="product-name">Coin Pocket Wallet</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#257</span>
+                        <div class="product-name">Designer Brand Wallet</div>
+                        <div class="product-price">£85</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#258</span>
+                        <div class="product-name">Travel Document Wallet</div>
+                        <div class="product-price">£48</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#259</span>
+                        <div class="product-name">Magnetic Closure Wallet</div>
+                        <div class="product-price">£36</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#260</span>
+                        <div class="product-name">Zip Around Wallet</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#261</span>
+                        <div class="product-name">Checkbook Wallet</div>
+                        <div class="product-price">£52</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#262</span>
+                        <div class="product-name">Phone Case Wallet</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#263</span>
+                        <div class="product-name">Wristlet Wallet</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#264</span>
+                        <div class="product-name">Chain Wallet</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#265</span>
+                        <div class="product-name">Passport Wallet</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#266</span>
+                        <div class="product-name">Front Pocket Wallet</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#267</span>
+                        <div class="product-name">Aluminum Wallet</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#268</span>
+                        <div class="product-name">Elastic Band Wallet</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#269</span>
+                        <div class="product-name">Vintage Coin Purse</div>
+                        <div class="product-price">£18</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#270</span>
+                        <div class="product-name">Credit Card Wallet</div>
+                        <div class="product-price">£24</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#271</span>
+                        <div class="product-name">Business Card Holder</div>
+                        <div class="product-price">£20</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#272</span>
+                        <div class="product-name">Leather Card Case</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#273</span>
+                        <div class="product-name">Expandable Wallet</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#274</span>
+                        <div class="product-name">Tactical Wallet</div>
+                        <div class="product-price">£48</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#275</span>
+                        <div class="product-name">Personalized Wallet</div>
+                        <div class="product-price">£55</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#276</span>
+                        <div class="product-name">Waterproof Wallet</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#277</span>
+                        <div class="product-name">Vintage Leather Wallet</div>
+                        <div class="product-price">£62</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#278</span>
+                        <div class="product-name">Slim Card Holder</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#279</span>
+                        <div class="product-name">Multi-Tool Wallet</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#280</span>
+                        <div class="product-name">Luxury Designer Wallet</div>
+                        <div class="product-price">£120</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#281</span>
+                        <div class="product-name">Minimalist Card Case</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#282</span>
+                        <div class="product-name">Secure Wallet</div>
+                        <div class="product-price">£58</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#283</span>
+                        <div class="product-name">Travel Security Wallet</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#284</span>
+                        <div class="product-name">Compact Wallet</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#285</span>
+                        <div class="product-name">Premium Leather Wallet</div>
+                        <div class="product-price">£75</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#286</span>
+                        <div class="product-name">Flip Wallet</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#287</span>
+                        <div class="product-name">Organizer Wallet</div>
+                        <div class="product-price">£48</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#288</span>
+                        <div class="product-name">Executive Wallet</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#289</span>
+                        <div class="product-name">Casual Wallet</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#290</span>
+                        <div class="product-name">Sport Wallet</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#291</span>
+                        <div class="product-name">Outdoor Wallet</div>
+                        <div class="product-price">£40</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#292</span>
+                        <div class="product-name">Urban Wallet</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#293</span>
+                        <div class="product-name">Classic Bifold</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#294</span>
+                        <div class="product-name">Modern Wallet</div>
+                        <div class="product-price">£45</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#295</span>
+                        <div class="product-name">Traditional Wallet</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card no-image">
+                    <div class="product-info">
+                        <span class="product-number">#296</span>
+                        <div class="product-name">Contemporary Wallet</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ACCESSORIES -->
+        <div class="category">
+            <div class="category-header">
+                <h2>🎀 Accessories</h2>
+                <div class="category-info">Produtos 297-313 • 17 produtos com imagens</div>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="Accessories1.jpg" alt="Leather Key Chain" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#297</span>
+                        <div class="product-name">Leather Key Chain</div>
+                        <div class="product-price">£15</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories2.jpg" alt="Metal Cufflinks" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#298</span>
+                        <div class="product-name">Metal Cufflinks</div>
+                        <div class="product-price">£25</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories3.jpg" alt="Vintage Pocket Watch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#299</span>
+                        <div class="product-name">Vintage Pocket Watch</div>
+                        <div class="product-price">£85</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories4.jpg" alt="Silk Tie" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#300</span>
+                        <div class="product-name">Silk Tie</div>
+                        <div class="product-price">£35</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories5.jpg" alt="Bow Tie Set" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#301</span>
+                        <div class="product-name">Bow Tie Set</div>
+                        <div class="product-price">£28</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories6.jpg" alt="Lapel Pin Collection" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#302</span>
+                        <div class="product-name">Lapel Pin Collection</div>
+                        <div class="product-price">£18</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories7.jpg" alt="Suspenders" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#303</span>
+                        <div class="product-name">Suspenders</div>
+                        <div class="product-price">£32</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories8.jpg" alt="Pocket Square" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#304</span>
+                        <div class="product-name">Pocket Square</div>
+                        <div class="product-price">£22</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories9.jpg" alt="Tie Clip" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#305</span>
+                        <div class="product-name">Tie Clip</div>
+                        <div class="product-price">£20</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories10.jpg" alt="Collar Stays" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#306</span>
+                        <div class="product-name">Collar Stays</div>
+                        <div class="product-price">£12</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories11.jpg" alt="Shirt Studs" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#307</span>
+                        <div class="product-name">Shirt Studs</div>
+                        <div class="product-price">£30</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories12.jpg" alt="Collar Bar" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#308</span>
+                        <div class="product-name">Collar Bar</div>
+                        <div class="product-price">£24</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories13.jpg" alt="Ascot Tie" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#309</span>
+                        <div class="product-name">Ascot Tie</div>
+                        <div class="product-price">£38</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories14.jpg" alt="Cravat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#310</span>
+                        <div class="product-name">Cravat</div>
+                        <div class="product-price">£42</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories15.jpg" alt="Tie Tack" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#311</span>
+                        <div class="product-name">Tie Tack</div>
+                        <div class="product-price">£26</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories16.jpg" alt="Boutonniere" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#312</span>
+                        <div class="product-name">Boutonniere</div>
+                        <div class="product-price">£16</div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="Accessories17.jpg" alt="Gentleman's Accessory Set" class="product-image">
+                    <div class="product-info">
+                        <span class="product-number">#313</span>
+                        <div class="product-name">Gentleman's Accessory Set</div>
+                        <div class="product-price">£65</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>📋 Catálogo completo do site Fitrite.me • 313 produtos catalogados</p>
+            <p>🔍 Análise realizada em 21/08/2025</p>
+        </div>
+    </footer>
+
+    <style>
+        .no-image {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            border: 2px dashed #ccc;
+        }
+        
+        .no-image .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .no-image .product-name {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .no-image::before {
+            content: "📷";
+            font-size: 48px;
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+            opacity: 0.3;
+        }
+    </style>
+</body>
+</html>
+

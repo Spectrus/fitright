@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gloves - Fitrite</title>
+  <!-- Import Special Elite from Google Fonts for the header and gloves section -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Reset and Box Model Standardization */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header: Special Font Styling Only for Header */
+    header {
+      position: relative;
+      z-index: 1000; /* Ensure header stays on top */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: transparent;
+      width: 100%;
+      font-family: 'Special Elite', monospace; /* Only header uses Special Elite */
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    header .logo h1 {
+      margin: 0;
+      font-size: 1.5em;
+      font-weight: normal;
+      color: black;
+    }
+    header .logo p {
+      margin: 3px 0 0;
+      font-size: 0.8em;
+      font-style: italic;
+      color: black;
+    }
+    
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 20;
+      position: relative; /* enable absolute bars */
+    }
+    .menu-toggle span {
+      display: block;
+      position: absolute;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: #000; /* darker black */
+      border-radius: 3px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .menu-toggle span:nth-child(1) { top: 0; }
+    .menu-toggle span:nth-child(2) { top: 9px; }
+    .menu-toggle span:nth-child(3) { top: 18px; }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    
+    header nav {
+      padding-right: 0;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    header nav ul li a {
+      color: black;
+      text-decoration: none;
+      transition: color 0.3s;
+      pointer-events: auto;
+      padding: 5px 10px;
+      display: block;
+    }
+    header nav ul li a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+    
+    /* Search Bar */
+    #search-bar {
+      background-color: transparent;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      width: 100%;
+    }
+    #searchInput {
+      width: 90%;
+      max-width: 600px;
+      padding: 10px 15px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      outline: none;
+    }
+    #searchInput:focus {
+      border-color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Products Grid - Responsive grid like bags page */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Default to 4 columns for desktop */
+      gap: 20px;
+      padding: 20px;
+      background-color: #f4f4f4;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .product {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      touch-action: manipulation;
+    }
+    .product:hover {
+      transform: scale(1.02);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+    }
+    
+    /* Updated Image Style to match bags page */
+    .product img {
+      width: 100%;
+      max-width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    
+    /* AVAILABLE GLOVES Section: Inherit Special Elite for headings etc. */
+    #gloves, #gloves * {
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    /* Update product text inside white squares to use Special Elite */
+    #gloves .product p {
+      margin: 5px 0;
+      font-weight: bold;
+      font-size: 1.1em;
+      font-family: 'Special Elite', monospace !important;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      background-color: transparent;
+      color: #333;
+      font-size: 0.9em;
+      margin: 20px 0;
+      padding: 15px;
+      width: 100%;
+    }
+    footer p {
+      margin: 5px 0;
+    }
+    
+    /* Modal Styles - Responsive */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.show {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 1.5rem;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 15px;
+      text-align: center;
+      position: relative;
+      animation: fadeInSlide 0.4s ease;
+    }
+    @keyframes fadeInSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .close-btn:hover {
+      color: red;
+    }
+    
+    /* Updated Modal Image Style to match bags page */
+    #modalProductImage {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    
+    .proceed-btn, #sizeSelector {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .proceed-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 15px;
+      transition: background-color 0.3s;
+      touch-action: manipulation;
+      width: 100%;
+    }
+    .proceed-btn:hover {
+      background-color: #333;
+    }
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 10000;
+      pointer-events: none;
+    }
+    #toast.show {
+      opacity: 1;
+    }
+    
+    /* Discount Tag Styles - ADDED FOR DISCOUNT SYSTEM */
+    .discount-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-weight: bold;
+      z-index: 5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    /* Red Tag (≤ 55%) */
+    .discount-tag.red {
+      background-color: #ff0000;
+      color: white;
+      font-size: 0.9em;
+    }
+    
+    /* Gold Tag (> 55%) */
+    .discount-tag.gold {
+      background-color: gold;
+      color: #333;
+      font-size: 0.95em;
+      padding: 6px 10px;
+      font-weight: bold;
+    }
+    
+    /* Price Display for Discounted Products */
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 5px;
+    }
+    
+    .new-price {
+      color: green;
+      font-weight: bold;
+    }
+    
+    /* Media Queries for Responsive Design - Adapting like bags page */
+    /* Large screens */
+    @media (max-width: 1200px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+      }
+    }
+    
+    /* Medium screens */
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+      }
+      
+      header {
+        padding: 20px;
+      }
+      
+      header .logo h1 {
+        font-size: 1.8em;
+      }
+      
+      header .logo p {
+        font-size: 0.9em;
+        margin: 5px 0 0;
+      }
+      
+      #search-bar {
+        padding: 20px 15px;
+      }
+      
+      #searchInput {
+        width: 80%;
+      }
+      
+      .product img {
+        height: 250px;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+        max-width: 350px;
+      }
+      
+      .proceed-btn {
+        width: auto;
+        min-width: 200px;
+      }
+    }
+    
+    /* Smartphone displays - 2 per line as requested */
+    @media (max-width: 600px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        padding: 10px;
+      }
+      
+      .product {
+        min-height: 250px;
+        padding: 10px;
+      }
+      
+      .product img {
+        height: 120px;
+      }
+      
+      .modal-content {
+        max-width: 300px;
+      }
+    }
+    
+    /* Very small screens - 1 per line */
+    @media (max-width: 400px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+      
+      header .logo h1 {
+        font-size: 1.5em;
+      }
+    }
+    
+    /* Mobile Navigation */
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 5001; /* above drawer */
+      }
+      
+      header nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: white;
+        z-index: 100;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        padding: 80px 20px 20px;
+      }
+      
+      header nav.active {
+        right: 0;
+      }
+      
+      header nav ul {
+        flex-direction: column;
+      }
+      
+      header nav ul li {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      
+      .basket-desktop { display: none !important; }
+      .basket-mobile { display: block !important; }
+      
+      /* Updated mobile basket dropdown styles */
+      #basketDropdownMobile {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 0 0 !important;
+        box-shadow: none !important;
+        border-radius: 10px !important;
+        border: 1px solid #eee !important;
+        background: #fff !important;
+        display: none;
+        padding: 10px 0 10px 0 !important;
+      }
+      
+      #basketDropdownMobile.show {
+        display: block;
+      }
+      
+      #basketDropdownContentMobile {
+        text-align: center;
+        color: #888;
+        font-family: 'Special Elite', monospace;
+        font-size: 1.1em;
+        padding: 10px 0;
+      }
+    }
+    
+    /* Highlight basket button in mobile menu on hover like other links */
+    .basket-mobile-btn:hover span:first-child {
+      text-decoration: underline;
+      color: black;
+    }
+    
+    /* Only add border-bottom to basket rows except the last */
+    .basket-row:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Basket button styles */
+    #basketDropdownBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    #basketCount {
+      font-size: 0.8em;
+      background: #000;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #basketDropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      min-width: 300px;
+      max-width: 350px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      z-index: 2000;
+      padding: 15px 10px 10px 10px;
+    }
+    
+    #basketDropdownContent {
+      padding-top: 20px;
+    }
+    
+    .basket-mobile-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      padding: 5px 10px;
+      text-align: left;
+      display: block;
+    }
+    
+    #basketCountMobile {
+      font-size: 1em;
+      background: #000;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 8px;
+      margin-left: 10px;
+      vertical-align: middle;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Basket Dropdown Animation */
+    #basketDropdown {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: block; /* Always block for animation, hide with opacity */
+      max-height: 400px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+      overscroll-behavior: contain;      /* Keep scroll inside the basket */
+    }
+
+    #basketDropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Mobile Basket Dropdown Animation (cap size like belts/leather jackets) */
+    #basketDropdownMobile {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: block; /* Always block for animation, hide with opacity */
+      max-height: 250px;                  /* Cap height */
+      overflow-y: auto;                   /* Scroll within dropdown */
+      -webkit-overflow-scrolling: touch;  /* Momentum scrolling on iOS */
+      overscroll-behavior: contain;       /* Keep scroll inside the basket */
+      max-width: 95vw;                    /* Constrain width */
+      width: auto;
+      margin-left: auto;                  /* Center if narrower */
+      margin-right: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      margin-top: 10px;
+      padding: 10px;
+    }
+
+    #basketDropdownMobile.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Fade animation for basket product row */
+    .basket-fade-out {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .basket-fade-in {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    /* Hide minus button by default, show on hover (desktop only) */
+    .basket-row .basket-minus-btn {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .basket-row:hover .basket-minus-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Hide/show basket button for desktop/mobile */
+    .basket-desktop { display: block; }
+    .basket-mobile { display: none; }
+
+    @media (max-width: 767px) {
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      
+      .basket-desktop { display: none !important; }
+      .basket-mobile { display: block !important; }
+      #basketDropdown {
+        right: 10px !important;
+        left: 10px !important;
+        min-width: unset !important;
+        max-width: 95vw !important;
+      }
+    }
+
+    /* Basket row styles */
+    .basket-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+    
+    /* Clear Basket Button Slide-up Animation */
+    #basketDropdownFooter {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #basketDropdown:hover #basketDropdownFooter {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Mobile Clear Basket Footer (hidden by default, revealed on hover) */
+    #basketDropdownFooterMobile {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+      pointer-events: none; /* Avoid capturing taps while hidden */
+    }
+    #basketDropdownMobile:hover #basketDropdownFooterMobile {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto; /* Enable when revealed */
+    }
+    
+    #clearBasketBtn {
+      transition: all 0.2s ease;
+    }
+    
+    #clearBasketBtn:hover {
+      background: #a00 !important;
+      transform: scale(1.05);
+    }
+    .basket-row div {
+      color: #222;
+      font-family: 'Special Elite', monospace;
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+    .basket-row .basket-qty {
+      color: #222;
+      font-weight: bold;
+      font-family: 'Special Elite', monospace;
+    }
+    .basket-row img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .basket-row .basket-minus-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: red;
+      font-size: 1.2em;
+    }
+
+    /* Basket total and checkout button */
+    .basket-total {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .basket-total .total-amount {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .basket-total .checkout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      <h1>FITRITE</h1>
+      <p>Gloves</p>
+    </div>
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="mobileNav">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="page2.html">FITTING ROOM</a></li>
+        <li><a href="page3.html">CHECKOUT</a></li>
+        <li class="basket-desktop">
+          <button id="basketDropdownBtn" style="background:none;border:none;cursor:pointer;position:relative;">
+            🛒
+            <span id="basketCount" style="font-size:0.8em;background:#000;color:#fff;border-radius:50%;padding:2px 6px;position:absolute;top:-8px;right:-10px;display:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+              <div id="basketDropdown" style="display:none;position:absolute;right:0;top:40px;min-width:300px;max-width:350px;background:#fff;border:1px solid #ddd;border-radius:15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:2000;padding:15px 10px 10px 10px;">
+        <div id="basketDropdownContent" style="padding-top:20px;">Your basket is empty.</div>
+        <div id="basketDropdownFooter" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+            <button id="clearBasketBtn" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+        </div>
+    </div>
+        </li>
+        <li class="basket-mobile" style="display:none;width:100%;">
+          <button id="basketDropdownBtnMobile" class="basket-mobile-btn" style="background:none;border:none;cursor:pointer;width:100%;padding:5px 10px;text-align:left;display:block;">
+            <span style="font-family:'Special Elite',monospace;font-size:1.2em;letter-spacing:0.04em;vertical-align:middle;">BASKET</span>
+            <span id="basketCountMobile" style="font-size:1em;background:#000;color:#fff;border-radius:50%;padding:2px 8px;margin-left:10px;vertical-align:middle;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+          <div id="basketDropdownMobile" class="basketDropdownMobile">
+            <div id="basketDropdownContentMobile" style="padding-top:10px;">Your basket is empty.</div>
+            <div id="basketDropdownFooterMobile" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+              <button id="clearBasketBtnMobile" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <section id="search-bar">
+    <input type="text" id="searchInput" placeholder="Search gloves by name or price..." onkeyup="filterProducts()" />
+  </section>
+
+  <!-- Products Section (AVAILABLE GLOVES) -->
+  <section id="gloves">
+    <h2 style="text-align:center; margin-top:20px;">AVAILABLE GLOVES</h2>
+    <div class="products" id="products-container">
+      <!-- Products will be populated by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Fitrite. All rights reserved.</p>
+  </footer>
+
+  <!-- Product Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <img id="modalProductImage" src="" alt="Product Image">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductPrice"></p>
+      <button id="addToBasket" class="proceed-btn">Add to Basket</button>
+      <button id="proceedToPayment" class="proceed-btn">Proceed to Payment</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">Item added to basket!</div>
+
+  <script>
+    // Mobile Menu Toggle (add active class for X transform)
+    (function(){
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileNav = document.getElementById('mobileNav');
+      if (!menuToggle || !mobileNav) return;
+      function handleToggle(e){
+        e.stopPropagation();
+        e.preventDefault();
+        mobileNav.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+      }
+      menuToggle.addEventListener('click', handleToggle, { passive: false });
+      menuToggle.addEventListener('touchend', handleToggle, { passive: false });
+      // Capture-phase fallback to survive interfering listeners
+      document.addEventListener('click', function(e){
+        const btn = e.target.closest('#menuToggle');
+        if (!btn) return;
+        handleToggle(e);
+      }, true);
+      document.addEventListener('click', function(e){
+        if (!e.target.closest('#mobileNav') && !e.target.closest('#menuToggle')){
+          mobileNav.classList.remove('active');
+          menuToggle.classList.remove('active');
+        }
+      });
+      // Keep button state in sync if other scripts toggle the nav
+      const sync = () => {
+        if (mobileNav.classList.contains('active')) menuToggle.classList.add('active');
+        else menuToggle.classList.remove('active');
+      };
+      // Observe class changes; guard for older browsers
+      try {
+        const mo = new MutationObserver(sync);
+        mo.observe(mobileNav, { attributes: true, attributeFilter: ['class'] });
+      } catch(_) {}
+      sync();
+    })();
+    // Discount Products Data (hardcoded to avoid CORS issues)
+    const discountedProducts = [
+      {
+        "id": "glove1",
+        "name": "glove1",
+        "category": "gloves",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_c4614d2d.jpg",
+        "price": 20,
+        "discount": true,
+        "discountPercent": 45
+      },
+      {
+        "id": "glove3",
+        "name": "glove3",
+        "category": "gloves",
+        "imagePath": "https://via.placeholder.com/150?text=Gloves+3",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "glove5",
+        "name": "glove5",
+        "category": "gloves",
+        "imagePath": "https://via.placeholder.com/150?text=Gloves+5",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "bag1",
+        "name": "bag1",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.08_b69df63d.jpg",
+        "price": 20,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "bag3",
+        "name": "bag3",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.08_c5c1c5a4.jpg",
+        "price": 26,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "bag5",
+        "name": "bag5",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.09_1e9c1c0c.jpg",
+        "price": 32,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "belt1",
+        "name": "belt1",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+1",
+        "price": 50,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "belt3",
+        "name": "belt3",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+3",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "belt5",
+        "name": "belt5",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+5",
+        "price": 70,
+        "discount": true,
+        "discountPercent": 65
+      },
+      {
+        "id": "belt7",
+        "name": "belt7",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+7",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "cap/hat1",
+        "name": "cap/hat1",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_92c05268.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 20
+      },
+      {
+        "id": "cap/hat3",
+        "name": "cap/hat3",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_0d3af0f4.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "cap/hat5",
+        "name": "cap/hat5",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_4bcc7afc.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "footwear1",
+        "name": "footwear1",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_f2708529.jpg",
+        "price": 120,
+        "discount": true,
+        "discountPercent": 50
+      },
+      {
+        "id": "footwear2",
+        "name": "footwear2",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_65068fa5.jpg",
+        "price": 25,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "footwear3",
+        "name": "footwear3",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_ec433eab.jpg",
+        "price": 35,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "leather_jacket1",
+        "name": "leather_jacket1",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_4f9bf797.jpg",
+        "price": 200,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "leather_jacket3",
+        "name": "leather_jacket3",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_30f60707.jpg",
+        "price": 120,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "leather_jacket5",
+        "name": "leather_jacket5",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_697b5895.jpg",
+        "price": 140,
+        "discount": true,
+        "discountPercent": 70
+      },
+      {
+        "id": "scarf1",
+        "name": "scarf1",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+1",
+        "price": 50,
+        "discount": true,
+        "discountPercent": 35
+      },
+      {
+        "id": "scarf3",
+        "name": "scarf3",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+3",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "scarf5",
+        "name": "scarf5",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+5",
+        "price": 70,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "scarf7",
+        "name": "scarf7",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+7",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "sunglasses1",
+        "name": "sunglasses1",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_15f0a57a.jpg",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 55
+      },
+      {
+        "id": "sunglasses2",
+        "name": "sunglasses2",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_0cecf64c.jpg",
+        "price": 55,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "sunglasses3",
+        "name": "sunglasses3",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_03d2784a.jpg",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 65
+      },
+      {
+        "id": "wallet1",
+        "name": "wallet1",
+        "category": "wallets",
+        "imagePath": "https://via.placeholder.com/300x300?text=Wallet+1",
+        "price": 40,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "wallet2",
+        "name": "wallet2",
+        "category": "wallets",
+        "imagePath": "https://via.placeholder.com/300x300?text=Wallet+2",
+        "price": 45,
+        "discount": true,
+        "discountPercent": 70
+      }
+    ];
+    
+    // Create a map of discounted products for easy lookup
+    const discountMap = {};
+    discountedProducts.forEach(product => {
+      discountMap[product.id] = product;
+    });
+    
+    // Gloves Data
+    const gloves = [
+      {
+        id: "glove1",
+        name: "Leather Gloves – Black Classic",
+        price: 32.5,
+        imgUrl: "Gloves1.jpg"
+      },
+      {
+        id: "glove2",
+        name: "Leather Gloves – Tan Classic",
+        price: 36,
+        imgUrl: "Gloves2.jpg"
+      },
+      {
+        id: "glove3",
+        name: "Leather Gloves – Camel Shearling Cuff",
+        price: 42.5,
+        imgUrl: "Gloves3.jpg"
+      },
+      {
+        id: "glove4",
+        name: "Leather Gloves – Navy Ribbed Cuff",
+        price: 34,
+        imgUrl: "Gloves4.jpg"
+      },
+      {
+        id: "glove5",
+        name: "Tartan Gloves – Brown/Black",
+        price: 22.5,
+        imgUrl: "Gloves5.jpg"
+      },
+      {
+        id: "glove6",
+        name: "Fitted Woolly Gloves – Olive with Buttons",
+        price: 19,
+        imgUrl: "Gloves6.jpg"
+      },
+      {
+        id: "glove7",
+        name: "Leather Gloves – Navy with Stitch Detail",
+        price: 37.5,
+        imgUrl: "Gloves7.jpg"
+      },
+      {
+        id: "glove8",
+        name: "Strapped Woolly Gloves – Black with Strap",
+        price: 21,
+        imgUrl: "Gloves8.jpg"
+      },
+      {
+        id: "glove9",
+        name: "Camel Fingerless Gloves",
+        price: 22,
+        imgUrl: "Gloves9.jpg"
+      },
+      {
+        id: "glove10",
+        name: "Leather & Fur Gloves – Beige Fur Cuff",
+        price: 38,
+        imgUrl: "Gloves10.jpg"
+      },
+      {
+        id: "glove11",
+        name: "Faux Suede Gloves – Red",
+        price: 24,
+        imgUrl: "Gloves11.jpg"
+      },
+      {
+        id: "glove12",
+        name: "Suede Look Gloves – Teal with Faux Fur Cuff",
+        price: 23,
+        imgUrl: "Gloves12.jpg"
+      },
+      {
+        id: "glove13",
+        name: "Classic Gloves – Black",
+        price: 25,
+        imgUrl: "Gloves13.jpg"
+      },
+      {
+        id: "glove14",
+        name: "Full-Finger Gloves – Black Knit Cuff",
+        price: 27,
+        imgUrl: "Gloves14.jpg"
+      },
+      {
+        id: "glove15",
+        name: "Woolly Gloves – Burgundy with Buttons",
+        price: 26,
+        imgUrl: "Gloves15.jpg"
+      },
+      {
+        id: "glove16",
+        name: "Navy Leather Gloves – Knit Cuff",
+        price: 25,
+        imgUrl: "Gloves16.jpg"
+      },
+      {
+        id: "glove17",
+        name: "Classic Leather Gloves – Brown",
+        price: 23,
+        imgUrl: "Gloves17.jpg"
+      },
+      {
+        id: "glove18",
+        name: "Leather Gloves – Olive",
+        price: 24,
+        imgUrl: "Gloves18.jpg"
+      },
+      {
+        id: "glove19",
+        name: "Stylish Winter Gloves – Burgundy with Stitch",
+        price: 25,
+        imgUrl: "Gloves19.jpg"
+      },
+      {
+        id: "glove20",
+        name: "Leather Gloves – Black with Strap",
+        price: 29,
+        imgUrl: "Gloves20.jpg"
+      },
+      {
+        id: "glove21",
+        name: "Winter Fabric Gloves – Blue",
+        price: 26,
+        imgUrl: "Gloves21.jpg"
+      },
+      {
+        id: "glove22",
+        name: "Leather Gloves – Burgundy Moto Cuff",
+        price: 24,
+        imgUrl: "Gloves22.jpg"
+      },
+      {
+        id: "glove23",
+        name: "Navy Leather Classic",
+        price: 28,
+        imgUrl: "Gloves23.jpg"
+      },
+      {
+        id: "glove24",
+        name: "Leather Gloves – Blue Classic",
+        price: 25,
+        imgUrl: "Gloves24.jpg"
+      },
+      {
+        id: "glove25",
+        name: "Basic Beige Leather",
+        price: 30,
+        imgUrl: "Gloves25.jpg"
+      },
+      {
+        id: "glove26",
+        name: "Patterned Black Leather",
+        price: 27,
+        imgUrl: "Gloves26.jpg"
+      },
+      {
+        id: "glove27",
+        name: "Faux Fur Gloves – Burgundy Fur Cuff",
+        price: 25,
+        imgUrl: "Gloves27.jpg"
+      },
+      {
+        id: "glove28",
+        name: "Faux Fur Black Gloves – Black with Fur Cuff",
+        price: 26,
+        imgUrl: "Gloves28.jpg"
+      },
+      {
+        id: "glove29",
+        name: "Faux Suede Gloves – Brown with Fur Cuff",
+        price: 28,
+        imgUrl: "Gloves29.jpg"
+      },
+      {
+        id: "glove30",
+        name: "Luxury Gift-Box Gloves",
+        price: 27,
+        imgUrl: "Gloves30.jpg"
+      },
+      {
+        id: "glove31",
+        name: "Brown Winter Gloves",
+        price: 26,
+        imgUrl: "Gloves31.jpg"
+      },
+      {
+        id: "glove32",
+        name: "Stylish Winter Gloves – Burgundy with Stitch",
+        price: 28,
+        imgUrl: "Gloves32.jpg"
+      },
+      {
+        id: "glove33",
+        name: "Winter Fabric Gloves – Pink",
+        price: 25,
+        imgUrl: "Gloves33.jpg"
+      },
+      {
+        id: "glove34",
+        name: "Faux Suede Gloves – Black w/Fur Cuff",
+        price: 27,
+        imgUrl: "Gloves34.jpg"
+      },
+      {
+        id: "glove35",
+        name: "Fashion Gloves – Olive Green",
+        price: 32,
+        imgUrl: "Gloves35.jpg"
+      },
+      {
+        id: "glove36",
+        name: "Faux Suede Gloves – Grey with Fur Cuff",
+        price: 30,
+        imgUrl: "Gloves36.jpg"
+      },
+      {
+        id: "glove37",
+        name: "Faux Fur Black Gloves – Black with Fur Cuff",
+        price: 24,
+        imgUrl: "Gloves37.jpg"
+      },
+      {
+        id: "glove38",
+        name: "Faux Suede Gloves – Black with Button",
+        price: 38,
+        imgUrl: "Gloves38.jpg"
+      },
+      {
+        id: "glove39",
+        name: "Herringbone Woolly Gloves – Burgundy",
+        price: 25,
+        imgUrl: "Gloves39.jpg"
+      },
+      {
+        id: "glove40",
+        name: "Stylish Winter Gloves – Teal with Buttons",
+        price: 27,
+        imgUrl: "Gloves40.jpg"
+      },
+      {
+        id: "glove41",
+        name: "Gift-Box Gloves – Violet",
+        price: 25,
+        imgUrl: "Gloves41.jpg"
+      },
+      {
+        id: "glove42",
+        name: "Suede Look Gloves – Black with Houndstooth Cuff",
+        price: 26,
+        imgUrl: "Gloves42.jpg"
+      },
+      {
+        id: "glove43",
+        name: "Velvet Gloves – Burgundy with Houndstooth Cuff",
+        price: 28,
+        imgUrl: "Gloves43.jpg"
+      },
+      {
+        id: "glove44",
+        name: "Winter Houndstooth Gloves – Burgundy/Black",
+        price: 25,
+        imgUrl: "Gloves44.jpg"
+      },
+      {
+        id: "glove45",
+        name: "Classic Velvet Gloves – Brown with Houndstooth Cuff",
+        price: 24,
+        imgUrl: "Gloves45.jpg"
+      },
+      {
+        id: "glove46",
+        name: "Leather Gloves – Navy Basic",
+        price: 30,
+        imgUrl: "Gloves46.jpg"
+      },
+      {
+        id: "glove47",
+        name: "Beige Leather Gloves – Fur Trim",
+        price: 25,
+        imgUrl: "Golves47.jpg"
+      },
+      {
+        id: "glove48",
+        name: "Leather Gloves – Black Basic",
+        price: 32,
+        imgUrl: "Gloves48.jpg"
+      },
+      {
+        id: "glove49",
+        name: "Stylish Winter Gloves – Black with Stitch",
+        price: 34,
+        imgUrl: "Gloves49.jpg"
+      },
+      {
+        id: "glove50",
+        name: "Leather Gloves – Black Patterned",
+        price: 36,
+        imgUrl: "Gloves50.jpg"
+      }
+    ];
+    
+    // Remove dynamic generation of placeholder gloves (Gloves 9 and onward)
+    // Only use the gloves defined in the gloves array above.
+    
+    // Populate Products
+    function populateProducts() {
+      const productsContainer = document.getElementById("products-container");
+      productsContainer.innerHTML = '';
+      
+      gloves.forEach(glove => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        
+        // Check if this glove is in the discounted products
+        const discountInfo = discountMap[glove.id];
+        let productHTML = '';
+        let priceDisplay = '';
+        let modalParams = '';
+        
+        if (discountInfo && discountInfo.discount) {
+          // Calculate discounted price
+          const discountedPrice = glove.price * (1 - discountInfo.discountPercent / 100);
+          const formattedOriginalPrice = `£${glove.price}`;
+          const formattedDiscountedPrice = `£${discountedPrice.toFixed(2)}`;
+          
+          // Determine tag type based on discount percentage
+          const tagType = discountInfo.discountPercent > 55 ? 'gold' : 'red';
+          const tagText = tagType === 'gold' 
+            ? `★★ ${discountInfo.discountPercent}% OFF – Bargain of the Day ★★`
+            : `★ ${discountInfo.discountPercent}% OFF ★`;
+          
+          // Add discount tag
+          productHTML += `<div class="discount-tag ${tagType}">${tagText}</div>`;
+          
+          // Price display with original and new price
+          priceDisplay = `<p><span class="original-price">${formattedOriginalPrice}</span> <span class="new-price">${formattedDiscountedPrice}</span></p>`;
+          
+          // Modal parameters for discounted product
+          modalParams = `'${glove.name}', '${formattedDiscountedPrice}', '${glove.imgUrl}', true, '${formattedOriginalPrice}'`;
+        } else {
+          // Regular price display
+          priceDisplay = `<p>£${glove.price}</p>`;
+          
+          // Modal parameters for regular product
+          modalParams = `'${glove.name}', '£${glove.price}', '${glove.imgUrl}'`;
+        }
+        
+        // Check if it's a placeholder image
+        const isPlaceholder = glove.imgUrl.includes('placeholder.com');
+        const imgStyle = isPlaceholder ? 'style="opacity: 0;"' : '';
+        
+        // Complete product HTML
+        productHTML += `
+          <img src="${glove.imgUrl}" alt="${glove.name}" ${imgStyle}>
+          <p>${glove.name}</p>
+          ${priceDisplay}
+        `;
+        
+        productDiv.innerHTML = productHTML;
+        productDiv.setAttribute('onclick', `openProductModal(${modalParams})`);
+        
+        productsContainer.appendChild(productDiv);
+      });
+    }
+    
+    // Mobile Menu Toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('mobileNav').classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileNav = document.getElementById('mobileNav');
+      const menuToggle = document.getElementById('menuToggle');
+      
+      if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target) && mobileNav.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+      }
+    });
+    
+    // Modal Functions
+    const modal = document.getElementById('modal');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalProductPrice = document.getElementById('modalProductPrice');
+    const modalProductImage = document.getElementById('modalProductImage');
+    
+    function openProductModal(name, price, imageUrl, isDiscounted = false, originalPrice = null) {
+      modalProductName.textContent = name;
+      
+      if (isDiscounted && originalPrice) {
+        modalProductPrice.innerHTML = `<span class="original-price">${originalPrice}</span> <span class="new-price">${price}</span>`;
+      } else {
+        modalProductPrice.textContent = price;
+      }
+      
+      modalProductImage.src = imageUrl;
+      
+      // Check if it's a placeholder image for the modal
+      if (imageUrl.includes('placeholder.com')) {
+        modalProductImage.style.opacity = '0';
+      } else {
+        modalProductImage.style.opacity = '1';
+      }
+      
+      modal.classList.add('show');
+    }
+    
+    function closeModal() {
+      modal.classList.remove('show');
+    }
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // Filter products based on search input
+    function filterProducts() {
+      const searchInput = document.getElementById('searchInput');
+      const filter = searchInput.value.toUpperCase();
+      const products = document.querySelectorAll('.product');
+      
+      products.forEach(product => {
+        const name = product.querySelector('p:first-of-type').textContent;
+        const price = product.querySelector('p:last-of-type').textContent;
+        
+        if (name.toUpperCase().indexOf(filter) > -1 || price.toUpperCase().indexOf(filter) > -1) {
+          product.style.display = '';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+    
+    // Firebase Cart Integration
+    let currentProductData = null;
+    
+    // Function to extract product data from modal
+    function extractProductFromModal() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imgUrl = modalProductImage.src;
+      
+      // Convert price to cents (preserve decimals accurately)
+      const numericPrice = parseFloat(price.replace(/[£,]/g, ''));
+      const priceInCents = Number.isFinite(numericPrice) ? Math.round(numericPrice * 100) : 0;
+      
+      return {
+        id: name.toLowerCase().replace(/\s+/g, '-'),
+        name: name,
+        price: priceInCents,
+        image: imgUrl,
+        category: 'gloves'
+      };
+    }
+    
+    // Firebase cart function
+    async function addToBasketFirebase() {
+      try {
+        if (!window.FitRightFirebase) {
+          console.error('FitRightFirebase not loaded');
+          return;
+        }
+        
+        const productData = extractProductFromModal();
+        await window.FitRightFirebase.addProductToCart(productData, 1);
+        showToast("Product added to basket!");
+        console.log("Product added to Firebase cart:", productData);
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        showToast("Error adding to basket: " + error.message);
+      }
+    }
+    
+    // Basket Handling & Toast Notification
+    function addToBasket(name, price, imgUrl, size, showMessage = true) {
+      let basket = JSON.parse(localStorage.getItem("basket")) || [];
+      const existingIndex = basket.findIndex(item => item.name === name);
+      if (existingIndex !== -1) {
+        const item = basket[existingIndex];
+        item.quantity = (item.quantity || 1) + 1;
+        localStorage.setItem("basket", JSON.stringify(basket));
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product quantity updated in basket!");
+      } else {
+        basket.push({ name, newPrice: price, imgUrl, size, quantity: 1 });
+        localStorage.setItem("basket", JSON.stringify(basket));
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product added to basket!");
+      }
+    }
+    
+    // Firebase cart rendering
+    function renderCart() {
+      if (!window.FitRightFirebase) return;
+      
+      const cartItems = window.FitRightFirebase.getCartItems();
+      const cartCount = window.FitRightFirebase.getCartCount();
+      
+      // Update counters
+      basketCount.textContent = cartCount;
+      basketCount.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Update dropdown content
+      const basketDropdownContent = document.getElementById('basketDropdownContent');
+      const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+      
+      if (cartItems.length === 0) {
+        const emptyMessage = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (basketDropdownContent) basketDropdownContent.innerHTML = emptyMessage;
+        if (basketDropdownContentMobile) basketDropdownContentMobile.innerHTML = emptyMessage;
+        return;
+      }
+      
+      const basketContent = cartItems.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;text-transform:uppercase;">${item.productName || item.name}</div>
+            <div style="font-size:1em;font-weight:bold;font-family:'Special Elite',monospace;">${window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || item.price != null) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || '£0.00')}</div>
+            <div style="font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;">QTY: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+            ${(() => { const s = (item.selectedSize || item.size || '').toString(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;\">SIZE: ${s}</div>` : '' })()}
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+        </div>
+      `).join('');
+      
+      // Update both desktop and mobile dropdowns
+      if (basketDropdownContent) {
+        basketDropdownContent.innerHTML = basketContent;
+        addBasketEventListeners(basketDropdownContent);
+      }
+      
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.innerHTML = basketContent;
+        addBasketEventListeners(basketDropdownContentMobile);
+      }
+    }
+    
+    // Listen for cart updates
+    window.addEventListener('cartUpdated', renderCart);
+    
+    // Load cart on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.FitRightFirebase) {
+        window.FitRightFirebase.loadCart().then(() => {
+          renderCart();
+        });
+      }
+    });
+    
+    // Update basket dropdown content
+    function updateBasketDropdown() {
+      // Get cart data from Firebase or localStorage fallback
+      let cartItems, cartCount;
+      
+      if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+        cartItems = window.FitRightFirebase.getCartItems();
+        cartCount = window.FitRightFirebase.getCartCount();
+      } else {
+        // Fallback to localStorage for guest mode
+        const basket = JSON.parse(localStorage.getItem("basket")) || [];
+        cartItems = basket;
+        cartCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      }
+      
+      const basketDropdownContent = document.getElementById('basketDropdownContent');
+      const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+      
+      if (cartItems.length === 0) {
+        const emptyMessage = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (basketDropdownContent) basketDropdownContent.innerHTML = emptyMessage;
+        if (basketDropdownContentMobile) basketDropdownContentMobile.innerHTML = emptyMessage;
+        basketCount.style.display = 'none';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = '0';
+          basketCountMobile.style.display = 'none';
+        }
+        
+        // Hide clear basket buttons when empty
+        const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+        const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+        if (basketDropdownFooter) basketDropdownFooter.style.display = 'none';
+        if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'none';
+        
+        return;
+      }
+      
+      basketCount.textContent = cartCount;
+      basketCount.style.display = 'inline-block';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = (cartCount === 0) ? 'none' : 'inline-block';
+      }
+      
+      const basketContent = cartItems.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.image || item.productImage || item.imgUrl}" alt="${item.name || item.productName}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;text-transform:uppercase;">${item.name || item.productName}</div>
+            <div style="font-size:1em;font-weight:bold;font-family:'Special Elite',monospace;">${window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || item.price != null) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || '£0.00')}</div>
+            <div style="font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;">QTY: <span class="basket-qty" data-id="${item.id || item.productId}">${item.quantity || 1}</span></div>
+            ${(() => { const s = (item.selectedSize || item.size || '').toString(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;\">SIZE: ${s}</div>` : '' })()}
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:50%;right:8px;transform:translateY(-50%);">&minus;</button>
+        </div>
+      `).join('');
+
+      // Update both desktop and mobile dropdowns
+      if (basketDropdownContent) {
+        basketDropdownContent.innerHTML = basketContent;
+        addBasketEventListeners(basketDropdownContent);
+      }
+      
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.innerHTML = basketContent;
+        addBasketEventListeners(basketDropdownContentMobile);
+      }
+
+      // Show clear basket buttons when there are items
+      const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+      const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+      if (basketDropdownFooter) basketDropdownFooter.style.display = 'block';
+      if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'block';
+    }
+    
+    // Add event listeners for basket minus buttons
+    function addBasketEventListeners(container) {
+      container.querySelectorAll('.basket-minus-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          const cartItemId = this.getAttribute('data-id');
+          const row = this.closest('.basket-row');
+          
+          if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+            // Firebase mode
+            try {
+              // Get current quantity
+              const cartItems = window.FitRightFirebase.getCartItems();
+              const currentItem = cartItems.find(item => (item.id || item.productId) === cartItemId);
+              
+              if (currentItem && currentItem.quantity > 1) {
+                // Decrease quantity
+                await window.FitRightFirebase.updateQuantity(cartItemId, currentItem.quantity - 1);
+                console.log("Quantity decreased for item:", cartItemId);
+              } else {
+                // Remove item completely
+                row.classList.remove('basket-fade-in');
+                row.classList.add('basket-fade-out');
+                setTimeout(async () => {
+                  await window.FitRightFirebase.removeFromCart(cartItemId);
+                  console.log("Item removed from cart:", cartItemId);
+                }, 300);
+              }
+            } catch (error) {
+              console.error("Error updating cart:", error);
+              showToast("Error updating basket: " + error.message);
+            }
+          } else {
+            // localStorage mode
+            const idx = parseInt(this.getAttribute('data-index'));
+            let basket = JSON.parse(localStorage.getItem("basket")) || [];
+            
+            if (basket[idx] && basket[idx].quantity > 1) {
+              basket[idx].quantity -= 1;
+              localStorage.setItem("basket", JSON.stringify(basket));
+              const qtySpan = row.querySelector('.basket-qty');
+              if (qtySpan) qtySpan.textContent = basket[idx].quantity;
+              
+              // Update the basket counter immediately
+              updateBasketDropdown();
+            } else {
+              row.classList.remove('basket-fade-in');
+              row.classList.add('basket-fade-out');
+              setTimeout(() => {
+                basket.splice(idx, 1);
+                localStorage.setItem("basket", JSON.stringify(basket));
+                
+                // Update the basket counter immediately
+                updateBasketDropdown();
+                
+                updateBasketDropdown();
+              }, 300);
+            }
+          }
+        });
+      });
+    }
+    
+    // Toggle basket dropdown
+    const basketDropdownBtn = document.getElementById('basketDropdownBtn');
+    const basketDropdownBtnMobile = document.getElementById('basketDropdownBtnMobile');
+    const basketDropdown = document.getElementById('basketDropdown');
+    const basketDropdownMobile = document.getElementById('basketDropdownMobile');
+    const basketCount = document.getElementById('basketCount');
+    const basketCountMobile = document.getElementById('basketCountMobile');
+    
+    function toggleBasketDropdown() {
+      basketDropdown.classList.toggle('show');
+      if (basketDropdown.classList.contains('show')) {
+        updateBasketDropdown(); // Update content when opening
+      }
+    }
+    
+    if (basketDropdownBtn) {
+      basketDropdownBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        updateBasketDropdown();
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        } else {
+          basketDropdown.style.display = 'block';
+          setTimeout(() => { basketDropdown.classList.add('show'); }, 10);
+        }
+      });
+    }
+    
+    if (basketDropdownBtnMobile && basketDropdownMobile) {
+      basketDropdownBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        updateBasketDropdown();
+        // Toggle the mobile dropdown with animation
+        if (basketDropdownMobile.classList.contains('show')) {
+          basketDropdownMobile.classList.remove('show');
+        } else {
+          basketDropdownMobile.classList.add('show');
+        }
+      });
+    }
+    
+    document.addEventListener('click', function(e) {
+      // Close desktop dropdown
+      if (basketDropdown && !basketDropdown.contains(e.target) && e.target !== basketDropdownBtn) {
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        }
+      }
+      
+      // Close mobile dropdown when clicking outside the mobile nav
+      if (basketDropdownMobile && !document.getElementById('mobileNav').contains(e.target)) {
+        basketDropdownMobile.classList.remove('show');
+      }
+    });
+    
+    // Firebase cart rendering
+    function renderFirebaseCart() {
+      if (!window.FitRightFirebase) return;
+      
+      const cartItems = window.FitRightFirebase.getCartItems();
+      const cartCount = window.FitRightFirebase.getCartCount();
+      
+      console.log("Firebase cart updated:", { items: cartItems, count: cartCount });
+      
+      // Update basket counters
+      const basketCount = document.getElementById('basketCount');
+      const basketCountMobile = document.getElementById('basketCountMobile');
+      
+      if (basketCount) {
+        basketCount.textContent = cartCount;
+        basketCount.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Update basket dropdown if it exists
+      updateBasketDropdown();
+    }
+    
+    // Listen for Firebase cart updates
+    window.addEventListener('cartUpdated', renderFirebaseCart);
+    
+    // Load Firebase cart on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.FitRightFirebase) {
+        window.FitRightFirebase.loadCart().then(() => {
+          renderFirebaseCart();
+        });
+      }
+    });
+
+    // Clear basket button functionality
+    const clearBasketBtn = document.getElementById('clearBasketBtn');
+    const clearBasketBtnMobile = document.getElementById('clearBasketBtnMobile');
+
+    function clearBasket() {
+      if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+        // Firebase mode
+        window.FitRightFirebase.clearCart().then(() => {
+          updateBasketDropdown();
+          showToast("Basket cleared!");
+        }).catch(error => {
+          console.error("Error clearing Firebase cart:", error);
+          showToast("Error clearing basket: " + error.message);
+        });
+      } else {
+        // localStorage mode
+        localStorage.removeItem("basket");
+        updateBasketDropdown();
+        showToast("Basket cleared!");
+      }
+    }
+
+    if (clearBasketBtn) {
+      clearBasketBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+    if (clearBasketBtnMobile) {
+      clearBasketBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+    
+    // Initialize basket on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      populateProducts();
+      updateBasketDropdown();
+      updateBasketDropdown(); // Update basket on page load
+    });
+    
+    document.getElementById("addToBasket").onclick = function() {
+      // Use Firebase if available, otherwise fallback to localStorage
+      if (window.FitRightFirebase) {
+        addToBasketFirebase();
+        closeModal();
+      } else {
+        const name = modalProductName.textContent;
+        const priceElement = modalProductPrice.querySelector(".new-price");
+        const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+        const imgUrl = modalProductImage.src;
+        const size = "Standard"; // Assuming a default size for gloves
+        addToBasket(name, price, imgUrl, size, true);
+        closeModal();
+      }
+    };
+    
+    document.getElementById("proceedToPayment").onclick = function() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imageUrl = modalProductImage.src;
+      const queryString = `?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&imgUrl=${encodeURIComponent(imageUrl)}`;
+      window.location.href = "page3.html" + queryString;
+    };
+    
+    function showToast(message) {
+      const toastEl = document.getElementById("toast");
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2000);
+    }
+  </script>
+
+  <!-- Firebase Cart System -->
+  <script type="module" src="./firebase.js?v=2"></script>
+  <script type="module" src="./fitright-cart-only.js?v=2"></script>
+  <script src="./shared-basket-dropdown.js"></script>
+  
+  <!-- Basket Button Fix -->
+
+</body>
+</html>

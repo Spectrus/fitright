@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FITRITE - Virtual Try-On</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7em;
+            font-weight: 400;
+            color: #666;
+            margin-top: -5px;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-type-option {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #212529;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-type-option:hover {
+            background: #343a40;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-type-option.active {
+            background: #495057;
+            color: white;
+        }
+
+        .nav-type-option span {
+            font-size: 1.1em;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 40px 20px;
+        }
+
+        /* Messages */
+        .message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            font-weight: 500;
+            display: none;
+            max-width: 600px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        /* Unified Card Container */
+        .unified-card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Try-On Layout Container */
+        .tryon-layout {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: all 0.6s ease;
+        }
+
+        /* Desktop: Side by side layout */
+        @media (min-width: 769px) {
+            .tryon-layout.side-by-side {
+                flex-direction: row;
+            }
+            
+            .tryon-layout.side-by-side .main-card {
+                flex: 1;
+                max-width: 450px;
+            }
+            
+            .tryon-layout.side-by-side .model-upload-section {
+                flex: 1;
+                max-width: 450px;
+                margin-top: 0;
+            }
+        }
+
+        /* Mobile: Stacked layout with animations - slower timing */
+        @media (max-width: 768px) {
+            .tryon-layout {
+                flex-direction: column;
+                align-items: center;
+                min-height: auto;
+            }
+            
+            .tryon-layout.mobile-transition {
+                gap: 0;
+                margin-top: -20px;
+            }
+            
+            .tryon-layout.mobile-transition .main-card {
+                animation: fadeOutUp 1.2s ease-out forwards;
+                margin-bottom: 0;
+            }
+            
+            .tryon-layout.mobile-transition .model-upload-section {
+                animation: fadeInUp 1.2s ease-out 0.4s both;
+                margin-top: 0;
+                transform: translateY(-40px);
+            }
+        }
+
+        @keyframes fadeOutUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-50px);
+                visibility: hidden;
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-40px);
+            }
+        }
+
+        /* Main Card - Transforms from Upload to Preview */
+        .main-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Upload State */
+        .upload-state {
+            text-align: center;
+        }
+
+        .upload-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upload-area {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-area:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            border-color: #007bff;
+            background: #e3f2fd;
+            transform: scale(1.05);
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Preview State */
+        .preview-state {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .preview-state.show {
+            display: block;
+        }
+
+        .preview-image-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-width: 350px;
+            max-height: 350px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: #f8f9fa;
+        }
+
+        .api-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .api-fashn {
+            background: #28a745;
+        }
+
+        .api-thenewblack {
+            background: #6f42c1;
+        }
+
+        .default-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ffc107;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .preview-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .preview-price {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .remove-item-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #212529;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .remove-item-btn:hover {
+            background: #343a40;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Iridescent Glacier Try-On Button */
+        .try-on-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: linear-gradient(135deg, #a3d5ff 0%, rgba(255, 255, 255, 0.9) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(163, 213, 255, 0.4);
+            display: none;
+            margin: 0 auto;
+            z-index: 10;
+        }
+
+        .try-on-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 180, 180, 0.35), 
+                rgba(255, 200, 160, 0.35), 
+                rgba(255, 255, 200, 0.35), 
+                rgba(200, 255, 200, 0.4), 
+                rgba(200, 230, 255, 0.4), 
+                rgba(230, 200, 255, 0.35), 
+                rgba(255, 200, 230, 0.35), 
+                rgba(255, 255, 255, 0.5),
+                transparent);
+            opacity: 1;
+            z-index: 1;
+            animation: glacier-rainbow-sweep 4s infinite;
+        }
+
+        @keyframes glacier-rainbow-sweep {
+            0% { left: -100%; opacity: 0.4; }
+            50% { left: 100%; opacity: 0.7; }
+            100% { left: -100%; opacity: 0.4; }
+        }
+
+        .try-on-btn.show {
+            display: block;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .try-on-btn:hover:not(:disabled) {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(163, 213, 255, 0.6);
+            background: linear-gradient(135deg, #87ceeb 0%, rgba(255, 255, 255, 0.95) 100%);
+        }
+
+        .try-on-btn:active:not(:disabled) {
+            transform: translateY(-2px) scale(0.98);
+            box-shadow: 0 10px 25px rgba(163, 213, 255, 0.4);
+        }
+
+        .btn-icon {
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .try-on-btn:hover:not(:disabled) .btn-icon {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        /* Model Upload Section - Same structure as main card with slower transitions */
+        .model-upload-section {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: all 1.0s ease;
+            position: relative;
+        }
+
+        .model-upload-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Mobile Back Button */
+        .mobile-back-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #212529;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        /* Show back button only on mobile when model upload is visible - slower animation */
+        @media (max-width: 768px) {
+            .model-upload-section.show .mobile-back-btn {
+                display: block;
+                animation: fadeInScale 0.8s ease-out 0.5s both;
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .mobile-back-btn:hover {
+            background: #343a40;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .mobile-back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .model-upload-section.show {
+            display: block;
+        }
+
+        /* Desktop: Show side by side with slower animation */
+        @media (min-width: 769px) {
+            .model-upload-section.show {
+                animation: slideInRight 1.2s ease-out;
+            }
+        }
+
+        /* Mobile: Show with fade in and reduced gap - slower animation */
+        @media (max-width: 768px) {
+            .model-upload-section.show {
+                animation: fadeInUp 1.2s ease-out 0.4s both;
+            }
+            
+            .model-upload-section {
+                padding: 30px 20px;
+                margin-top: 0;
+            }
+            
+            .main-content.compact {
+                padding-top: 20px;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Person Upload Area - Same structure as product card with increased height */
+        .person-upload-area {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            /* Increased height to accommodate full person images */
+            min-height: 500px;
+            cursor: pointer;
+        }
+
+        .person-upload-area:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Inner upload area with dashed border - only when in upload state */
+        .person-upload-inner {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .person-upload-inner:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        .person-upload-inner.dragover {
+            border-color: #007bff;
+            background: #e3f2fd;
+            transform: scale(1.05);
+        }
+
+        /* Hide inner upload area when photo is loaded */
+        .person-upload-inner.hidden {
+            display: none;
+        }
+
+        /* Result In-Place Container - Positioned within the card padding */
+        .result-in-place {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 9px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            /* ENSURE: proper dimensions for full image display */
+            width: calc(100% - 80px);
+            height: calc(100% - 80px);
+        }
+
+        .result-in-place.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .result-image-in-place {
+            width: 100%;
+            height: 100%;
+            /* ENSURE: object-fit contain to show full result image */
+            object-fit: contain;
+            object-position: center;
+            border-radius: 9px;
+            box-shadow: none;
+            /* Add small padding for better presentation */
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Mobile adjustments for result container */
+        @media (max-width: 768px) {
+            .result-in-place {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                width: calc(100% - 40px);
+                height: calc(100% - 40px);
+            }
+        }
+
+        /* External Action Buttons - Outside the frame */
+        .result-actions-external {
+            display: none;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        .result-actions-external.show {
+            display: flex;
+        }
+
+        .action-btn-small {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #212529;
+            color: white;
+        }
+
+        .download-btn-small {
+            background: #212529;
+            color: white;
+        }
+
+        .try-again-btn-small {
+            background: #212529;
+            color: white;
+        }
+
+        .action-btn-small:hover {
+            background: #343a40;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Fade transition for person photo - Enhanced for "trying on" effect */
+        .person-photo-preview.fade-out {
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        .person-photo-preview {
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        /* Navigation Back Button - For switching between original and result */
+        .result-back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #212529;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 25;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .result-back-btn.show {
+            display: block;
+        }
+
+        .result-back-btn:hover {
+            background: #343a40;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .result-back-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile specific height adjustment */
+        @media (max-width: 768px) {
+            .person-upload-area {
+                min-height: 550px; /* Increased for full image display */
+                padding: 30px 20px;
+            }
+            
+            .person-upload-inner {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+            
+            .result-actions-external {
+                flex-direction: column;
+                gap: 8px;
+                padding: 0 15px;
+                margin-top: 15px;
+            }
+            
+            .action-btn-small {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .person-upload-area {
+                min-height: 600px; /* Even taller for small mobile to show full image */
+            }
+        }
+
+        /* Upload prompt - Inside the inner upload area */
+        .upload-prompt {
+            text-align: center;
+            padding: 40px 20px;
+            transition: all 0.3s ease;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-prompt.hidden {
+            display: none;
+        }
+
+        /* Full size photo preview - Positioned within the card padding */
+        .person-photo-preview {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            /* ENSURE: object-fit contain to show full image without cropping */
+            object-fit: contain;
+            /* CENTER: object-position to center the image */
+            object-position: center;
+            border-radius: 9px;
+            display: none;
+            /* BACKGROUND: to fill empty space elegantly */
+            background: #f8f9fa;
+            /* ENSURE: width and height are properly set */
+            width: calc(100% - 80px);
+            height: calc(100% - 80px);
+        }
+
+        /* Mobile adjustments for person photo */
+        @media (max-width: 768px) {
+            .person-photo-preview {
+                /* On mobile, ensure full image is visible with proper spacing */
+                object-fit: contain;
+                object-position: center;
+                /* Adjust positioning for mobile padding */
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                width: calc(100% - 40px);
+                height: calc(100% - 40px);
+                /* Add small internal padding to prevent edge touching */
+                padding: 5px;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .person-photo-preview {
+                /* On desktop, ensure full image visibility */
+                object-fit: contain;
+                object-position: center;
+                /* Add small internal padding for better presentation */
+                padding: 5px;
+                box-sizing: border-box;
+            }
+        }
+
+        .person-photo-preview.show {
+            display: block;
+        }
+
+        /* Remove photo button */
+        .remove-photo-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #212529;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: none;
+        }
+
+        .remove-photo-btn.show {
+            display: block;
+        }
+
+        .remove-photo-btn:hover {
+            background: #343a40;
+            transform: scale(1.1);
+        }
+
+        /* Continue Button */
+        .continue-btn {
+            width: 100%;
+            padding: 15px;
+            background: #212529;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .continue-btn:hover:not(:disabled) {
+            background: #343a40;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .continue-btn:disabled {
+            background: #dee2e6;
+            color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Processing Overlay - Positioned within the card padding */
+        .processing-overlay-local {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+            border-radius: 9px;
+        }
+
+        .processing-overlay-local.show {
+            display: flex;
+        }
+
+        /* Mobile adjustments for processing overlay */
+        @media (max-width: 768px) {
+            .processing-overlay-local {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+
+        .processing-content-local {
+            background: transparent;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            max-width: 300px;
+            width: 80%;
+        }
+
+        .processing-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #212529;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .processing-text {
+            font-size: 1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .processing-subtext {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #212529, #343a40);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Result Modal */
+        .result-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .result-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: #212529;
+            color: white;
+        }
+
+        .download-btn {
+            background: #212529;
+            color: white;
+        }
+
+        .share-btn {
+            background: #212529;
+            color: white;
+        }
+
+        .close-btn {
+            background: #212529;
+            color: white;
+        }
+
+        .try-again-btn {
+            background: #212529;
+            color: white;
+        }
+
+        .action-btn:hover {
+            background: #343a40;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+            }
+
+            .nav-type-option {
+                padding: 10px 20px;
+                font-size: 0.85em;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .main-content {
+                padding: 40px 15px 20px 15px;
+            }
+
+            .main-card {
+                padding: 30px 20px;
+            }
+
+            .tryon-layout {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-type-option {
+                font-size: 0.8em;
+                padding: 8px 16px;
+            }
+
+            .upload-area {
+                padding: 40px 15px;
+                min-height: 250px;
+            }
+
+            .upload-icon {
+                font-size: 3em;
+            }
+
+            .main-content {
+                padding: 30px 10px 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                FITRITE
+                <div class="logo-subtitle">VIRTUAL TRY-ON</div>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-type-option active" data-type="clothing">
+                    <span>👕</span> CLOTHING
+                </button>
+                <button class="nav-type-option" data-type="shoes">
+                    <span>👟</span> SHOES
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Error Messages Only -->
+        <div class="error-message" id="errorMessage"></div>
+
+        <!-- Unified Card Container -->
+        <div class="unified-card-container">
+            <!-- Try-On Layout Container -->
+            <div class="tryon-layout" id="tryonLayout">
+                <!-- Main Card - Transforms from Upload to Preview -->
+                <div class="main-card" id="mainCard">
+                    <!-- Upload State -->
+                    <div class="upload-state" id="uploadState">
+                        <h2 class="upload-title" id="uploadTitle">ADD YOUR CLOTHING</h2>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon" id="uploadIcon">👕</div>
+                            <div class="upload-text" id="uploadText">Add Clothing</div>
+                            <div class="upload-subtext">PNG, JPG, WebP up to 25MB</div>
+                            <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!-- Preview State -->
+                    <div class="preview-state" id="previewState">
+                        <div class="preview-image-container">
+                            <img id="previewImage" class="preview-image" alt="Item Preview">
+                            <div class="api-badge api-fashn" id="apiBadge">Fashn.ai</div>
+                            <div class="default-badge" id="defaultBadge" style="display: none;">DEFAULT</div>
+                            <button class="remove-item-btn" id="removeItemBtn">×</button>
+                        </div>
+                        <h3 class="preview-title" id="previewTitle">CUSTOM CLOTHING</h3>
+                        <div class="preview-price">FREE</div>
+                    </div>
+                </div>
+
+                <!-- Model Upload Section (Hidden Initially) -->
+                <section class="model-upload-section" id="modelUploadSection">
+                    <!-- Mobile Back Button -->
+                    <button class="mobile-back-btn" id="mobileBackBtn" title="Back to product">←</button>
+                    
+                    <!-- Person Upload Area - Full Size -->
+                    <div class="person-upload-area" id="personUploadArea">
+                        <!-- Inner Upload Area with dashed border -->
+                        <div class="person-upload-inner" id="personUploadInner">
+                            <!-- Upload Prompt (Hidden when photo loaded) -->
+                            <div class="upload-prompt" id="uploadPrompt">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">Click or drag your photo here</div>
+                                <div class="upload-subtext">PNG, JPG, WebP up to 25MB</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Full Size Photo Preview -->
+                        <img id="personPhotoPreview" class="person-photo-preview" alt="Person Preview">
+                        
+                        <!-- Result In-Place Container -->
+                        <div class="result-in-place" id="resultInPlace">
+                            <img id="resultImageInPlace" class="result-image-in-place" alt="Virtual Try-On Result">
+                            <!-- Navigation Back Button -->
+                            <button class="result-back-btn" id="resultBackBtn" title="Remove item">←</button>
+                        </div>
+                        
+                        <!-- Local Processing Overlay -->
+                        <div class="processing-overlay-local" id="processingOverlayLocal">
+                            <div class="processing-content-local">
+                                <div class="processing-spinner"></div>
+                                <div class="processing-text" id="processingTextLocal">Connecting to AI servers</div>
+                                <div class="processing-subtext" id="processingSubtextLocal"></div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFillLocal"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Remove Photo Button -->
+                        <button class="remove-photo-btn" id="removePhotoBtn">×</button>
+                        
+                        <input type="file" id="personFileInput" class="file-input" accept="image/*">
+                    </div>
+                    
+                    <button class="continue-btn" id="continueBtn" disabled>PROCESS VIRTUAL TRY-ON</button>
+                    
+                    <!-- External Action Buttons - Outside the frame (Share and Close removed) -->
+                    <div class="result-actions-external" id="resultActionsExternal">
+                        <button class="action-btn-small download-btn-small" id="downloadBtnSmall">
+                            📥 Download
+                        </button>
+                        <button class="action-btn-small try-again-btn-small" id="tryAgainBtnSmall">
+                            🔄 Try Again
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Try On Button -->
+            <button class="try-on-btn" id="tryOnBtn">
+                TRY ON
+            </button>
+        </div>
+    </main>
+
+    <!-- Processing Overlay (Legacy - kept for compatibility) -->
+    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+        <div class="processing-content">
+            <div class="processing-spinner"></div>
+            <div class="processing-text" id="processingText">Processing with AI...</div>
+            <div class="processing-subtext" id="processingSubtext">This may take a few seconds</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <img id="resultImage" class="result-image" alt="Result">
+            <div class="result-actions">
+                <button class="action-btn download-btn" id="downloadBtn">📥 Download</button>
+                <button class="action-btn share-btn" id="shareBtn">📤 Share</button>
+                <button class="action-btn try-again-btn" id="tryAgainBtn">🔄 Try Again</button>
+                <button class="action-btn close-btn" id="closeBtn">✖ Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-text">© 2024 Fitrite. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Fashn.ai API Handler Module
+        class FashnAPIHandler {
+            constructor(apiKey) {
+                this.apiKey = apiKey;
+                this.baseURL = 'https://api.fashn.ai/v1';
+                this.maxRetries = 3;
+                this.retryDelay = 1000;
+            }
+
+            async makeRequest(endpoint, options = {}) {
+                const url = `${this.baseURL}${endpoint}`;
+                const defaultOptions = {
+                    headers: {
+                        'Authorization': `Bearer ${this.apiKey}`,
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    }
+                };
+
+                const requestOptions = { ...defaultOptions, ...options };
+
+                for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+                    try {
+                        console.log(`Attempt ${attempt}/${this.maxRetries} for ${endpoint}`);
+                        
+                        const response = await fetch(url, requestOptions);
+                        
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            throw new Error(`HTTP ${response.status}: ${errorText}`);
+                        }
+
+                        const data = await response.json();
+                        console.log('API Response:', data);
+                        return data;
+
+                    } catch (error) {
+                        console.error(`Error on attempt ${attempt}:`, error);
+                        
+                        if (attempt === this.maxRetries) {
+                            throw error;
+                        }
+                        
+                        await this.delay(this.retryDelay * attempt);
+                    }
+                }
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async startTryOn(modelImage, garmentImage, options = {}) {
+                const requestData = {
+                    model_name: options.modelVersion || 'tryon-v1.6',
+                    inputs: {
+                        model_image: modelImage,
+                        garment_image: garmentImage,
+                        category: options.category || 'auto',
+                        segmentation_free: options.segmentationFree !== false,
+                        moderation_level: options.moderationLevel || 'conservative'
+                    }
+                };
+
+                console.log('Sending try-on request:', requestData);
+
+                const result = await this.makeRequest('/run', {
+                    method: 'POST',
+                    body: JSON.stringify(requestData)
+                });
+
+                return result.id;
+            }
+
+            async checkStatus(predictionId) {
+                const result = await this.makeRequest(`/status/${predictionId}`);
+                return result;
+            }
+
+            async waitForResult(predictionId, onProgress = null) {
+                const maxAttempts = 60;
+                const pollInterval = 2000;
+                
+                for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                    try {
+                        const status = await this.checkStatus(predictionId);
+                        
+                        if (onProgress) {
+                            onProgress({
+                                attempt,
+                                maxAttempts,
+                                status: status.status,
+                                progress: Math.round((attempt / maxAttempts) * 100)
+                            });
+                        }
+
+                        if (status.status === 'completed') {
+                            return {
+                                success: true,
+                                output: status.output,
+                                metadata: status
+                            };
+                        } else if (status.status === 'failed') {
+                            return {
+                                success: false,
+                                error: status.error || 'Processing failed',
+                                metadata: status
+                            };
+                        }
+
+                        if (attempt < maxAttempts) {
+                            await this.delay(pollInterval);
+                        }
+
+                    } catch (error) {
+                        console.error(`Error in polling (attempt ${attempt}):`, error);
+                        
+                        if (attempt === maxAttempts) {
+                            return {
+                                success: false,
+                                error: `Timeout after ${maxAttempts} attempts: ${error.message}`,
+                                metadata: null
+                            };
+                        }
+                        
+                        await this.delay(pollInterval);
+                    }
+                }
+
+                return {
+                    success: false,
+                    error: 'Timeout: processing took too long',
+                    metadata: null
+                };
+            }
+
+            async processTryOn(modelImage, garmentImage, options = {}) {
+                try {
+                    const predictionId = await this.startTryOn(modelImage, garmentImage, options);
+                    const result = await this.waitForResult(predictionId, options.onProgress);
+                    return result;
+
+                } catch (error) {
+                    console.error('Error in complete processing:', error);
+                    return {
+                        success: false,
+                        error: error.message,
+                        metadata: null
+                    };
+                }
+            }
+
+            async optimizeImage(imageDataURL, maxWidth = 1024, maxHeight = 1024, quality = 0.8) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+
+                        let { width, height } = img;
+                        const aspectRatio = width / height;
+
+                        if (width > maxWidth || height > maxHeight) {
+                            if (aspectRatio > 1) {
+                                width = Math.min(width, maxWidth);
+                                height = width / aspectRatio;
+                            } else {
+                                height = Math.min(height, maxHeight);
+                                width = height * aspectRatio;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const optimizedDataURL = canvas.toDataURL('image/jpeg', quality);
+                        resolve(optimizedDataURL);
+                    };
+
+                    img.onerror = () => reject(new Error('Error loading image'));
+                    img.src = imageDataURL;
+                });
+            }
+        }
+
+        class FitriteVirtualTryOn {
+            constructor() {
+                this.currentType = 'clothing';
+                this.itemFile = null;
+                this.personFile = null;
+                this.resultImageUrl = null;
+                this.isProcessing = false;
+                this.isUsingDefaultShoes = false;
+                this.showingModelUpload = false;
+                this.isInPreviewMode = false;
+                this.isMobile = window.innerWidth <= 768;
+                
+                // API configurations
+                this.fashnConfig = {
+                    apiKey: 'fa-BWEKaWHoO0YD-KDW0kUKgK6eEPOzgKh0M1oC0',
+                    baseUrl: 'https://api.fashn.ai/v1'
+                };
+                
+                this.theNewBlackConfig = {
+                    email: 'fscbra@gmail.com',
+                    password: 'Spectrus123',
+                    baseUrl: 'https://thenewblack.ai/api/1.1/wf'
+                };
+
+                // Default shoes image
+                this.defaultShoesImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZjhmOWZhIi8+CjxwYXRoIGQ9Ik0zMCA5MEMzMCA4NSA0MCA3NSA2MCA3MEMxMDAgNjAgMTQwIDYwIDE3MCA3MEMxODAgNzUgMTkwIDg1IDE5MCA5MEMxOTAgMTAwIDE4NSAxMTAgMTcwIDEyMEg2MEMzNSAxMTAgMzAgMTAwIDMwIDkwWiIgZmlsbD0iIzIxMjUyOSIvPgo8cGF0aCBkPSJNNTAgODBDNTAgNzggNjAgNzAgODAgNjhDMTIwIDY0IDE0MCA2NCAxNjAgNjhDMTcwIDcwIDE4MCA3OCAxODAgODBDMTgwIDg1IDE3NSA5MCAxNjAgOTVIODBDNjUgOTAgNTAgODUgNTAgODBaIiBmaWxsPSIjMzQzYTQwIi8+CjxjaXJjbGUgY3g9IjcwIiBjeT0iNzUiIHI9IjMiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9Ijc1IiByPSIzIiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIxMDAiIHk9IjEzNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5EZWZhdWx0IFNob2VzPC90ZXh0Pgo8L3N2Zz4=';
+
+                this.typeConfig = {
+                    clothing: {
+                        uploadTitle: 'ADD YOUR CLOTHING',
+                        uploadIcon: '👕',
+                        uploadText: 'Add Clothing',
+                        previewTitle: 'CUSTOM CLOTHING',
+                        api: 'fashn',
+                        apiName: 'Fashn.ai'
+                    },
+                    shoes: {
+                        uploadTitle: 'ADD YOUR SHOES',
+                        uploadIcon: '👟',
+                        uploadText: 'Add Shoes',
+                        previewTitle: 'DEFAULT SHOES',
+                        api: 'thenewblack',
+                        apiName: 'The New Black AI'
+                    }
+                };
+
+                this.initializeElements();
+                this.bindEvents();
+                this.initializeFashnAPI();
+                this.updateInterface();
+                this.handleResize();
+            }
+
+            initializeElements() {
+                this.elements = {
+                    navTypeOptions: document.querySelectorAll('.nav-type-option'),
+                    
+                    // Layout elements
+                    tryonLayout: document.getElementById('tryonLayout'),
+                    mainContent: document.getElementById('mainContent'),
+                    
+                    // Main card elements
+                    mainCard: document.getElementById('mainCard'),
+                    uploadState: document.getElementById('uploadState'),
+                    previewState: document.getElementById('previewState'),
+                    
+                    // Upload elements
+                    uploadTitle: document.getElementById('uploadTitle'),
+                    uploadArea: document.getElementById('uploadArea'),
+                    uploadIcon: document.getElementById('uploadIcon'),
+                    uploadText: document.getElementById('uploadText'),
+                    fileInput: document.getElementById('fileInput'),
+                    
+                    // Preview elements
+                    previewImage: document.getElementById('previewImage'),
+                    previewTitle: document.getElementById('previewTitle'),
+                    apiBadge: document.getElementById('apiBadge'),
+                    defaultBadge: document.getElementById('defaultBadge'),
+                    removeItemBtn: document.getElementById('removeItemBtn'),
+                    
+                    // Try on button
+                    tryOnBtn: document.getElementById('tryOnBtn'),
+                    
+                    // Model upload elements
+                    modelUploadSection: document.getElementById('modelUploadSection'),
+                    mobileBackBtn: document.getElementById('mobileBackBtn'),
+                    personUploadArea: document.getElementById('personUploadArea'),
+                    personUploadInner: document.getElementById('personUploadInner'),
+                    personFileInput: document.getElementById('personFileInput'),
+                    uploadPrompt: document.getElementById('uploadPrompt'),
+                    personPhotoPreview: document.getElementById('personPhotoPreview'),
+                    removePhotoBtn: document.getElementById('removePhotoBtn'),
+                    continueBtn: document.getElementById('continueBtn'),
+                    
+                    // Processing elements
+                    processingOverlay: document.getElementById('processingOverlay'),
+                    processingText: document.getElementById('processingText'),
+                    processingSubtext: document.getElementById('processingSubtext'),
+                    progressFill: document.getElementById('progressFill'),
+                    
+                    // Local processing elements
+                    processingOverlayLocal: document.getElementById('processingOverlayLocal'),
+                    processingTextLocal: document.getElementById('processingTextLocal'),
+                    processingSubtextLocal: document.getElementById('processingSubtextLocal'),
+                    progressFillLocal: document.getElementById('progressFillLocal'),
+                    
+                    // Result elements
+                    resultModal: document.getElementById('resultModal'),
+                    resultImage: document.getElementById('resultImage'),
+                    downloadBtn: document.getElementById('downloadBtn'),
+                    shareBtn: document.getElementById('shareBtn'),
+                    tryAgainBtn: document.getElementById('tryAgainBtn'),
+                    closeBtn: document.getElementById('closeBtn'),
+                    
+                    // Result in-place elements
+                    resultInPlace: document.getElementById('resultInPlace'),
+                    resultImageInPlace: document.getElementById('resultImageInPlace'),
+                    resultBackBtn: document.getElementById('resultBackBtn'),
+                    resultActionsExternal: document.getElementById('resultActionsExternal'),
+                    downloadBtnSmall: document.getElementById('downloadBtnSmall'),
+                    tryAgainBtnSmall: document.getElementById('tryAgainBtnSmall'),
+                    
+                    // Message elements
+                    errorMessage: document.getElementById('errorMessage')
+                };
+            }
+
+            initializeFashnAPI() {
+                this.fashnAPI = new FashnAPIHandler(this.fashnConfig.apiKey);
+            }
+
+            bindEvents() {
+                // Header type selector
+                this.elements.navTypeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        this.elements.navTypeOptions.forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        this.currentType = option.dataset.type;
+                        this.updateInterface();
+                        this.hideModelUpload();
+                        this.resetToUploadState();
+                    });
+                });
+
+                // Upload area click
+                this.elements.uploadArea.addEventListener('click', () => {
+                    this.elements.fileInput.click();
+                });
+
+                // File input change
+                this.elements.fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handleFileSelect(e.target.files[0]);
+                    }
+                });
+
+                // Drag and drop for upload area
+                this.setupDragAndDrop(this.elements.uploadArea, this.handleFileSelect.bind(this));
+
+                // Person upload - now uses the inner container for drag/drop
+                this.elements.personUploadArea.addEventListener('click', () => {
+                    if (!this.personFile) {
+                        this.elements.personFileInput.click();
+                    }
+                });
+
+                this.setupDragAndDrop(this.elements.personUploadInner, this.handlePersonFileSelect.bind(this));
+                this.elements.personFileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handlePersonFileSelect(e.target.files[0]);
+                    }
+                });
+
+                // Remove item
+                this.elements.removeItemBtn.addEventListener('click', () => {
+                    this.resetToUploadState();
+                });
+
+                // Remove photo
+                this.elements.removePhotoBtn.addEventListener('click', () => {
+                    this.removePersonPhoto();
+                });
+
+                // Try on button - shows model upload
+                this.elements.tryOnBtn.addEventListener('click', () => {
+                    this.showModelUpload();
+                });
+
+                // Mobile back button - hides model upload (mobile only)
+                this.elements.mobileBackBtn.addEventListener('click', () => {
+                    this.hideModelUpload();
+                });
+
+                // Continue button - starts processing
+                this.elements.continueBtn.addEventListener('click', () => {
+                    this.startTryOn();
+                });
+
+                // Result actions
+                this.elements.downloadBtn.addEventListener('click', () => {
+                    this.downloadResult();
+                });
+
+                this.elements.shareBtn.addEventListener('click', () => {
+                    this.shareResult();
+                });
+
+                this.elements.tryAgainBtn.addEventListener('click', () => {
+                    this.hideResult();
+                    this.hideModelUpload();
+                });
+
+                this.elements.closeBtn.addEventListener('click', () => {
+                    this.hideResult();
+                });
+
+                // Result in-place actions (Share and Close removed)
+                this.elements.downloadBtnSmall.addEventListener('click', () => {
+                    this.downloadResult();
+                });
+
+                this.elements.tryAgainBtnSmall.addEventListener('click', () => {
+                    this.hideResultInPlace();
+                    this.hideModelUpload();
+                });
+
+                // Result back button - navigation between original and result
+                this.elements.resultBackBtn.addEventListener('click', () => {
+                    this.toggleResultView();
+                });
+
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+            }
+
+            handleResize() {
+                this.isMobile = window.innerWidth <= 768;
+                
+                // Update layout if model upload is showing
+                if (this.showingModelUpload) {
+                    this.updateLayoutForModelUpload();
+                }
+            }
+
+            setupDragAndDrop(element, handler) {
+                element.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    element.classList.add('dragover');
+                });
+
+                element.addEventListener('dragleave', () => {
+                    element.classList.remove('dragover');
+                });
+
+                element.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    element.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        handler(files[0]);
+                    }
+                });
+            }
+
+            updateInterface() {
+                const config = this.typeConfig[this.currentType];
+                
+                // Update upload state
+                this.elements.uploadTitle.textContent = config.uploadTitle;
+                this.elements.uploadIcon.textContent = config.uploadIcon;
+                this.elements.uploadText.textContent = config.uploadText;
+                
+                // Update API badge
+                this.elements.apiBadge.className = `api-badge api-${config.api}`;
+                this.elements.apiBadge.textContent = config.apiName;
+                
+                // Load default shoes if needed
+                if (this.currentType === 'shoes') {
+                    this.loadDefaultShoes();
+                }
+            }
+
+            loadDefaultShoes() {
+                this.isUsingDefaultShoes = true;
+                this.switchToPreviewState();
+                
+                // Set default shoes image
+                this.elements.previewImage.src = this.defaultShoesImage;
+                this.elements.previewTitle.textContent = 'DEFAULT SHOES';
+                this.elements.defaultBadge.style.display = 'block';
+                
+                // Show try on button
+                this.elements.tryOnBtn.classList.add('show');
+            }
+
+            handleFileSelect(file) {
+                if (!this.validateFile(file)) {
+                    return;
+                }
+
+                this.itemFile = file;
+                this.isUsingDefaultShoes = false;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.switchToPreviewState();
+                    
+                    // Set custom item image
+                    this.elements.previewImage.src = e.target.result;
+                    this.elements.previewTitle.textContent = `CUSTOM ${this.currentType.toUpperCase()}`;
+                    this.elements.defaultBadge.style.display = 'none';
+                    
+                    // Show try on button
+                    this.elements.tryOnBtn.classList.add('show');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            handlePersonFileSelect(file) {
+                if (!this.validateFile(file)) {
+                    return;
+                }
+
+                this.personFile = file;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    // Hide upload prompt and inner container
+                    this.elements.uploadPrompt.classList.add('hidden');
+                    this.elements.personUploadInner.classList.add('hidden');
+                    
+                    // Show full size photo
+                    this.elements.personPhotoPreview.src = e.target.result;
+                    this.elements.personPhotoPreview.classList.add('show');
+                    
+                    // Show remove button
+                    this.elements.removePhotoBtn.classList.add('show');
+                    
+                    // Enable continue button
+                    this.elements.continueBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            removePersonPhoto() {
+                this.personFile = null;
+                
+                // Show upload prompt and inner container again
+                this.elements.uploadPrompt.classList.remove('hidden');
+                this.elements.personUploadInner.classList.remove('hidden');
+                
+                // Hide photo and remove button
+                this.elements.personPhotoPreview.classList.remove('show');
+                this.elements.removePhotoBtn.classList.remove('show');
+                
+                // Disable continue button
+                this.elements.continueBtn.disabled = true;
+                
+                // Clear file input
+                this.elements.personFileInput.value = '';
+            }
+
+            switchToPreviewState() {
+                this.isInPreviewMode = true;
+                this.elements.uploadState.style.display = 'none';
+                this.elements.previewState.classList.add('show');
+            }
+
+            resetToUploadState() {
+                this.isInPreviewMode = false;
+                this.itemFile = null;
+                this.isUsingDefaultShoes = false;
+                
+                // Hide preview and show upload
+                this.elements.previewState.classList.remove('show');
+                this.elements.uploadState.style.display = 'block';
+                
+                // Hide try on button
+                this.elements.tryOnBtn.classList.remove('show');
+                
+                // Reset layout
+                this.elements.tryonLayout.classList.remove('side-by-side', 'mobile-transition');
+                this.elements.mainContent.classList.remove('compact');
+                
+                // Clear file input
+                this.elements.fileInput.value = '';
+                
+                // Hide model upload if showing
+                this.hideModelUpload();
+            }
+
+            showModelUpload() {
+                if (!this.itemFile && !this.isUsingDefaultShoes) {
+                    this.showError(`Please add ${this.currentType === 'clothing' ? 'clothing' : 'shoes'} first.`);
+                    return;
+                }
+
+                this.showingModelUpload = true;
+                this.updateLayoutForModelUpload();
+                
+                // Show model upload section
+                this.elements.modelUploadSection.classList.add('show');
+                
+                // Hide try on button
+                this.elements.tryOnBtn.style.display = 'none';
+                
+                // Add compact class to main content on mobile
+                if (this.isMobile) {
+                    this.elements.mainContent.classList.add('compact');
+                }
+            }
+
+            updateLayoutForModelUpload() {
+                if (this.isMobile) {
+                    // Mobile: Add transition class for animations
+                    this.elements.tryonLayout.classList.add('mobile-transition');
+                    this.elements.tryonLayout.classList.remove('side-by-side');
+                } else {
+                    // Desktop: Side by side layout
+                    this.elements.tryonLayout.classList.add('side-by-side');
+                    this.elements.tryonLayout.classList.remove('mobile-transition');
+                }
+            }
+
+            hideModelUpload() {
+                this.showingModelUpload = false;
+                this.elements.modelUploadSection.classList.remove('show');
+                this.elements.tryonLayout.classList.remove('side-by-side', 'mobile-transition');
+                this.elements.mainContent.classList.remove('compact');
+                
+                // Show try on button again if in preview mode
+                if (this.isInPreviewMode) {
+                    this.elements.tryOnBtn.style.display = 'block';
+                }
+                
+                // Clear person upload
+                this.removePersonPhoto();
+            }
+
+            validateFile(file) {
+                const maxSize = 25 * 1024 * 1024; // 25MB
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+
+                if (!allowedTypes.includes(file.type)) {
+                    this.showError('Unsupported format. Use PNG, JPG, JPEG or WebP.');
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    this.showError('File too large. Maximum 25MB.');
+                    return false;
+                }
+
+                return true;
+            }
+
+            async startTryOn() {
+                if (this.isProcessing) return;
+
+                if (!this.personFile) {
+                    this.showError('Please add your photo first.');
+                    return;
+                }
+
+                if (!this.itemFile && !this.isUsingDefaultShoes) {
+                    this.showError(`Please add ${this.currentType === 'clothing' ? 'clothing' : 'shoes'} first.`);
+                    return;
+                }
+
+                this.isProcessing = true;
+                this.showProcessing();
+
+                try {
+                    let resultUrl;
+                    
+                    if (this.currentType === 'clothing') {
+                        resultUrl = await this.processFashnAI();
+                    } else {
+                        resultUrl = await this.processTheNewBlackAI();
+                    }
+
+                    this.hideProcessing();
+                    this.showResultInPlace(resultUrl);
+                    
+                } catch (error) {
+                    this.hideProcessing();
+                    this.showError(`Processing error: ${error.message}`);
+                } finally {
+                    this.isProcessing = false;
+                }
+            }
+
+            async processFashnAI() {
+                this.updateProcessing('Connecting to AI servers', '', 10);
+
+                const modelImageBase64 = await this.fileToBase64(this.personFile);
+                const garmentImageBase64 = await this.fileToBase64(this.itemFile);
+
+                this.updateProcessing('Connecting to AI servers', '', 20);
+
+                const optimizedModelImage = await this.fashnAPI.optimizeImage(modelImageBase64);
+                const optimizedGarmentImage = await this.fashnAPI.optimizeImage(garmentImageBase64);
+
+                this.updateProcessing('Connecting to AI servers', '', 30);
+
+                const result = await this.fashnAPI.processTryOn(
+                    optimizedModelImage,
+                    optimizedGarmentImage,
+                    {
+                        category: 'tops',
+                        segmentationFree: true,
+                        moderationLevel: 'conservative',
+                        onProgress: (progress) => {
+                            const progressPercent = 30 + (progress.progress * 0.6);
+                            this.updateProcessing(
+                                'Connecting to AI servers',
+                                '',
+                                progressPercent
+                            );
+                        }
+                    }
+                );
+
+                if (result.success) {
+                    this.updateProcessing('Connecting to AI servers', '', 100);
+                    return result.output;
+                } else {
+                    throw new Error(result.error);
+                }
+            }
+
+            async processTheNewBlackAI() {
+                this.updateProcessing('Connecting to AI servers', '', 20);
+
+                let shoesImageUrl;
+                if (this.isUsingDefaultShoes) {
+                    shoesImageUrl = this.defaultShoesImage;
+                } else {
+                    shoesImageUrl = await this.uploadToCDN(this.itemFile);
+                }
+
+                const modelImageUrl = await this.uploadToCDN(this.personFile);
+
+                this.updateProcessing('Connecting to AI servers', '', 50);
+
+                const formData = new FormData();
+                formData.append('email', this.theNewBlackConfig.email);
+                formData.append('password', this.theNewBlackConfig.password);
+                formData.append('model_photo', modelImageUrl);
+                formData.append('shoes_photo', shoesImageUrl);
+
+                const response = await fetch(`${this.theNewBlackConfig.baseUrl}/vto-shoes`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`The New Black API error: ${response.status}`);
+                }
+
+                this.updateProcessing('Connecting to AI servers', '', 100);
+
+                const result = await response.text();
+                return result;
+            }
+
+            async fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            async uploadToCDN(file) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        resolve(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            showProcessing() {
+                this.elements.processingOverlayLocal.classList.add('show');
+                this.updateProcessing('Connecting to AI servers', '', 0);
+            }
+
+            hideProcessing() {
+                this.elements.processingOverlayLocal.classList.remove('show');
+            }
+
+            updateProcessing(text, subtext, progress) {
+                this.elements.processingTextLocal.textContent = text;
+                this.elements.processingSubtextLocal.textContent = subtext;
+                this.elements.progressFillLocal.style.width = progress + '%';
+            }
+
+            showResult(imageUrl) {
+                this.resultImageUrl = imageUrl;
+                this.elements.resultImage.src = imageUrl;
+                this.elements.resultModal.style.display = 'flex';
+            }
+
+            showResultInPlace(imageUrl) {
+                this.resultImageUrl = imageUrl;
+                this.elements.resultImageInPlace.src = imageUrl;
+                
+                // Perfect fade transition to simulate "trying on" the item
+                // The model appears to be wearing the item seamlessly
+                this.elements.personPhotoPreview.style.transition = 'opacity 1.2s ease-in-out';
+                this.elements.resultInPlace.style.transition = 'opacity 1.2s ease-in-out';
+                
+                // Start fade out of original model photo
+                this.elements.personPhotoPreview.classList.add('fade-out');
+                
+                // Simultaneous fade in of result to create "trying on" effect
+                setTimeout(() => {
+                    this.elements.resultInPlace.classList.add('show');
+                    this.elements.resultBackBtn.classList.add('show');
+                    this.elements.resultActionsExternal.classList.add('show');
+                    // Hide continue button
+                    this.elements.continueBtn.style.display = 'none';
+                }, 100); // Minimal delay for perfect synchronization
+            }
+
+            hideResult() {
+                this.elements.resultModal.style.display = 'none';
+            }
+
+            hideResultInPlace() {
+                this.elements.resultInPlace.classList.remove('show');
+                this.elements.resultBackBtn.classList.remove('show');
+                this.elements.resultActionsExternal.classList.remove('show');
+                this.elements.personPhotoPreview.classList.remove('fade-out');
+                this.elements.continueBtn.style.display = 'block';
+                
+                // Reset to show person photo again
+                setTimeout(() => {
+                    if (this.personFile) {
+                        this.elements.personPhotoPreview.classList.add('show');
+                    }
+                }, 100);
+            }
+
+            toggleResultView() {
+                const isShowingResult = this.elements.resultInPlace.classList.contains('show');
+                
+                // Enhanced transitions for seamless "trying on" effect
+                this.elements.personPhotoPreview.style.transition = 'opacity 1.0s ease-in-out';
+                this.elements.resultInPlace.style.transition = 'opacity 1.0s ease-in-out';
+                
+                if (isShowingResult) {
+                    // Fade out result, fade in original (removing the item)
+                    this.elements.resultInPlace.classList.remove('show');
+                    
+                    setTimeout(() => {
+                        this.elements.personPhotoPreview.classList.remove('fade-out');
+                        this.elements.resultBackBtn.title = "Try on item again";
+                        this.elements.resultBackBtn.textContent = "→"; // Arrow pointing forward to result
+                        this.elements.resultBackBtn.classList.add('show');
+                    }, 50); // Quick transition for smooth effect
+                    
+                } else {
+                    // Fade out original, fade in result (putting on the item)
+                    this.elements.personPhotoPreview.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        this.elements.resultInPlace.classList.add('show');
+                        this.elements.resultBackBtn.title = "Remove item";
+                        this.elements.resultBackBtn.textContent = "←"; // Arrow pointing back to original
+                        this.elements.resultBackBtn.classList.add('show');
+                    }, 50); // Quick transition for smooth effect
+                }
+            }
+
+            downloadResult() {
+                if (this.resultImageUrl) {
+                    const link = document.createElement('a');
+                    link.href = this.resultImageUrl;
+                    link.download = `fitrite-virtual-tryon-${this.currentType}-${Date.now()}.jpg`;
+                    link.click();
+                }
+            }
+
+            async shareResult() {
+                if (navigator.share && this.resultImageUrl) {
+                    try {
+                        await navigator.share({
+                            title: 'My Virtual Try-On - Fitrite',
+                            text: `Check out how this ${this.currentType === 'clothing' ? 'clothing' : 'shoes'} looks on me!`,
+                            url: this.resultImageUrl
+                        });
+                    } catch (error) {
+                        this.copyToClipboard();
+                    }
+                } else {
+                    this.copyToClipboard();
+                }
+            }
+
+            copyToClipboard() {
+                navigator.clipboard.writeText(this.resultImageUrl);
+            }
+
+            showError(message) {
+                this.elements.errorMessage.textContent = message;
+                this.elements.errorMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    this.elements.errorMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', () => {
+            new FitriteVirtualTryOn();
+        });
+    </script>
+</body>
+</html>
+
