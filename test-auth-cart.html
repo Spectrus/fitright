@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth + Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .auth-section {
+            background-color: #f0f8ff;
+        }
+        .cart-section {
+            background-color: #f0fff0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-btn { background-color: #4CAF50; color: white; }
+        .logout-btn { background-color: #f44336; color: white; }
+        .add-btn { background-color: #2196F3; color: white; }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Test Auth + Cart System</h1>
+    
+    <div class="section auth-section">
+        <h2>Authentication</h2>
+        <div id="authStatus" class="status info">Checking auth status...</div>
+        
+        <div id="loginForm">
+            <h3>Login</h3>
+            <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="loginPassword" placeholder="Password" value="password123">
+            <button class="login-btn" onclick="login()">Login</button>
+        </div>
+        
+        <div id="registerForm">
+            <h3>Register</h3>
+            <input type="text" id="registerName" placeholder="Name" value="Test User">
+            <input type="email" id="registerEmail" placeholder="Email" value="test2@example.com">
+            <input type="password" id="registerPassword" placeholder="Password" value="password123">
+            <button class="login-btn" onclick="register()">Register</button>
+        </div>
+        
+        <div id="userInfo" style="display: none;">
+            <h3>User Info</h3>
+            <p id="userDetails"></p>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="section cart-section">
+        <h2>Cart System</h2>
+        <div id="cartStatus" class="status info">Cart status: Guest mode</div>
+        
+        <div id="cartActions">
+            <h3>Add Items to Cart</h3>
+            <button class="add-btn" onclick="addItem('Product 1', 1000)">Add Product 1 (R$10)</button>
+            <button class="add-btn" onclick="addItem('Product 2', 2000)">Add Product 2 (R$20)</button>
+            <button class="add-btn" onclick="addItem('Product 3', 3000)">Add Product 3 (R$30)</button>
+            <br><br>
+            <button onclick="showCart()">Show Cart Items</button>
+            <button onclick="clearCart()">Clear Cart</button>
+        </div>
+        
+        <div id="cartItems">
+            <h3>Cart Items</h3>
+            <div id="cartList">No items in cart</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>System Status</h2>
+        <div id="systemStatus"></div>
+    </div>
+
+    <!-- Firebase Integration -->
+    <script type="module" src="fitright-cart-only.js"></script>
+    
+    <script>
+        // Test functions
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                await window.FitRightFirebase.login(email, password);
+                showStatus('Login successful!', 'success');
+                updateAuthUI();
+            } catch (error) {
+                showStatus('Login failed: ' + error.message, 'error');
+            }
+        }
+        
+        async function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            try {
+                await window.FitRightFirebase.register(email, password, name);
+                showStatus('Registration successful!', 'success');
+                updateAuthUI();
+            } catch (error) {
+                showStatus('Registration failed: ' + error.message, 'error');
+            }
+        }
+        
+        async function logout() {
+            try {
+                await window.FitRightFirebase.logout();
+                showStatus('Logout successful!', 'success');
+                updateAuthUI();
+            } catch (error) {
+                showStatus('Logout failed: ' + error.message, 'error');
+            }
+        }
+        
+        async function addItem(name, price) {
+            try {
+                const productData = {
+                    id: name.toLowerCase().replace(/\s+/g, '-'),
+                    name: name,
+                    price: price,
+                    image: '',
+                    category: 'test'
+                };
+                
+                await window.FitRightFirebase.addProductToCart(productData, 1);
+                showStatus('Item added to cart!', 'success');
+                updateCartUI();
+            } catch (error) {
+                showStatus('Failed to add item: ' + error.message, 'error');
+            }
+        }
+        
+        async function showCart() {
+            try {
+                const items = window.FitRightFirebase.getCartItems();
+                const count = window.FitRightFirebase.getCartCount();
+                const total = window.FitRightFirebase.getCartTotal();
+                
+                let cartHtml = `<p>Items: ${count}</p>`;
+                cartHtml += `<p>Total: ${total.formattedTotal}</p>`;
+                cartHtml += '<ul>';
+                
+                items.forEach(item => {
+                    cartHtml += `<li>${item.name || item.productName} - Qty: ${item.quantity}</li>`;
+                });
+                
+                cartHtml += '</ul>';
+                document.getElementById('cartList').innerHTML = cartHtml;
+                
+                showStatus('Cart loaded successfully!', 'success');
+            } catch (error) {
+                showStatus('Failed to load cart: ' + error.message, 'error');
+            }
+        }
+        
+        async function clearCart() {
+            try {
+                await window.FitRightFirebase.clearCart();
+                showStatus('Cart cleared!', 'success');
+                updateCartUI();
+            } catch (error) {
+                showStatus('Failed to clear cart: ' + error.message, 'error');
+            }
+        }
+        
+        function updateAuthUI() {
+            const isLoggedIn = window.FitRightFirebase.isLoggedIn();
+            const authStatus = document.getElementById('authStatus');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const userInfo = document.getElementById('userInfo');
+            const userDetails = document.getElementById('userDetails');
+            
+            if (isLoggedIn) {
+                authStatus.innerHTML = '<strong>Status:</strong> Logged in';
+                authStatus.className = 'status success';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'none';
+                userInfo.style.display = 'block';
+                userDetails.textContent = 'User is logged in';
+            } else {
+                authStatus.innerHTML = '<strong>Status:</strong> Not logged in (Guest mode)';
+                authStatus.className = 'status info';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+        }
+        
+        function updateCartUI() {
+            const isLoggedIn = window.FitRightFirebase.isLoggedIn();
+            const cartStatus = document.getElementById('cartStatus');
+            
+            if (isLoggedIn) {
+                cartStatus.innerHTML = '<strong>Cart Status:</strong> Firebase mode (logged in)';
+                cartStatus.className = 'status success';
+            } else {
+                cartStatus.innerHTML = '<strong>Cart Status:</strong> localStorage mode (guest)';
+                cartStatus.className = 'status info';
+            }
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            document.body.insertBefore(statusDiv, document.body.firstChild);
+            
+            setTimeout(() => {
+                statusDiv.remove();
+            }, 5000);
+        }
+        
+        function updateSystemStatus() {
+            const systemStatus = document.getElementById('systemStatus');
+            const isLoggedIn = window.FitRightFirebase.isLoggedIn();
+            const cartCount = window.FitRightFirebase.getCartCount();
+            
+            let status = '<h3>Current System State:</h3>';
+            status += `<p><strong>Authentication:</strong> ${isLoggedIn ? 'Logged In' : 'Guest Mode'}</p>`;
+            status += `<p><strong>Cart Items:</strong> ${cartCount}</p>`;
+            status += `<p><strong>Cart System:</strong> ${isLoggedIn ? 'Firebase' : 'localStorage'}</p>`;
+            
+            systemStatus.innerHTML = status;
+        }
+        
+        // Event listeners
+        window.addEventListener('authStateChanged', function(event) {
+            console.log('Auth state changed:', event.detail);
+            updateAuthUI();
+            updateCartUI();
+            updateSystemStatus();
+        });
+        
+        window.addEventListener('cartUpdated', function(event) {
+            console.log('Cart updated:', event.detail);
+            updateCartUI();
+            updateSystemStatus();
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                updateAuthUI();
+                updateCartUI();
+                updateSystemStatus();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

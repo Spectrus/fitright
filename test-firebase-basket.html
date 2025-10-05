@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Basket Integration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .basket-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .basket-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firebase Basket Integration Test</h1>
+    
+    <!-- Firebase Import -->
+    <script type="module">
+        import { auth } from './firebase.js';
+        window.firebaseAuth = auth;
+    </script>
+    
+    <!-- Firebase Basket Integration -->
+    <script type="module" src="./firebase-basket-integration.js"></script>
+    
+    <div class="test-section">
+        <h2>Authentication Status</h2>
+        <div id="auth-status" class="status info">Checking authentication status...</div>
+        <button onclick="checkAuthStatus()">Check Auth Status</button>
+        <button onclick="loginTest()">Test Login (Guest)</button>
+        <button onclick="logoutTest()">Test Logout</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Basket Operations</h2>
+        <div id="basket-status" class="status info">Basket status will appear here...</div>
+        <button onclick="addTestItem()">Add Test Item</button>
+        <button onclick="removeTestItem()">Remove Test Item</button>
+        <button onclick="clearBasket()">Clear Basket</button>
+        <button onclick="showBasket()">Show Basket</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Basket Contents</h2>
+        <div id="basket-contents"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Debug Information</h2>
+        <div id="debug-info"></div>
+        <button onclick="updateDebugInfo()">Update Debug Info</button>
+    </div>
+    
+    <script>
+        // Wait for FirebaseBasketIntegration to load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                checkAuthStatus();
+                showBasket();
+                updateDebugInfo();
+            }, 1000);
+        });
+        
+        function checkAuthStatus() {
+            const statusDiv = document.getElementById('auth-status');
+            if (window.FirebaseBasketIntegration) {
+                const isLoggedIn = window.FirebaseBasketIntegration.isLoggedIn();
+                const user = window.FirebaseBasketIntegration.getCurrentUser();
+                
+                if (isLoggedIn) {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = `Logged in as: ${user.email || user.uid}`;
+                } else {
+                    statusDiv.className = 'status info';
+                    statusDiv.textContent = 'Not logged in (Guest mode)';
+                }
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'FirebaseBasketIntegration not available';
+            }
+        }
+        
+        function loginTest() {
+            const statusDiv = document.getElementById('auth-status');
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Guest mode - no login required for testing';
+        }
+        
+        function logoutTest() {
+            if (window.FirebaseBasketIntegration && window.FirebaseBasketIntegration.isLoggedIn()) {
+                // This would trigger a sign out
+                checkAuthStatus();
+            } else {
+                const statusDiv = document.getElementById('auth-status');
+                statusDiv.className = 'status info';
+                statusDiv.textContent = 'Already in guest mode';
+            }
+        }
+        
+        function addTestItem() {
+            const statusDiv = document.getElementById('basket-status');
+            if (window.FirebaseBasketIntegration) {
+                const testItem = {
+                    name: 'Test Product ' + Date.now(),
+                    price: '£29.99',
+                    imgUrl: 'https://via.placeholder.com/100x100?text=Test',
+                    quantity: 1
+                };
+                
+                window.FirebaseBasketIntegration.addToBasket(testItem).then(() => {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = 'Test item added to basket!';
+                    showBasket();
+                }).catch(error => {
+                    statusDiv.className = 'status error';
+                    statusDiv.textContent = 'Error adding item: ' + error.message;
+                });
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'FirebaseBasketIntegration not available';
+            }
+        }
+        
+        function removeTestItem() {
+            const statusDiv = document.getElementById('basket-status');
+            if (window.FirebaseBasketIntegration) {
+                const basket = window.FirebaseBasketIntegration.getCurrentBasket();
+                if (basket.length > 0) {
+                    const itemToRemove = basket[0].name;
+                    window.FirebaseBasketIntegration.removeFromBasket(itemToRemove).then(() => {
+                        statusDiv.className = 'status success';
+                        statusDiv.textContent = 'Item removed from basket!';
+                        showBasket();
+                    }).catch(error => {
+                        statusDiv.className = 'status error';
+                        statusDiv.textContent = 'Error removing item: ' + error.message;
+                    });
+                } else {
+                    statusDiv.className = 'status info';
+                    statusDiv.textContent = 'Basket is empty';
+                }
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'FirebaseBasketIntegration not available';
+            }
+        }
+        
+        function clearBasket() {
+            const statusDiv = document.getElementById('basket-status');
+            if (window.FirebaseBasketIntegration) {
+                window.FirebaseBasketIntegration.clearBasket().then(() => {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = 'Basket cleared!';
+                    showBasket();
+                }).catch(error => {
+                    statusDiv.className = 'status error';
+                    statusDiv.textContent = 'Error clearing basket: ' + error.message;
+                });
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'FirebaseBasketIntegration not available';
+            }
+        }
+        
+        function showBasket() {
+            const contentsDiv = document.getElementById('basket-contents');
+            if (window.FirebaseBasketIntegration) {
+                const basket = window.FirebaseBasketIntegration.getCurrentBasket();
+                const count = window.FirebaseBasketIntegration.getCurrentBasketCount();
+                
+                if (basket.length === 0) {
+                    contentsDiv.innerHTML = '<p>Basket is empty</p>';
+                } else {
+                    let html = `<p>Basket contains ${count} items:</p>`;
+                    basket.forEach(item => {
+                        html += `
+                            <div class="basket-item">
+                                <div>
+                                    <img src="${item.imgUrl}" alt="${item.name}" onerror="this.style.display='none'">
+                                    <strong>${item.name}</strong>
+                                </div>
+                                <div>
+                                    <span>${item.newPrice}</span>
+                                    <span>Qty: ${item.quantity}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    contentsDiv.innerHTML = html;
+                }
+            } else {
+                contentsDiv.innerHTML = '<p>FirebaseBasketIntegration not available</p>';
+            }
+        }
+        
+        function updateDebugInfo() {
+            const debugDiv = document.getElementById('debug-info');
+            let info = '<h3>Debug Information:</h3>';
+            
+            // Check FirebaseBasketIntegration
+            if (window.FirebaseBasketIntegration) {
+                info += '<p>✅ FirebaseBasketIntegration available</p>';
+                info += `<p>Logged in: ${window.FirebaseBasketIntegration.isLoggedIn()}</p>`;
+                info += `<p>Current user: ${window.FirebaseBasketIntegration.getCurrentUser()?.uid || 'None'}</p>`;
+                info += `<p>Basket count: ${window.FirebaseBasketIntegration.getCurrentBasketCount()}</p>`;
+            } else {
+                info += '<p>❌ FirebaseBasketIntegration not available</p>';
+            }
+            
+            // Check localStorage
+            const basket = JSON.parse(localStorage.getItem('basket') || '[]');
+            info += `<p>localStorage basket items: ${basket.length}</p>`;
+            
+            // Check all localStorage keys
+            const allKeys = Object.keys(localStorage);
+            const basketKeys = allKeys.filter(key => key.startsWith('basket'));
+            info += `<p>localStorage basket keys: ${basketKeys.join(', ')}</p>`;
+            
+            debugDiv.innerHTML = info;
+        }
+        
+        // Listen for basket updates
+        window.addEventListener('basketAuthStateChanged', function(event) {
+            console.log('Basket auth state changed:', event.detail);
+            checkAuthStatus();
+            showBasket();
+        });
+        
+        window.addEventListener('cartUpdated', function(event) {
+            console.log('Cart updated:', event.detail);
+            showBasket();
+        });
+    </script>
+</body>
+</html> 

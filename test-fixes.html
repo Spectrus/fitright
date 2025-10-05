@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Fixes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Results for Basket Button and Hamburger Menu Fixes</h1>
+    
+    <div class="test-section">
+        <h2>Basket Button Test</h2>
+        <p>✅ <strong>Fixed:</strong> Added missing event listener for desktop basket button</p>
+        <p>✅ <strong>Fixed:</strong> Added click outside functionality to close dropdowns</p>
+        <p>✅ <strong>Fixed:</strong> Added renderCart() initialization call</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Hamburger Menu Test</h2>
+        <p>✅ <strong>Fixed:</strong> Corrected syntax error in DOMContentLoaded event listener</p>
+        <p>✅ <strong>Fixed:</strong> Proper event handling for menu toggle</p>
+        <p>✅ <strong>Fixed:</strong> Added click outside functionality to close menu</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>What was fixed:</h2>
+        <ul>
+            <li><strong>Basket Button Issue:</strong> The desktop basket button was missing its click event listener. Added proper event listener with toggle functionality.</li>
+            <li><strong>Hamburger Menu Issue:</strong> There was a syntax error in the DOMContentLoaded event listener (missing parenthesis). Fixed the syntax.</li>
+            <li><strong>Additional Improvements:</strong> Added click outside functionality to close both basket dropdowns and hamburger menu.</li>
+            <li><strong>Initialization:</strong> Added renderCart() call to initialize the basket display.</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>How to test:</h2>
+        <ol>
+            <li>Open the index.html file in a browser</li>
+            <li>Click on the basket icon (🛒) - it should now open/close the dropdown</li>
+            <li>On mobile view, click the hamburger menu (☰) - it should now open/close the navigation</li>
+            <li>Click outside both elements to verify they close properly</li>
+        </ol>
+    </div>
+    
+    <script>
+        console.log('Test page loaded successfully');
+        console.log('Basket button and hamburger menu fixes have been applied to index.html');
+    </script>
+</body>
+</html> 
