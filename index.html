@@ -1,0 +1,2769 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<title>
+   Fitrite
+  </title>
+<!-- Import Special Elite from Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet"/>
+<!-- Responsive Styles -->
+<link href="responsive-index.css" rel="stylesheet"/>
+<!-- Hamburger Menu Styles -->
+<link href="hamburger-menu.css" rel="stylesheet"/>
+<style>
+   /* Global Styles */
+    body {
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      padding-bottom: 50px;
+      position: relative;
+      min-height: 100vh;
+    }
+    /* Background Video Styling */
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+      display: block; /* Video is visible on load */
+    }
+    /* Video Last Frame Canvas */
+    #lastFrameCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      pointer-events: none;
+      display: none; /* Hidden initially */
+    }
+    /* Welcome Message Styling */
+    #welcomeMessage {
+      color: black;
+      font-size: 2.5em;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #welcomeMessage.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Content container (initially hidden) */
+    #content {
+      opacity: 0; /* Start with opacity 0 */
+      display: none; /* And not displayed */
+      transition: opacity 0.5s ease;
+    }
+    /* Add new style for when user is already authenticated */
+    #content.authenticated {
+      opacity: 1;
+      display: block;
+      transition: none;
+    }
+    /* Header: Logo and Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: transparent;
+      width: 100%;
+    }
+    header .logo h1 {
+      margin: 0;
+      font-size: 1.8em;
+      font-weight: normal;
+    }
+    header .logo p {
+      margin: 5px 0 0;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+    header nav {
+      margin-right: 40px;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    header nav ul li a {
+      color: black;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    header nav ul li a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background-color: transparent;
+    }
+    .hero h2 {
+      font-size: 2.5em;
+      margin: 0;
+      color: black;
+    }
+    /* Carousel Container */
+    .carousel-container {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+      width: 85%;
+      max-width: 750px;
+      padding: 20px 0;
+    }
+    
+    /* Carousel Track */
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      cursor: grab;
+    }
+    /* Carousel Items */
+    .carousel-item {
+      flex: 0 0 38vw;
+      text-align: center;
+      margin: 0 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      transform-origin: center;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      display: block;
+      opacity: 1;
+    }
+    .carousel-item a {
+      text-decoration: none;
+      color: black;
+      display: block;
+    }
+    /* Carousel Buttons */
+   
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      background-color: transparent;
+      color: black;
+      font-size: 0.9em;
+      padding: 10px 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+    footer p {
+      margin: 5px 0;
+    }
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: transparent;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      animation: fadeInModal 0.5s forwards;
+    }
+    .modal-content {
+      background: #fff;
+      border: 3px solid #000;
+      border-top: none;
+      border-radius: 10px;
+      width: 320px;
+      padding: 20px;
+      text-align: center;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+    }
+    .modal-content button {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 15px;
+      cursor: pointer;
+      background: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .modal-content button:hover {
+      background: #fff;
+      color: #000;
+      border-color: #000;
+    }
+    .modal-content input,
+    .modal-content textarea {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 2px solid #000;
+      border-radius: 5px;
+      background: #f4f4f4;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #000;
+    }
+    .modal-content input:focus,
+    .modal-content textarea:focus {
+      outline: none;
+      border-color: #333;
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    .hidden {
+      display: none;
+    }
+    @keyframes fadeInModal {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .auth-options {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+    .back-button {
+      position: absolute;
+      bottom: -15px;
+      right: -15px;
+      background: none !important;
+      border: none !important;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.75em;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      color: #333;
+    }
+    /* Background style after video ends */
+    .background-gradient {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    /* Forgot Password Link Styling */
+    .forgot-password {
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-size: 0.8em;
+      color: #333;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .forgot-password:hover {
+      color: #000;
+    }
+    /* Password Reset Form */
+    #passwordResetFormContainer {
+      text-align: center;
+    }
+    .success-message {
+      color: #28a745;
+      margin: 10px 0;
+      font-size: 0.9em;
+    }
+    .error-message {
+      color: #dc3545;
+      margin: 10px 0;
+      font-size: 0.9em;
+    }
+    /* Video overlay to capture clicks */
+    #videoOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      cursor: pointer;
+      background-color: transparent; /* Ensure it's transparent */
+    }
+    /* Hamburger Menu Styles */
+    @media screen and (max-width: 768px) {
+      header nav ul {
+        position: fixed;
+        top: 0;
+        right: -260px; /* Start off-screen */
+        width: 260px;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.97);
+        display: flex; /* keep flex to allow transition out */
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 60px 0 20px;
+        margin: 0;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: right 0.35s ease, opacity 0.25s ease;
+      }
+      
+      header nav ul.show {
+        right: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      
+      header nav ul li {
+        margin: 15px 0;
+        width: 80%;
+        text-align: center;
+      }
+      
+      .basket-mobile {
+        width: 80% !important;
+        margin: 15px 0 !important;
+        text-align: center !important;
+        position: static !important;
+        z-index: auto !important;
+      }
+      /* Basket button: underline the word BASKET (button text), not the counter */
+      #basketDropdownBtnMobile {
+        -webkit-tap-highlight-color: transparent; 
+        outline: none; 
+        font-size: 1.08em !important; 
+        padding: 9px !important; 
+        display: flex !important; 
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important; 
+        text-align: center !important; 
+        background: transparent !important; 
+        border: none !important; 
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        position: relative !important;
+        min-height: 44px; /* ensure consistent tap target height */
+      }
+      #basketCountMobile {
+        position: absolute !important;
+        right: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        margin-left: 0 !important;
+      }
+      #basketDropdownBtnMobile:hover .basket-label,
+      #basketDropdownBtnMobile:focus .basket-label,
+      #basketDropdownBtnMobile:active .basket-label { text-decoration: underline !important; }
+      #basketDropdownBtnMobile:hover #basketCountMobile,
+      #basketDropdownBtnMobile:focus #basketCountMobile,
+      #basketDropdownBtnMobile:active #basketCountMobile { text-decoration: none !important; border: none !important; }
+
+      /* Align dropdown with other menu items: make it full-width under the button */
+      #basketDropdownMobile {
+        position: static !important;
+        width: 100% !important;
+        left: auto !important;
+        right: auto !important;
+        margin-top: 0 !important;
+        border-radius: 0 0 15px 15px !important;
+      }
+      
+      header nav ul li a {
+        display: block;
+        padding: 9px; /* 10% smaller than 10px */
+        font-size: 1.08em; /* 10% smaller than 1.2em */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      /* Hover/focus effects in the mobile drawer: underline only */
+      header nav ul li a:hover,
+      header nav ul li a:focus,
+      header nav ul li a:active {
+        text-decoration: underline !important;
+        color: black !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+        border-radius: 0 !important;
+        filter: none !important;
+        transform: none !important;
+      }
+      /* Basket button underline behavior clarified above; remove duplicate rules */
+      
+      .hamburger-menu {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 22px;
+        cursor: pointer;
+        z-index: 1001;
+        background: transparent;
+        border: none;
+        padding: 0;
+      }
+      
+      .hamburger-menu span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: black;
+        border-radius: 3px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: all 0.25s ease-in-out;
+      }
+      
+      .hamburger-menu span:nth-child(1) { top: 0; }
+      .hamburger-menu span:nth-child(2) { top: 9px; }
+      .hamburger-menu span:nth-child(3) { top: 18px; }
+      
+      .hamburger-menu.active span:nth-child(1) {
+        top: 9px;
+        transform: rotate(135deg);
+      }
+      
+      .hamburger-menu.active span:nth-child(2) {
+        opacity: 0;
+        right: -60px;
+      }
+      
+      .hamburger-menu.active span:nth-child(3) {
+        top: 9px;
+        transform: rotate(-135deg);
+      }
+      
+      .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      
+      .menu-overlay.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .hamburger-menu { display: none; }
+      .menu-overlay { display: none; }
+      header nav ul { display: flex; }
+    }
+
+    /* Basket Dropdown Styles */
+    #basketDropdown {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: none;
+      max-height: 400px; /* Cap height like belts/leather jackets */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+      overscroll-behavior: contain;      /* Keep scroll inside the basket */
+    }
+    
+    #basketDropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Mobile dropdown: same expand/retract animation */
+    #basketDropdownMobile {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: none;
+      max-height: 250px;                 /* Cap height like belts/leather jackets */
+      overflow-y: auto;                   /* Scroll within dropdown */
+      -webkit-overflow-scrolling: touch;  /* Momentum scrolling on iOS */
+      overscroll-behavior: contain;       /* Keep scroll inside the basket */
+    }
+    #basketDropdownMobile.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    /* Match sunglasses.html removal animation */
+    .basket-fade-out {
+      opacity: 0;
+      transform: translateX(-20px) scale(0.95);
+      background-color: rgba(255, 0, 0, 0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    
+    .basket-fade-in {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      background-color: transparent;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .basket-row .basket-minus-btn {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    
+    .basket-row:hover .basket-minus-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* DESKTOP: Hide minus button by default inside the main basket dropdown */
+    #basketDropdown .basket-minus-btn {
+      opacity: 0; /* Hidden by default */
+    }
+
+    /* DESKTOP: Show minus button on hover inside the main basket dropdown */
+    #basketDropdown .basket-row:hover .basket-minus-btn {
+      opacity: 1; /* Visible on hover */
+    }
+
+    .basket-desktop { display: block; }
+    .basket-mobile { display: none; }
+    
+    .basket-mobile-btn:hover span:first-child {
+      text-decoration: underline;
+      color: black;
+    }
+
+    /* Only add border-bottom to basket rows except the last */
+    .basket-row:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Removed separate mobile dropdown; reuse #basketDropdown on mobile */
+
+    @media (max-width: 767px) {
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      
+      .basket-desktop { display: none !important; }
+      .basket-mobile { display: block !important; }
+      
+      /* Mobile basket dropdown positioning */
+      .basket-mobile {
+        position: relative !important;
+      }
+      
+      /* Reuse shared dropdown on mobile by placing it in the flow under the button */
+      #basketDropdown {
+        position: static !important;
+        right: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        min-width: unset !important;
+        max-width: 100% !important;
+        border-radius: 0 0 15px 15px !important;
+        box-shadow: none !important;
+        z-index: 1 !important;
+        margin: 0 !important;
+        padding: 0 0 10px 0 !important;
+        max-height: 250px !important;
+        overflow-y: auto !important;
+      }
+    }
+  </style>
+  <style>
+    /* Smooth removal animation for basket rows */
+    .basket-row {
+      transition:
+        opacity .32s ease,
+        transform .32s ease,
+        max-height .32s ease,
+        margin .32s ease,
+        padding .32s ease;
+      will-change: opacity, transform, max-height, margin, padding;
+      max-height: 200px;
+    }
+    .basket-row.removing {
+      opacity: 0;
+      transform: translateX(-12px) scale(.98);
+      max-height: 0;
+      margin-top: 0; margin-bottom: 0;
+      padding-top: 0; padding-bottom: 0;
+      pointer-events: none;
+    }
+
+    /* Quantity bump */
+    [data-qty].qty-bump, .basket-qty.qty-bump {
+      animation: qtyBump .18s ease-out both;
+    }
+    @keyframes qtyBump {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    /* Minus press nudge */
+    .basket-minus-btn:active { transform: scale(.96); }
+  </style>
+<style>
+   /* --- Carousel Fitrite Start --- */
+
+/* Styles for the product carousel implementing natural swipe as per pasted_content.txt */
+.horizontal-carousel-container {
+    width: 80%; /* Retaining existing layout width from original CSS */
+    max-width: 1200px; /* Retaining existing layout max-width */
+    margin: 50px auto; /* Retaining existing layout margin */
+    position: relative; /* Retaining existing layout position */
+    padding: 10px 0; /* Retaining existing padding for some vertical space */
+
+    /* Core swipe functionality from pasted_content.txt */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    scroll-snap-type: x mandatory; /* Snap to items */
+    scroll-behavior: smooth; /* Smooth scrolling for programmatic scrolls (though not used here) */
+}
+
+.carousel-track {
+    display: flex;
+    flex-wrap: nowrap; /* Ensures items stay in a single horizontal line */
+    gap: 1rem; /* Spacing between product items, as per pasted_content.txt */
+    /* Remove any JS-driven transform/transition if they were here */
+    /* Remove visibility: hidden if it was here */
+}
+
+.carousel-item {
+    flex: 0 0 auto; /* Items do not grow or shrink, maintain their base size */
+    width: 150px; /* Width for each product item, as per pasted_content.txt */
+    scroll-snap-align: start; /* Align the start of the item to the snap point */
+    
+    /* Basic existing styling to maintain appearance */
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0; /* Reset margin, gap on .carousel-track will handle spacing */
+    /* Remove transitions, opacity, transform related to old JS-driven effects */
+    /* e.g., no .carousel-item-central or .carousel-item-upcoming specific styles */
+}
+
+.carousel-item img {
+    width: 100%; /* Image takes full width of its .carousel-item (250px) */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Retain existing border-radius */
+    display: block; /* Retain existing display property */
+    margin-bottom: 8px; /* Retain existing margin for spacing below image */
+}
+
+.carousel-item p { /* Basic styling for product name under the image */
+    margin: 0;
+    font-size: 1em; /* Example, adjust as needed */
+    color: black; /* Assuming text color from existing theme */
+    padding: 5px 0; /* Some padding for the text */
+}
+
+/* Responsive adjustments for the swipe carousel */
+@media (max-width: 768px) {
+    .carousel-item {
+        width: 220px; /* Slightly smaller items on tablets */
+    }
+    .horizontal-carousel-container {
+        width: 90%; /* More screen width on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item {
+        width: 180px; /* Smaller items on mobile */
+    }
+    .horizontal-carousel-container {
+        width: 95%; /* Even more screen width on mobile */
+    }
+    .carousel-track {
+        gap: 0.5rem; /* Reduced gap on small screens */
+    }
+}
+
+.carousel {
+  overflow-x: auto;            /* Enables horizontal scroll */
+  overflow-y: hidden;          /* Prevents vertical overflow */
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* Internet Explorer and Edge */
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari */
+}
+
+.scrollable-element {
+  overflow: auto;              /* Enables scrolling */
+  scrollbar-width: none;       /* Hides scrollbar in Firefox */
+  -ms-overflow-style: none;    /* Hides scrollbar in Internet Explorer/Edge */
+}
+
+.scrollable-element::-webkit-scrollbar {
+  display: none;               /* Hides scrollbar in Chrome/Safari */
+}
+
+.horizontal-carousel-container {
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* Internet Explorer/Edge */
+}
+
+.horizontal-carousel-container::-webkit-scrollbar {
+  display: none;                 /* Chrome, Safari */
+}
+
+/* --- Carousel Fitrite End --- */
+  </style>
+<style>
+  /* Estilos adicionados para o efeito de hover no carrossel de produtos */
+  .carousel-item {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .carousel-item:hover {
+    transform: scale(1.1);
+    z-index: 5;
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .carousel-item:hover + .carousel-item {
+    transform: scale(1.05);
+    opacity: 0.85;
+    z-index: 4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  .carousel-item {
+    flex: 0 0 auto;
+    width: 225px;
+    text-align: center;
+    margin: 0 10px;
+    position: relative;
+    transform-origin: center; /* ensure it scales inward */
+    transition: transform 0.3s, box-shadow 0.3s;
+    will-change: transform; /* optimize smoothness */
+  }
+
+  #welcomeMessage {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    color: black;
+    font-size: 2.5em;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10;
+  }
+  
+  #welcomeMessage.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  
+  .horizontal-carousel-container {
+    margin-top: 85px; /* adjust to push it lower */
+  }
+  
+  .horizontal-carousel-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+  
+  .carousel-track {
+    display: flex;
+    gap: 0.5rem; /* Smaller gap (≈ 8px) */
+  }
+  
+  .horizontal-carousel-container {
+    scroll-snap-type: none !important;
+  }
+  .carousel-item {
+    scroll-snap-align: unset !important;
+  }
+  
+</style>
+<style>
+  /* Ensure shared basket dropdown becomes visible when toggled */
+  #basketDropdown.show {
+    display: block !important;
+  }
+</style>
+  <style>
+    /* Desktop: show only the hovered row's minus button */
+    @media (min-width: 768px) {
+      #basketDropdown .basket-minus-btn {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.2s ease;
+      }
+      #basketDropdown .basket-row:hover .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+    /* Mobile: always visible */
+    @media (max-width: 767px) {
+      #basketDropdown .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Background Video -->
+<video autoplay="" id="bgVideo" muted="" playsinline="">
+<source src="INTRO.mp4" type="video/mp4"/>
+   Your browser does not support the video tag.
+  </video>
+<!-- Canvas for last frame capture -->
+<canvas id="lastFrameCanvas">
+</canvas>
+<!-- Invisible overlay to capture clicks -->
+<div id="videoOverlay">
+</div>
+<!-- Choice Modal -->
+<div class="modal" id="choiceModal">
+<div class="modal-content">
+<button id="guestButton">
+     Continue as Guest
+    </button>
+<button id="userButton">
+     Continue as User
+    </button>
+</div>
+</div>
+<!-- Authentication Modal - Hidden by default, will be shown on click -->
+<div class="modal" id="authModal">
+<!-- Account Options -->
+<div class="modal-content" id="authChoice">
+<h2>
+     Account Options
+    </h2>
+<div class="auth-options">
+<button id="loginOption" onclick="showLoginForm()">
+      Log In
+     </button>
+<button id="signupOption" onclick="showSignupForm()">
+      Sign Up
+     </button>
+</div>
+<button class="back-button" id="backFromAuthChoice" onclick="goBackFromAuthChoice()">
+     ⟵ Back
+    </button>
+</div>
+<!-- Login Form -->
+<div class="modal-content hidden" id="loginFormContainer">
+<h2>
+     Log In
+    </h2>
+<form id="loginForm" onsubmit="handleLogin(event)">
+<input name="email" placeholder="Email" required="" type="email"/>
+<br/>
+<br/>
+<input name="password" placeholder="Password" required="" type="password"/>
+<br/>
+<a class="forgot-password" href="#" id="forgotPasswordLink" onclick="showPasswordReset()">
+      Forgot Password?
+     </a>
+<br/>
+<button type="submit">
+      Log In
+     </button>
+</form>
+<button class="back-button" id="backFromLogin" onclick="goBackFromLogin()">
+     ⟵ Back
+    </button>
+</div>
+<!-- Sign Up Form -->
+<div class="modal-content hidden" id="signupFormContainer">
+<h2>
+     Sign Up
+    </h2>
+<form id="signupForm" onsubmit="handleSignup(event)">
+<input name="email" placeholder="Email" required="" type="email"/>
+<br/>
+<br/>
+<input name="password" placeholder="Password" required="" type="password"/>
+<br/>
+<br/>
+<input name="confirmPassword" placeholder="Confirm Password" required="" type="password"/>
+<br/>
+<br/>
+<button type="submit">
+      Sign Up
+     </button>
+</form>
+<button class="back-button" id="backFromSignup" onclick="goBackFromSignup()">
+     ⟵ Back
+    </button>
+</div>
+<!-- Password Reset Form -->
+<div class="modal-content hidden" id="passwordResetFormContainer">
+<h2>
+     Reset Password
+    </h2>
+<p>
+     Enter your email address and we'll send you a link to reset your password.
+    </p>
+<form id="passwordResetForm" onsubmit="handlePasswordReset(event)">
+<input name="resetEmail" placeholder="Email" required="" type="email"/>
+<br/>
+<br/>
+<button type="submit">
+      Send Reset Link
+     </button>
+</form>
+<div class="hidden" id="resetMessage">
+</div>
+<button class="back-button" id="backFromPasswordReset" onclick="goBackFromPasswordReset()">
+     ⟵ Back
+    </button>
+</div>
+</div>
+<!-- Main Content -->
+<div id="content">
+<!-- Header -->
+<header>
+<div class="logo">
+<h1>
+      FITRITE
+     </h1>
+<p>
+     Selling Moments In Time
+     </p>
+</div>
+<div class="hamburger-menu" id="hamburgerMenu">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</div>
+<div class="menu-overlay" id="menuOverlay">
+</div>
+<nav>
+<ul id="navMenu">
+<li>
+<a class="button" href="#" id="homeButton">HOME</a>
+</li>
+<li>
+<a class="button" href="page2.html">
+        FITTING ROOM
+       </a>
+</li>
+<li>
+<a class="button" href="page3.html">
+        CHECKOUT
+       </a>
+</li>
+<li>
+<a class="button" href="#" id="logoutButton" onclick="handleLogout()">
+        LOGOUT
+       </a>
+</li>
+<li class="basket-desktop" style="position: relative; z-index: 3000;">
+    <div class="basket-btn-container" style="position: relative; display: inline-block;">
+    <button id="basketDropdownBtn" style="background:none;border:none;cursor:pointer;position:relative; top: -1px; font-size: 1.2em;">
+        🛒
+        <span id="basketCount" style="font-size:0.8em;background:#000;color:#fff;border-radius:50%;padding:2px 6px;position:absolute;top:-8px;right:-10px;display:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;">0</span>
+    </button>
+    <div id="basketDropdown" style="display:none;position:absolute;right:0;top:40px;min-width:300px;max-width:350px;background:#fff;border:1px solid #ddd;border-radius:15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:3001;padding:15px 10px 10px 10px;">
+        <div id="basketDropdownContent" style="padding-top:20px;">Your basket is empty.</div>
+        <div id="basketDropdownFooter" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+          <button id="clearBasketBtn" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+        </div>
+    </div>
+    </div>
+</li>
+<li class="basket-mobile" style="display: none; position: relative; z-index: 3000;">
+    <button id="basketDropdownBtnMobile" class="basket-mobile-btn" style="background:none; border:none; cursor:pointer; width:100%; padding: 10px; display:block; border-bottom: 1px solid rgba(0, 0, 0, 0.1); font-family: 'Special Elite', monospace; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.2em; color: black; text-align: center;">
+        <span class="basket-label">   BASKET</span>
+        <span id="basketCountMobile" style="font-size: 0.8em; background: rgb(0, 0, 0); color: rgb(255, 255, 255); border-radius: 50%; padding: 2px 6px; margin-left: 8px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; height: 20px; min-width: 20px;">0</span>
+    </button>
+    <div id="basketDropdownMobile" style="display:none;position:absolute;top:100%;left:0;right:0;width:100%;background:#fff;border:1px solid #ddd;border-radius:0 0 15px 15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:3001;padding:15px 10px 10px 10px;">
+      <div id="basketDropdownContentMobile" style="padding-top:20px;">Your basket is empty.</div>
+      <div id="basketDropdownFooterMobile" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+        <button id="clearBasketBtnMobile" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+      </div>
+    </div>
+</li>
+</ul>
+</nav>
+</header>
+<!-- Hero Section -->
+<section class="hero">
+<h2 id="welcomeMessage" style="display: none;">
+     WELCOME
+    </h2>
+</section>
+<!-- Carousel Section -->
+<main>
+<div class="horizontal-carousel-container">
+<div class="carousel-track">
+<div class="carousel-item">
+<a href="leather_jackets.html">
+<img alt="Leather Jackets" src="Symbol1.jpg"/>
+<p>
+         Leather Jackets
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="belts.html">
+<img alt="Belts" src="Symbol8.jpg"/>
+<p>
+         Belts
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="footwear.html">
+<img alt="Footwear" src="Symbol9.webp"/>
+<p>
+         Footwear
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="sunglasses.html">
+<img alt="Sunglasses" src="Symbol2.webp"/>
+<p>
+         Sunglasses
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="caps_and_hats.html">
+<img alt="Caps and Hats" src="Symbol10.webp"/>
+<p>
+         Caps and Hats
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="bags.html">
+<img alt="Bags" src="Symbol3.png"/>
+<p>
+         Bags
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="scarves.html">
+<img alt="Scarves" src="Symbol4.jpg"/>
+<p>
+         Scarves
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="gloves.html">
+<img alt="Gloves" src="Symbol6.jpg"/>
+<p>
+         Gloves
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="wallets.html">
+<img alt="Wallets" src="Symbol5.jpg"/>
+<p>
+         Wallets
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="bargains.html">
+<img alt="Bargains" src="Symbol7.jpg"/>
+<p>
+         Bargains
+        </p>
+</a>
+</div>
+<div class="carousel-item">
+<a href="Accessories.html">
+<img alt="Accessories" src="Accessories.jpg"/>
+<p>
+         Accessories
+        </p>
+</a>
+</div>
+</div>
+</div>
+<!-- Firebase cart + Shared basket (match bags.html) -->
+  <script type="module" src="./firebase.js?v=2"></script>
+  <script type="module" src="./fitright-cart-only.js?v=2"></script>
+  <script src="./shared-basket-dropdown.js"></script>
+</main>
+<!-- Footer -->
+<footer>
+<p>
+     © 2024 Fitrite. All rights reserved.
+    </p>
+</footer>
+</div>
+<style>
+  /* Match scarves/sunglasses: slide-up Clear Basket on hover, and only show minus on hover (desktop) */
+  @media (min-width: 768px) {
+    /* Minus hidden until basket dropdown hover */
+    #basketDropdown .basket-minus-btn {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity 0.2s ease;
+    }
+    #basketDropdown .basket-row:hover .basket-minus-btn {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Clear Basket footer slides up on hover */
+    #basketDropdownFooter {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    #basketDropdown:hover #basketDropdownFooter {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile: mirror slide-up behavior for mobile dropdown */
+  @media (max-width: 767px) {
+    #basketDropdownFooterMobile {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    #basketDropdownMobile:hover #basketDropdownFooterMobile {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
+  <script type="module" src="cartSync.js"></script>
+  <script>
+    // Inline basket logic adapted from scarves.html while keeping Firebase as baseline
+    (function(){
+      const basketDropdownBtn = document.getElementById('basketDropdownBtn');
+      const basketDropdownBtnMobile = document.getElementById('basketDropdownBtnMobile');
+      const basketDropdown = document.getElementById('basketDropdown');
+      const basketDropdownMobile = document.getElementById('basketDropdownMobile');
+      const basketDropdownContent = document.getElementById('basketDropdownContent');
+      const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+      const basketCount = document.getElementById('basketCount');
+      const basketCountMobile = document.getElementById('basketCountMobile');
+
+      function renderCart() {
+        if (!window.FitRightFirebase) return;
+        const cartItems = window.FitRightFirebase.getCartItems();
+        const count = window.FitRightFirebase.getCartCount();
+        if (basketCount) { basketCount.textContent = count; basketCount.style.display = count>0?'inline-block':'none'; }
+        if (basketCountMobile) { basketCountMobile.textContent = count; basketCountMobile.style.display = count>0?'inline-block':'none'; }
+        const empty = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (!cartItems || cartItems.length === 0) {
+          if (basketDropdownContent) basketDropdownContent.innerHTML = empty;
+          if (basketDropdownContentMobile) basketDropdownContentMobile.innerHTML = empty;
+          return;
+        }
+        const html = cartItems.map((item, idx) => `
+          <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+            <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+              <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;">
+            </div>
+            <div style="flex:1;">
+              <div style="font-family:'Special Elite',monospace;font-size:1em;">${item.productName || item.name}</div>
+              <div style="font-size:1em;font-weight:bold;">${window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || item.price != null) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || '£0.00')}</div>
+              <div style="font-size:0.95em;color:#555;">Qty: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+              ${(() => { const s = ((item.selectedSize || item.size) || '').toString().trim(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;\">Size: ${s}</div>` : '' })()}
+            </div>
+            <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+          </div>
+        `).join('');
+        if (basketDropdownContent) { basketDropdownContent.innerHTML = html; bindMinusHandlers(basketDropdownContent); }
+        if (basketDropdownContentMobile) { basketDropdownContentMobile.innerHTML = html; bindMinusHandlers(basketDropdownContentMobile); }
+      }
+
+      function bindMinusHandlers(container){
+        if (!container) return;
+        container.querySelectorAll('.basket-minus-btn').forEach(btn => {
+          btn.addEventListener('click', async function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            const itemId = this.getAttribute('data-id');
+            const row = this.closest('.basket-row');
+            try {
+              if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn && window.FitRightFirebase.isLoggedIn()) {
+                const items = (window.FitRightFirebase.getCartItems && window.FitRightFirebase.getCartItems()) || [];
+                const current = items.find(it => (it.id || it.productId || it.name) == itemId);
+                const qty = current?.quantity || 1;
+                if (qty > 1 && window.FitRightFirebase.updateQuantity) {
+                  await window.FitRightFirebase.updateQuantity(itemId, qty - 1);
+                  updateBasketDropdown();
+                } else if (window.FitRightFirebase.removeFromCart) {
+                  if (row) row.classList.add('basket-fade-out');
+                  // Wait slightly longer than the CSS transition (~320ms)
+                  setTimeout(async () => { await window.FitRightFirebase.removeFromCart(itemId); updateBasketDropdown(); }, 380);
+                }
+              } else {
+                let basket = JSON.parse(localStorage.getItem('basket') || '[]');
+                const idxAttr = parseInt(this.getAttribute('data-index'), 10);
+                let idx = Number.isFinite(idxAttr) ? idxAttr : basket.findIndex(it => (it.id || it.productId || it.name) == itemId);
+                if (idx >= 0) {
+                  const q = basket[idx].quantity || 1;
+                  if (q > 1) {
+                    basket[idx].quantity = q - 1;
+                    localStorage.setItem('basket', JSON.stringify(basket));
+                    updateBasketDropdown();
+                  } else {
+                    if (row) row.classList.add('basket-fade-out');
+                    setTimeout(() => {
+                      basket.splice(idx,1);
+                      localStorage.setItem('basket', JSON.stringify(basket));
+                      updateBasketDropdown();
+                    }, 380);
+                    return; // Avoid immediate refresh
+                  }
+                }
+                else {
+                  updateBasketDropdown();
+                }
+              }
+            } catch(err) {
+              console.error('Minus handler error:', err);
+            }
+          });
+        });
+      }
+
+      function updateBasketDropdown(){
+        let cartItems = [];
+        let count = 0;
+        if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+          cartItems = window.FitRightFirebase.getCartItems() || [];
+          count = window.FitRightFirebase.getCartCount ? window.FitRightFirebase.getCartCount() : cartItems.reduce((s,i)=>s+(i.quantity||1),0);
+        } else {
+          const basket = JSON.parse(localStorage.getItem('basket')||'[]');
+          cartItems = basket;
+          count = basket.reduce((s,i)=>s+(i.quantity||1),0);
+        }
+        if (basketCount) { basketCount.textContent = count; basketCount.style.display = count>0?'inline-block':'none'; }
+        if (basketCountMobile) { basketCountMobile.textContent = count; basketCountMobile.style.display = count>0?'inline-block':'none'; }
+        const empty = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        if (!cartItems.length) {
+          if (basketDropdownContent) basketDropdownContent.innerHTML = empty;
+          if (basketDropdownContentMobile) basketDropdownContentMobile.innerHTML = empty;
+          document.getElementById('basketDropdownFooter')?.style && (document.getElementById('basketDropdownFooter').style.display='none');
+          document.getElementById('basketDropdownFooterMobile')?.style && (document.getElementById('basketDropdownFooterMobile').style.display='none');
+          return;
+        }
+        const html = cartItems.map((item, idx) => `
+          <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+            <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+              <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;">
+            </div>
+            <div style="flex:1;">
+              <div style="font-family:'Special Elite',monospace;font-size:1em;">${item.productName || item.name}</div>
+              <div style="font-size:1em;font-weight:bold;">${window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || item.price != null) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || '£0.00')}</div>
+              <div style="font-size:0.95em;color:#555;">Qty: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+              ${(() => { const s = ((item.selectedSize || item.size) || '').toString().trim(); return s && s.toLowerCase() !== 'standard' ? `<div style=\"font-size:0.95em;color:#555;\">Size: ${s}</div>` : '' })()}
+            </div>
+            <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+          </div>
+        `).join('');
+        if (basketDropdownContent) { basketDropdownContent.innerHTML = html; bindMinusHandlers(basketDropdownContent); }
+        if (basketDropdownContentMobile) { basketDropdownContentMobile.innerHTML = html; bindMinusHandlers(basketDropdownContentMobile); }
+        document.getElementById('basketDropdownFooter')?.style && (document.getElementById('basketDropdownFooter').style.display='block');
+        document.getElementById('basketDropdownFooterMobile')?.style && (document.getElementById('basketDropdownFooterMobile').style.display='block');
+      }
+
+      // Listen for cart updates
+      window.addEventListener('cartUpdated', renderCart);
+
+      // Toggle handlers matching scarves
+      if (basketDropdownBtn) {
+        basketDropdownBtn.addEventListener('click', function(e){
+          e.stopPropagation();
+          updateBasketDropdown();
+          if (basketDropdown.classList.contains('show')) { basketDropdown.classList.remove('show'); setTimeout(()=>basketDropdown.style.display='none',300); }
+          else { basketDropdown.style.display='block'; setTimeout(()=>basketDropdown.classList.add('show'),10); }
+        });
+      }
+      if (basketDropdownBtnMobile && basketDropdownMobile) {
+        basketDropdownBtnMobile.addEventListener('click', function(e){
+          e.stopPropagation();
+          updateBasketDropdown();
+          if (basketDropdownMobile.classList.contains('show')) { basketDropdownMobile.classList.remove('show'); setTimeout(()=>basketDropdownMobile.style.display='none',300); }
+          else { basketDropdownMobile.style.display='block'; setTimeout(()=>basketDropdownMobile.classList.add('show'),10); }
+        });
+      }
+      document.addEventListener('click', function(e){
+        if (!basketDropdown.contains(e.target) && !basketDropdownBtn.contains(e.target)) {
+          if (basketDropdown.classList.contains('show')) { basketDropdown.classList.remove('show'); setTimeout(()=>basketDropdown.style.display='none',300); }
+        }
+        if (basketDropdownMobile && !basketDropdownMobile.contains(e.target) && (!basketDropdownBtnMobile || !basketDropdownBtnMobile.contains(e.target))) {
+          if (basketDropdownMobile.classList.contains('show')) { basketDropdownMobile.classList.remove('show'); setTimeout(()=>basketDropdownMobile.style.display='none',300); }
+        }
+      });
+
+      // Clear buttons
+      const clearBasketBtn = document.getElementById('clearBasketBtn');
+      const clearBasketBtnMobile = document.getElementById('clearBasketBtnMobile');
+      function clearBasket(){
+        if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+          window.FitRightFirebase.clearCart().then(()=>{ updateBasketDropdown(); }).catch(()=>{});
+        } else {
+          localStorage.removeItem('basket');
+          updateBasketDropdown();
+        }
+      }
+      if (clearBasketBtn) clearBasketBtn.addEventListener('click', (e)=>{ e.stopPropagation(); if (confirm('Are you sure you want to clear your basket?')) clearBasket(); });
+      if (clearBasketBtnMobile) clearBasketBtnMobile.addEventListener('click', (e)=>{ e.stopPropagation(); if (confirm('Are you sure you want to clear your basket?')) clearBasket(); });
+
+      // Initial render
+      document.addEventListener('DOMContentLoaded', function(){
+        if (window.FitRightFirebase && window.FitRightFirebase.loadCart) {
+          window.FitRightFirebase.loadCart().then(()=>{ renderCart(); });
+        }
+        updateBasketDropdown();
+      });
+      window.addEventListener('storage', function(e){ if (e.key==='basket') updateBasketDropdown(); });
+    })();
+  </script>
+  
+  <!-- Mobile basket button uses shared dropdown; move after button and toggle -->
+  <script>
+    (function () {
+    // Prevent double dropdowns on mobile: if dedicated mobile dropdown exists, skip reusing desktop dropdown
+    if (document.getElementById('basketDropdownMobile')) { return; }
+    (function bindMobileBasket() {
+      const btnMobile = document.getElementById('basketDropdownBtnMobile');
+      const dd = document.getElementById('basketDropdown');
+      if (!btnMobile || !dd) return;
+      const toggle = (e) => {
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        if (e.preventDefault) e.preventDefault();
+        e.stopPropagation();
+        try { window.dispatchEvent(new CustomEvent('cartUpdated')); } catch(_) {}
+        if (window.innerWidth <= 767) {
+          const li = btnMobile.closest('li');
+          if (li && li.nextSibling !== dd) li.parentNode.insertBefore(dd, li.nextSibling);
+        }
+        if (dd.classList.contains('show')) {
+          dd.classList.remove('show');
+          setTimeout(() => { dd.style.display = 'none'; }, 300);
+        } else {
+          dd.style.display = 'block';
+          requestAnimationFrame(() => dd.classList.add('show'));
+        }
+      };
+      btnMobile.addEventListener('click', toggle, { passive: false });
+      btnMobile.addEventListener('touchend', toggle, { passive: false });
+      document.addEventListener('click', (e) => {
+        const inside = e.target.closest('#basketDropdown') || e.target.closest('#basketDropdownBtn') || e.target.closest('#basketDropdownBtnMobile');
+        if (!inside && dd.classList.contains('show')) {
+          dd.classList.remove('show');
+          setTimeout(() => { dd.style.display = 'none'; }, 300);
+        }
+      });
+    })();
+    })();
+  </script>
+  <script></script>
+<script type="module">
+/*
+    IMPORTANT: As per the user's command (from pasted_content.txt), 
+    any existing JavaScript logic that actively controls the product carousel's movement 
+    (e.g., for custom dragging, programmatic scrolling, button navigation, auto-scroll, or item centering/scaling effects) 
+    must be disabled or removed for the '.horizontal-carousel-container' and its children.
+    The requirement is for a pure CSS-driven swipe experience using 'overflow-x: auto' and 'scroll-snap'.
+    Please review the JavaScript below, particularly any functions or event listeners 
+    (mousedown, touchstart, mousemove, touchmove, etc.) tied to carousel elements 
+    like '.horizontal-carousel-container', '.carousel-track', or '.carousel-item'.
+    Variables like 'isDragging', 'autoScroll', 'currentIndex', 'startPos', 'currentDelta' related to the carousel 
+    might indicate such logic and should be neutralized for this specific carousel.
+    */
+
+   import {
+      auth,
+      db,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      sendPasswordResetEmail,
+      setDoc,
+      doc,
+      getDoc
+    } from './firebase.js';
+    
+    // Global variables
+    let currentUserID = null;
+    let modalTimeout = null;
+    let choiceModalShown = false;
+  
+    let userInteracted = false;
+    let carousel, originalItems, itemWidth, allItems, currentIndex;
+    let autoScroll;
+    let isDragging = false;
+    let startPos = 0;
+    let currentDelta = 0;
+
+    // Global variables for video capture
+    let lastSecondFrames = [];
+    const FRAMES_PER_SECOND = 30; // Number of frames to capture per second
+    let isCapturingLastSecond = false;
+
+    // DOM elements
+    const bgVideo = document.getElementById('bgVideo');
+    const videoOverlay = document.getElementById('videoOverlay');
+    const lastFrameCanvas = document.getElementById('lastFrameCanvas');
+    const content = document.getElementById("content");
+    const choiceModal = document.getElementById("choiceModal");
+    const authModal = document.getElementById("authModal");
+    const welcomeMessage = document.getElementById("welcomeMessage");
+
+    // Function to capture video frame
+    function captureVideoFrame() {
+      if (bgVideo && lastFrameCanvas) {
+        const ctx = lastFrameCanvas.getContext('2d');
+        lastFrameCanvas.width = bgVideo.videoWidth;
+        lastFrameCanvas.height = bgVideo.videoHeight;
+        ctx.drawImage(bgVideo, 0, 0);
+        
+        // Only store the frame if we're in the last half second
+        if (bgVideo.currentTime >= bgVideo.duration - 0.5) {
+          try {
+            const lastFrameData = lastFrameCanvas.toDataURL('image/jpeg');
+            localStorage.setItem('lastFrameData', lastFrameData);
+          } catch (error) {
+            console.error("[Video Frame] Error storing last frame:)", error);
+          }
+        }
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedUserMode = localStorage.getItem('userMode');
+      const userAuthenticated = localStorage.getItem('userAuthenticated');
+      const hasVisited = sessionStorage.getItem('hasVisited');
+      const storedLastFrame = localStorage.getItem('lastFrameData');
+      
+      if (hasVisited) {
+        // If userMode is set, skip modal and show content
+        if (storedUserMode === 'user' && userAuthenticated === 'true') {
+          bgVideo.style.display = 'none';
+          if (storedLastFrame) {
+            const img = new Image();
+            img.onload = function() {
+              lastFrameCanvas.width = img.width;
+              lastFrameCanvas.height = img.height;
+              const ctx = lastFrameCanvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              lastFrameCanvas.style.display = 'block';
+              lastFrameCanvas.style.zIndex = '-1';
+            };
+            img.src = storedLastFrame;
+          }
+          revealContent();
+        } else if (storedUserMode === 'guest') {
+          bgVideo.style.display = 'none';
+          if (storedLastFrame) {
+            const img = new Image();
+            img.onload = function() {
+              lastFrameCanvas.width = img.width;
+              lastFrameCanvas.height = img.height;
+              const ctx = lastFrameCanvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              lastFrameCanvas.style.display = 'block';
+              lastFrameCanvas.style.zIndex = '-1';
+            };
+            img.src = storedLastFrame;
+          }
+          revealContent();
+        } else {
+          // For returning visitors without a mode set, show modal immediately
+          choiceModal.style.display = 'flex';
+          bgVideo.style.display = 'none';
+          if (storedLastFrame) {
+            const img = new Image();
+            img.onload = function () {
+              lastFrameCanvas.width = img.width;
+              lastFrameCanvas.height = img.height;
+              const ctx = lastFrameCanvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              lastFrameCanvas.style.display = 'block';
+              lastFrameCanvas.style.zIndex = '-1';
+            };
+            img.src = storedLastFrame;
+          }
+        }
+      } else {
+        // First visit, play video
+        console.log("[Startup] First visit, playing video");
+        sessionStorage.setItem('hasVisited', 'true');
+        setupVideo();
+      }
+    });
+    
+    console.log("[Main Script] Initializing...");
+    
+    // Set up initial state
+    content.style.display = "none";
+    content.style.opacity = "0";
+    choiceModal.style.display = "none";
+    
+    // Add background gradient immediately
+    document.body.classList.add('background-gradient');
+    
+    // Show video overlay to capture clicks - ONLY for first-time visitors
+    if (videoOverlay && !sessionStorage.getItem('hasVisited')) {
+      videoOverlay.style.display = "block";
+      
+      // Add immediate click handler
+      videoOverlay.addEventListener('click', function() {
+        console.log("[videoOverlay] Clicked, showing choice modal immediately");
+        videoOverlay.style.display = "none";
+        choiceModal.style.display = "flex";
+        userInteracted = true;
+      });
+      
+      // Automatically show choice modal after 7 seconds
+      setTimeout(function() {
+        if (!userInteracted) {
+          console.log("[videoOverlay] Auto-showing choice modal after 7 seconds");
+          videoOverlay.style.display = "none";
+          choiceModal.style.display = "flex";
+        }
+      }, 3250);
+    }
+      
+    
+    
+    // Set initial state for interaction flags
+    userInteracted = false;
+    choiceModalShown = false;
+
+    // Check if user has a session already
+    
+    
+    // Handle video playback and transition
+    
+    
+    // Set up event listeners for guest/user buttons
+    document.getElementById("guestButton").addEventListener("click", function() {
+      console.log("[guestButton] clicked.");
+      localStorage.setItem('userMode', 'guest');
+      revealContent();
+    });
+    
+    document.getElementById("userButton").addEventListener("click", function() {
+      console.log("[userButton] clicked. Showing authModal.");
+      localStorage.setItem('userMode', 'user');
+      choiceModal.style.display = "none";
+      authModal.style.display = "flex";
+    });
+    document.getElementById("signupOption").addEventListener("click", showSignupForm);
+    document.getElementById("loginOption").addEventListener("click", showLoginForm);
+    document.getElementById("backFromAuthChoice").addEventListener("click", goBackFromAuthChoice);
+    document.getElementById("backFromLogin").addEventListener("click", goBackFromLogin);
+    document.getElementById("backFromSignup").addEventListener("click", goBackFromSignup);
+    document.getElementById("backFromPasswordReset").addEventListener("click", goBackFromPasswordReset);
+
+    // Set up home button
+    document.getElementById("homeButton").addEventListener("click", function(e) {
+      e.preventDefault();
+      // Just refresh the page
+      window.location.reload();
+    });
+    document.getElementById("loginForm").addEventListener("submit", handleLogin);
+    document.getElementById("signupForm").addEventListener("submit", handleSignup);
+
+    ;
+    // Function to set up video behavior
+    function setupVideo() {
+      if (bgVideo) {
+        console.log("[Video Logic] Setting up video event listeners");
+    
+        // Reset frame capture
+        lastSecondFrames = [];
+        isCapturingLastSecond = false;
+    
+        // Force video to load and try autoplay
+        bgVideo.style.display = 'block';
+        bgVideo.currentTime = 0;
+    
+        const videoPlayAttempt = bgVideo.play();
+    
+        // 🧠 If browser blocks autoplay (common), fallback after 2 seconds
+        if (videoPlayAttempt !== undefined) {
+          videoPlayAttempt
+            .then(() => {
+              console.log("[Video Logic] Autoplay succeeded");
+            })
+            .catch((error) => {
+              console.warn("[Video Logic] Autoplay failed. Forcing fallback.");
+              fallbackToSession();
+            });
+        } else {
+          console.warn("[Video Logic] .play() not supported?");
+          fallbackToSession();
+        }
+    
+        // --- The usual listeners ---
+        bgVideo.addEventListener('timeupdate', function () {
+          if (bgVideo.currentTime > 0) {
+            captureVideoFrame();
+          }
+        });
+    
+        bgVideo.addEventListener('ended', function () {
+          console.log("[Video Logic] Video playback ended");
+          videoEnded = true;
+          lastFrameCanvas.style.display = 'block';
+          lastFrameCanvas.style.zIndex = '-1';
+          bgVideo.style.opacity = '0';
+          bgVideo.style.transition = 'opacity 1s ease';
+          setTimeout(() => {
+            bgVideo.style.display = 'none';
+            checkExistingSession();
+          }, 1000);
+        });
+    
+      } else {
+        console.log("[Video Logic] Video element not found");
+        fallbackToSession();
+      }
+    }
+    function fallbackToSession() {
+      console.log("[Fallback] Forcing session check without video end.");
+      videoEnded = true;
+    
+      // If the session is stored, resume it — or show the modal
+      const storedUserMode = localStorage.getItem('userMode');
+      if (storedUserMode) {
+        console.log("[Session] Found stored user mode:", storedUserMode);
+        
+        // If we have a stored background state, apply it
+        if (localStorage.getItem('videoEnded') === 'true') {
+          console.log("[Session] Applying stored background state");
+          videoEnded = true;
+          
+          // Hide video and show gradient background
+          if (bgVideo) {
+            bgVideo.style.display = 'none';
+            bgVideo.pause();
+          }
+          
+          document.body.classList.add('background-gradient');
+          
+          // If we have a stored last frame, display it
+          const storedLastFrame = localStorage.getItem('lastFrameData');
+          if (storedLastFrame && lastFrameCanvas) {
+            const img = new Image();
+            img.onload = function() {
+              lastFrameCanvas.width = img.width;
+              lastFrameCanvas.height = img.height;
+              const ctx = lastFrameCanvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              lastFrameCanvas.style.display = 'block';
+              lastFrameCanvas.style.zIndex = '-1';
+            };
+            img.src = storedLastFrame;
+          }
+          
+          // Check if user is authenticated
+          if (localStorage.getItem('userAuthenticated') === 'true') {
+            console.log("[Session] User is authenticated, restoring session");
+            currentUserID = localStorage.getItem('userID');
+            userInteracted = true;
+            
+            // Hide video overlay since user is already authenticated
+            if (videoOverlay) {
+              videoOverlay.style.display = "none";
+            }
+            
+            // Show content immediately
+            revealContent();
+          }
+          // If user mode is guest, show content immediately
+          else if (storedUserMode === 'guest') {
+            console.log("[Session] User is a guest, showing content");
+            userInteracted = true;
+            
+            // Hide video overlay since user is already a guest
+            if (videoOverlay) {
+              videoOverlay.style.display = "none";
+            }
+            
+            revealContent();
+          }
+        }
+      }
+    }
+    
+    // Function to start the page (show choice modal or content)
+    function startPage() {
+      console.log("[startPage] Starting page...");
+      
+      // Store that video has ended
+      localStorage.setItem('videoEnded', 'true');
+      
+      // Store the last frame data if available
+      if (lastFrameCanvas) {
+        try {
+          const lastFrameData = lastFrameCanvas.toDataURL('image/jpeg');
+          localStorage.setItem('lastFrameData', lastFrameData);
+        } catch (error) {
+          console.error("[startPage] Error storing last frame:", error);
+        }
+      }
+      
+      // Check if user is already authenticated
+      if (currentUserID) {
+        console.log("[startPage] User is authenticated, showing content");
+        revealContent();
+      } else {
+        // Check if we have a stored user mode
+        const storedUserMode = localStorage.getItem('userMode');
+        
+        if (storedUserMode === 'guest') {
+          console.log("[startPage] User was a guest, showing content");
+          revealContent();
+        } else if (storedUserMode === 'user') {
+          console.log("[startPage] User was logged in, showing auth modal");
+          choiceModal.style.display = "none";
+          authModal.style.display = "flex";
+        } else {
+          console.log("[startPage] No stored user mode, showing auth modal directly");
+          // Auth modal is already displayed
+        }
+      }
+    }
+
+    // Function to show authenticated content
+    function showAuthenticatedContent() {
+      content.classList.add("authenticated");
+      content.style.display = "block";
+      content.style.visibility = "visible";
+      content.style.opacity = "1";
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          initializeCarousel();
+        });
+      }, 100);
+      
+    }
+
+    // Function to show choice modal
+    function showChoiceModal() {
+      console.log("[showChoiceModal] Triggered by click");
+      
+      userInteracted = true;
+      
+      if (!choiceModalShown) {
+        console.log("[showChoiceModal] Showing choice modal");
+        
+        // Show the choice modal immediately
+        choiceModal.style.display = "flex";
+        choiceModalShown = true;
+        
+        if (videoOverlay) {
+          videoOverlay.onclick = null;
+          console.log("[showChoiceModal] Removed click event listener");
+        }
+      } else {
+        console.log("[showChoiceModal] Modal already shown, ignoring click");
+      }
+    }
+
+    // Function to reveal content
+    function revealContent() {
+      console.log("[revealContent] Starting content reveal...");
+      clearTimeout(modalTimeout);
+      
+      // Hide the video overlay
+      if (videoOverlay) {
+        videoOverlay.style.display = "none";
+      }
+      
+      content.style.display = "block";
+      content.style.opacity = "1";
+      content.style.visibility = "visible";
+      
+      // Initialize carousel
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          initializeCarousel();
+        });
+      }, 100);
+      
+      // Show welcome message based on user type
+      if (localStorage.getItem('userMode') === 'guest') {
+        welcomeMessage.textContent = "WELCOME";
+        welcomeMessage.style.display = "block";
+        setTimeout(() => {
+          welcomeMessage.classList.add("visible");
+          setTimeout(() => {
+            welcomeMessage.classList.remove("visible");
+            setTimeout(() => {
+              welcomeMessage.style.display = "none";
+            }, 500);
+          }, 3500);
+        }, 100);
+      } else if (localStorage.getItem('userMode') === 'user') {
+        // Check if this is a new user
+        if (localStorage.getItem('isNewUser') === 'true') {
+          welcomeMessage.textContent = "WELCOME";
+          localStorage.removeItem('isNewUser'); // Remove the flag after using it
+        } else {
+          welcomeMessage.textContent = "WELCOME BACK";
+        }
+        welcomeMessage.style.display = "block";
+        setTimeout(() => {
+          welcomeMessage.classList.add("visible");
+          setTimeout(() => {
+            welcomeMessage.classList.remove("visible");
+            setTimeout(() => {
+              welcomeMessage.style.display = "none";
+            }, 500);
+          }, 3500);
+        }, 100);
+      }
+      
+      choiceModal.style.display = "none";
+      authModal.style.display = "none";
+      console.log("[revealContent] Content reveal complete");
+    }
+
+    // Function to show login form
+    function showLoginForm() {
+      console.log("[loginOption] clicked, showing login form.");
+      document.getElementById("authChoice").classList.add("hidden");
+      document.getElementById("loginFormContainer").classList.remove("hidden");
+    }
+
+    // Function to show signup form
+    function showSignupForm() {
+      console.log("[signupOption] clicked, showing signup form.");
+      document.getElementById("authChoice").classList.add("hidden");
+      document.getElementById("signupFormContainer").classList.remove("hidden");
+    }
+
+    // Function to show password reset form
+    function showPasswordReset(e) {
+      if (e) e.preventDefault();
+      console.log("[forgotPasswordLink] clicked.");
+      document.getElementById("loginFormContainer").classList.add("hidden");
+      document.getElementById("passwordResetFormContainer").classList.remove("hidden");
+    }
+
+    // Function to go back from login form
+    function goBackFromLogin() {
+      console.log("[backFromLogin] clicked.");
+      document.getElementById("loginFormContainer").classList.add("hidden");
+      document.getElementById("authChoice").classList.remove("hidden");
+    }
+
+    // Function to go back from signup form
+    function goBackFromSignup() {
+      console.log("[backFromSignup] clicked.");
+      document.getElementById("signupFormContainer").classList.add("hidden");
+      document.getElementById("authChoice").classList.remove("hidden");
+    }
+
+    // Function to go back from auth choice
+    function goBackFromAuthChoice() {
+      console.log("[backFromAuthChoice] clicked.");
+      authModal.style.display = "none";
+      // Show choice modal when going back from auth choice
+      choiceModal.style.display = "flex";
+    }
+
+    // Function to go back from password reset form
+    function goBackFromPasswordReset() {
+      console.log("[backFromPasswordReset] clicked.");
+      document.getElementById("passwordResetFormContainer").classList.add("hidden");
+      document.getElementById("loginFormContainer").classList.remove("hidden");
+      document.getElementById("resetMessage").classList.add("hidden");
+      document.getElementById("resetMessage").textContent = "";
+    }
+
+    // Function to handle login
+    function handleLogin(e) {
+      e.preventDefault();
+      console.log("[loginForm] submitted.");
+    
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+    
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          currentUserID = user.uid;
+    
+          localStorage.setItem('userMode', 'user');
+          localStorage.setItem('userAuthenticated', 'true');
+          localStorage.setItem('userID', user.uid);
+          localStorage.setItem('userEmail', user.email);
+    
+          welcomeMessage.textContent = "WELCOME BACK";
+          welcomeMessage.style.display = "block";
+          setTimeout(() => {
+            welcomeMessage.classList.add("visible");
+            setTimeout(() => {
+              welcomeMessage.classList.remove("visible");
+              setTimeout(() => {
+                welcomeMessage.style.display = "none";
+              }, 500);
+            }, 3500);
+          }, 100);
+    
+          revealContent();
+        })
+        .catch((error) => {
+          console.error("[loginForm] Error logging in:", error.message);
+          alert("Login failed: " + error.message);
+        });
+    }
+    
+    // Function to handle signup
+    function handleSignup(e) {
+      e.preventDefault();
+      console.log("[signupForm] submitted explicitly.");
+    
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      const confirmPassword = e.target.confirmPassword.value;
+    
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+      }
+    
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          currentUserID = user.uid;
+    
+          // Create user document in Firestore
+          setDoc(doc(db, "users", user.uid), {
+            email: user.email,
+            createdAt: new Date(),
+          }).then(() => {
+            // Set local storage values
+            localStorage.setItem("userMode", "user");
+            localStorage.setItem("userAuthenticated", "true");
+            localStorage.setItem("userID", user.uid);
+            localStorage.setItem("userEmail", user.email);
+            localStorage.setItem("isNewUser", "true"); // Add flag for new user
+
+            // Show welcome message
+            welcomeMessage.textContent = "WELCOME";
+            welcomeMessage.style.display = "block";
+            setTimeout(() => {
+              welcomeMessage.classList.add("visible");
+              setTimeout(() => {
+                welcomeMessage.classList.remove("visible");
+                setTimeout(() => {
+                  welcomeMessage.style.display = "none";
+                }, 500);
+              }, 3500);
+            }, 100);
+    
+            // Automatically sign in the user
+            signInWithEmailAndPassword(auth, email, password)
+              .then(() => {
+                console.log("[signupForm] User automatically signed in after registration");
+                revealContent();
+              })
+              .catch((error) => {
+                console.error("[signupForm] Error signing in after registration:", error.message);
+                alert("Registration successful but automatic login failed. Please try logging in manually.");
+              });
+          });
+        })
+        .catch((error) => {
+          console.error("[signupForm] Error during signup:", error.message);
+          alert("Signup failed: " + error.message);
+        });
+    }
+    
+
+
+   
+    
+    // Function to handle password reset
+    function handlePasswordReset(e) {
+      e.preventDefault();
+      const resetEmail = e.target.resetEmail.value;
+      const resetMessage = document.getElementById("resetMessage");
+    
+      sendPasswordResetEmail(auth, resetEmail)
+        .then(() => {
+          console.log("[passwordResetForm] Reset email sent to:", resetEmail);
+          resetMessage.textContent = "Password reset email sent! Check your inbox.";
+          resetMessage.className = "success-message";
+          resetMessage.classList.remove("hidden");
+    
+          e.target.reset();
+    
+          setTimeout(() => {
+            document.getElementById("passwordResetFormContainer").classList.add("hidden");
+            document.getElementById("loginFormContainer").classList.remove("hidden");
+            resetMessage.classList.add("hidden");
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("[passwordResetForm] Error sending reset:", error.message);
+          resetMessage.textContent = "Failed to send reset email: " + error.message;
+          resetMessage.className = "error-message";
+          resetMessage.classList.remove("hidden");
+        });
+    }
+    // Function to handle logout
+    function handleLogout() {
+      try {
+        console.log("[handleLogout] Starting logout process...");
+    
+        // If auto-scroll running, stop it
+      
+    
+        // Only clear authentication data, keep user mode
+        localStorage.removeItem('userAuthenticated');
+        localStorage.removeItem('userID');
+        localStorage.removeItem('userEmail');
+        
+        // Keep userMode to remember guest/user choice
+        localStorage.removeItem('userMode');
+
+        // Hide content with animation
+        content.style.opacity = "0";
+        welcomeMessage.style.display = "none";
+        welcomeMessage.classList.remove("visible");
+
+        // Sign out from Firebase
+        signOut(auth).then(() => {
+          console.log("[handleLogout] Firebase sign-out complete.");
+        }).catch((error) => {
+          console.error("[handleLogout] Firebase sign-out error:", error);
+        });
+
+        // Wait for animation to complete
+        setTimeout(() => {
+          content.style.display = "none";
+          content.classList.remove("authenticated");
+
+          // Reset forms
+          if (document.getElementById("loginForm")) {
+            document.getElementById("loginForm").reset();
+          }
+          if (document.getElementById("signupForm")) {
+            document.getElementById("signupForm").reset();
+          }
+          if (document.getElementById("passwordResetForm")) {
+            document.getElementById("passwordResetForm").reset();
+          }
+
+          // Reset modal states
+          document.getElementById("loginFormContainer").classList.add("hidden");
+          document.getElementById("signupFormContainer").classList.add("hidden");
+          document.getElementById("passwordResetFormContainer").classList.add("hidden");
+          document.getElementById("authChoice").classList.remove("hidden");
+
+          // Kill current session but keep user mode
+          currentUserID = null;
+          console.log("[handleLogout] Session cleared");
+
+          // Show the choice modal again for a fresh start
+          choiceModal.style.display = "flex";
+          authModal.style.display = "none";
+
+          // Show video overlay again
+          if (videoOverlay) {
+            videoOverlay.style.display = "block";
+          }
+        }, 500);
+    
+      } catch (error) {
+        console.error("[handleLogout] Error:", error);
+        alert("Error logging out: " + error.message);
+      }
+    }
+    
+
+    // Carousel functions
+    function getContainerWidth() {
+      return document.querySelector('.carousel-container').offsetWidth;
+    }
+
+    function setCarouselTranslate(index) {
+      // Align the 'index'-th item (from the cloned list) such that its left edge
+      // is at the beginning of the carousel container's visible area.
+      // 'itemWidth' includes item content + margin.
+      // 'index' is the current position in the 'allItems' (cloned) array.
+      const translateX = index * itemWidth;
+      carousel.style.transform = `translateX(-${translateX}px)`;
+      
+      // The updateScaling() function, called after this, will handle the visual
+      // highlighting (scaling/opacity) of the item(s) currently in the center
+      // of the container's viewport.
+    }
+
+    function initializeCarousel() {
+      carousel = document.getElementById('carousel');
+      if (!carousel) return;
+      originalItems = Array.from(document.querySelectorAll('.carousel-item'));
+      if (originalItems.length === 0) return;
+      itemWidth = originalItems[0].offsetWidth + 20;
+
+      // Clone items for infinite loop effect
+      originalItems.forEach(item => {
+        const cloneAtFront = item.cloneNode(true);
+        const cloneAtBack = item.cloneNode(true);
+        carousel.insertBefore(cloneAtFront, carousel.firstChild);
+        carousel.appendChild(cloneAtBack);
+      });
+      allItems = Array.from(document.querySelectorAll('.carousel-item'));
+      currentIndex = originalItems.length; // Start at the first "real" item
+
+      // Initial position: Set without transition, then re-enable for future moves
+      carousel.style.transition = 'none';
+      setCarouselTranslate(currentIndex);
+      // Force reflow/repaint to ensure the style is applied synchronously before re-enabling transition
+      void carousel.offsetWidth; 
+      carousel.style.transition = 'transform 0.5s ease-in-out';
+
+      carousel.addEventListener('transitionend', () => {
+        let jumped = false;
+        // Check if the carousel has landed on a cloned item at either end
+        if (currentIndex < originalItems.length) { // Landed on a clone at the beginning
+          currentIndex += originalItems.length; // Silently jump to the corresponding "real" item
+          jumped = true;
+        } else if (currentIndex >= originalItems.length * 2) { // Landed on a clone at the end
+          currentIndex -= originalItems.length; // Silently jump to the corresponding "real" item
+          jumped = true;
+        }
+
+        if (jumped) {
+          // Perform the jump without animation
+          carousel.style.transition = 'none'; 
+          setCarouselTranslate(currentIndex);
+          // Force reflow/repaint to ensure the jump is visually instantaneous
+          void carousel.offsetWidth; 
+          // Re-enable transitions for subsequent user-initiated or automatic moves
+          carousel.style.transition = 'transform 0.5s ease-in-out';
+        }
+        // Update scaling for all items after any transition or jump
+        updateScaling();
+      });
+
+      // Autoscroll functionality (remains unchanged)
+      autoScroll = setInterval(() => {
+        moveCarousel(1);
+      }, 4000);
+      
+
+     
+
+      // Initial scaling of items (remains unchanged)
+      updateScaling();
+    }
+
+    function updateScaling() {
+      if (!carousel || !allItems) return;
+      const containerRect = document.querySelector('.carousel-container').getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      let minDistance = Infinity;
+      let highlightedItem = null;
+      allItems.forEach(item => {
+        const itemRect = item.getBoundingClientRect();
+        const itemCenter = itemRect.left + itemRect.width / 2;
+        const distance = Math.abs(containerCenter - itemCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          highlightedItem = item;
+        }
+        const scale = Math.max(0.8, 1 - distance / 1000);
+        item.style.transform = `scale(${scale})`;
+        item.style.opacity = Math.max(0.6, 1 - distance / 1000);
+      });
+      if (highlightedItem) {
+        highlightedItem.style.transform = 'scale(1.05)';
+        highlightedItem.style.opacity = '1';
+        highlightedItem.style.zIndex = '5';
+      }
+    }
+
+    function moveCarousel(direction) {
+      if (!carousel) return;
+      carousel.style.transition = 'transform 0.5s ease-in-out';
+      currentIndex += direction;
+      setCarouselTranslate(currentIndex);
+    }
+
+    function dragStart(e) {
+      if (!carousel) return;
+      isDragging = true;
+      startPos = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      currentDelta = 0;
+      carousel.style.transition = 'none';
+      carousel.style.cursor = 'grabbing';
+    }
+
+    function dragMove(e) {
+      if (!isDragging || !carousel) return;
+      const currentPos = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      currentDelta = currentPos - startPos;
+      const containerWidth = getContainerWidth();
+      const translateX = currentIndex * itemWidth + itemWidth / 2 - containerWidth / 2 - currentDelta;
+      carousel.style.transform = `translateX(-${translateX}px)`;
+    }
+
+    function dragEnd() {
+      if (!isDragging || !carousel) return;
+      isDragging = false;
+      carousel.style.cursor = 'grab';
+      carousel.style.transition = 'transform 0.5s ease-in-out';
+      if (Math.abs(currentDelta) > 50) {
+        currentIndex += currentDelta > 0 ? -1 : 1;
+      }
+      setCarouselTranslate(currentIndex);
+    }
+     // Make functions accessible globally for button onclicks
+    window.showLoginForm = showLoginForm;
+    window.showSignupForm = showSignupForm;
+    window.goBackFromAuthChoice = goBackFromAuthChoice;
+    window.goBackFromLogin = goBackFromLogin;
+    window.goBackFromSignup = goBackFromSignup;
+    window.showPasswordReset = showPasswordReset;
+    window.goBackFromPasswordReset = goBackFromPasswordReset;
+    window.handleLogin = handleLogin;
+    window.handleSignup = handleSignup;
+    window.handlePasswordReset = handlePasswordReset;
+    window.moveCarousel = moveCarousel;
+    window.handleLogout = handleLogout;
+  </script>
+<script>    
+        // Chamar após a inicialização e após a clonagem de itens
+
+
+   
+// --- Carousel Fitrite Start ---
+
+const CAROUSEL_BTN_PREV_ID = 'fitrite-carousel-prev';
+const CAROUSEL_BTN_NEXT_ID = 'fitrite-carousel-next';
+const CENTRAL_ITEM_CLASS = 'carousel-item-central';
+const UPCOMING_ITEM_CLASS = 'carousel-item-upcoming';
+
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.horizontal-carousel-container');
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.getElementById(CAROUSEL_BTN_PREV_ID);
+    const nextBtn = document.getElementById(CAROUSEL_BTN_NEXT_ID);
+
+    if (!container || !track || !track.children.length || !prevBtn || !nextBtn) {
+        console.warn('Carousel elements (container, track, items, or buttons) not found.');
+        return;
+    }
+
+    let items = Array.from(track.children);
+    const originalItemCount = items.length;
+    if (originalItemCount === 0) return;
+
+    const cloneCountPerSide = Math.max(3, Math.ceil(5 / originalItemCount) + 2);
+
+    for (let i = 0; i < cloneCountPerSide; i++) {
+        items.forEach(item => track.appendChild(item.cloneNode(true)));
+        items.slice().reverse().forEach(item => track.insertBefore(item.cloneNode(true), track.firstChild));
+    }
+    
+    items = Array.from(track.children);
+    
+    let itemWidth = 0;
+    let currentLogicalIndex = originalItemCount * cloneCountPerSide;
+    let currentPosition = 0;
+    
+    let animationFrameId = null;
+    const autoSlideSpeed = 0.5;
+    let isDragging = false;
+    let isPointerHeldOnTrack = false;
+    let startX, dragStartTrackPosition;
+    let isPausedByInteraction = false;
+    let resumeAutoSlideTimeout = null;
+    const RESUME_DELAY = 3000;
+
+    function calculateItemWidth() {
+        if (items.length > 0 && items[0].offsetParent !== null) {
+            const style = getComputedStyle(items[0]);
+            return items[0].offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+        }
+        return 200;
+    }
+
+    function updatePosition(animate = false) {
+        if (itemWidth <=0) itemWidth = calculateItemWidth();
+        currentPosition = - (currentLogicalIndex * itemWidth);
+        if (animate) {
+            track.style.transition = 'transform 0.4s ease-out';
+        } else {
+            track.style.transition = 'none';
+        }
+        track.style.transform = 'translateX(' + currentPosition + 'px)';
+        updateHighlighting();
+        
+        if(animate) {
+            setTimeout(() => { track.style.transition = 'none'; }, 400);
+        }
+    }
+    
+    function updateHighlighting() {
+        if (itemWidth <= 0) return;
+        const containerRect = container.getBoundingClientRect();
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        items.forEach(item => {
+            item.classList.remove(CENTRAL_ITEM_CLASS, UPCOMING_ITEM_CLASS);
+        });
+
+        let centralItem = null;
+        let minDistanceToCenter = Infinity;
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const itemRect = item.getBoundingClientRect();
+            if (itemRect.right < containerRect.left || itemRect.left > containerRect.right) {
+                continue;
+            }
+            const itemCenter = itemRect.left + itemRect.width / 2;
+            const distance = Math.abs(containerCenter - itemCenter);
+
+            if (distance < minDistanceToCenter && itemRect.width > 0) {
+                minDistanceToCenter = distance;
+                centralItem = item;
+            }
+        }
+        
+        if (centralItem) {
+            centralItem.classList.add(CENTRAL_ITEM_CLASS);
+            const centralIndexInAllItems = items.indexOf(centralItem);
+            if (centralIndexInAllItems < items.length - 1) {
+                const upcomingItem = items[centralIndexInAllItems + 1];
+                if(upcomingItem) upcomingItem.classList.add(UPCOMING_ITEM_CLASS);
+            }
+        }
+    }
+
+    function continuousScroll() {
+        if (isPausedByInteraction || isDragging || itemWidth <= 0) {
+            animationFrameId = requestAnimationFrame(continuousScroll);
+            return;
+        }
+        currentPosition -= autoSlideSpeed;
+        track.style.transform = 'translateX(' + currentPosition + 'px)';
+
+        const totalWidthOfOriginalItems = originalItemCount * itemWidth;
+        if (currentPosition <= -(totalWidthOfOriginalItems * (cloneCountPerSide + 1))) {
+            currentPosition += totalWidthOfOriginalItems;
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(' + currentPosition + 'px)';
+            void track.offsetWidth;
+            track.style.transition = '';
+        }
+        updateHighlighting();
+        animationFrameId = requestAnimationFrame(continuousScroll);
+    }
+
+    function startContinuousScroll() {
+        stopContinuousScroll();
+        if (itemWidth > 0) {
+            isPausedByInteraction = false;
+            animationFrameId = requestAnimationFrame(continuousScroll);
+        }
+    }
+
+    function stopContinuousScroll(temporarily = false) {
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+        if (!temporarily) isPausedByInteraction = false;
+        else isPausedByInteraction = true;
+    }
+
+    function handleInteractionPause() {
+        stopContinuousScroll(true);
+        clearTimeout(resumeAutoSlideTimeout);
+        resumeAutoSlideTimeout = setTimeout(() => {
+            if (!isDragging) startContinuousScroll();
+        }, RESUME_DELAY);
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (itemWidth <=0) return;
+        currentLogicalIndex--;
+        updatePosition(true);
+        clearTimeout(resumeAutoSlideTimeout); // Limpa qualquer timeout anterior
+                resumeAutoSlideTimeout = setTimeout(() => {
+                    if (!isDragging && !isPointerHeldOnTrack && !isPausedByInteraction) { // Verifica se não há outras pausas ativas
+                        startContinuousScroll();
+                    }
+                }, 450); // Mantém um pequeno delay para a transição do item completar
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (itemWidth <=0) return;
+        currentLogicalIndex++;
+        updatePosition(true);
+        clearTimeout(resumeAutoSlideTimeout); // Limpa qualquer timeout anterior
+                resumeAutoSlideTimeout = setTimeout(() => {
+                    if (!isDragging && !isPointerHeldOnTrack && !isPausedByInteraction) { // Verifica se não há outras pausas ativas
+                        startContinuousScroll();
+                    }
+                }, 450); // Mantém um pequeno delay para a transição do item completar
+    });
+
+    track.addEventListener('mousedown', (e) => {
+        isPointerHeldOnTrack = true;
+        isPointerHeldOnItem = true;
+                dragOccurredDuringItemHold = false;
+                stopContinuousScroll(true); // Pausa temporária
+                // Remover a classe de hover de todos os itens para evitar que o item clicado fique com hover durante o arrasto
+                track.querySelectorAll("." + HOVERED_ITEM_CLASS).forEach(i => i.classList.remove(HOVERED_ITEM_CLASS));
+        if (itemWidth <= 0) return;
+        isDragging = true;
+        startX = e.pageX;
+        dragStartTrackPosition = currentPosition;
+        stopContinuousScroll(true);
+        track.style.cursor = 'grabbing';
+        track.style.transition = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging || itemWidth <= 0) return;
+        dragOccurredDuringItemHold = true;
+        e.preventDefault();
+        const walk = e.pageX - startX;
+        currentPosition = dragStartTrackPosition + walk;
+        track.style.transform = 'translateX(' + currentPosition + 'px)';
+        updateHighlighting();
+    });
+
+    document.addEventListener('mouseup', () => {
+                const wasPointerHeldOnTrackBeforeDragCheck = isPointerHeldOnTrack;
+                const wasDraggingBeforeDragCheck = isDragging;
+                if (isPointerHeldOnTrack) { isPointerHeldOnTrack = false; }
+        
+                // A lógica de drag (if (wasDraggingBeforeDragCheck)) vem depois...
+                // Se não estava arrastando, mas estava segurando:
+                if (wasPointerHeldOnTrackBeforeDragCheck && !wasDraggingBeforeDragCheck) {
+                    startContinuousScroll();
+                }
+                    if (isPointerHeldOnItem) {
+                isPointerHeldOnItem = false;
+                // A lógica de snap (updatePosition(true)) já deve estar no final do drag (isDragging = false)
+                // Aqui, focamos em retomar o auto-scroll
+                if (dragOccurredDuringItemHold) {
+                    handleInteractionPause(); // Retoma com delay após um arrasto
+                } else {
+                    // Se não houve arrasto (foi um clique/toque rápido ou só segurou sem mover)
+                    // Retomar imediatamente se não estiver pausado por hover no container/botão
+                    if (!container.matches(":hover") && !prevButton.matches(":hover") && !nextButton.matches(":hover")) {
+                         clearTimeout(resumeAutoSlideTimeout); // Limpa qualquer timeout pendente de handleInteractionPause
+                         isManuallyPaused = false; // Garante que não está manualmente pausado
+                         startContinuousScroll(); // Retoma imediatamente
+                    }
+                }
+                dragOccurredDuringItemHold = false; // Reset para a próxima interação
+            }
+    
+    });
+    
+    track.addEventListener('touchstart', (e) => {
+        isPointerHeldOnTrack = true;
+        isPointerHeldOnItem = true;
+                dragOccurredDuringItemHold = false;
+                stopContinuousScroll(true); // Pausa temporária
+                // Remover a classe de hover de todos os itens para evitar que o item clicado fique com hover durante o arrasto
+                track.querySelectorAll("." + HOVERED_ITEM_CLASS).forEach(i => i.classList.remove(HOVERED_ITEM_CLASS));
+        if (itemWidth <= 0) return;
+        isDragging = true;
+        startX = e.touches[0].pageX;
+        dragStartTrackPosition = currentPosition;
+        stopContinuousScroll(true);
+        track.style.transition = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging || itemWidth <= 0) return;
+        const walk = e.touches[0].pageX - startX;
+        currentPosition = dragStartTrackPosition + walk;
+        track.style.transform = 'translateX(' + currentPosition + 'px)';
+        updateHighlighting();
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {        if (isPointerHeldOnItem) {
+                isPointerHeldOnItem = false;
+                // A lógica de snap (updatePosition(true)) já deve estar no final do drag (isDragging = false)
+                // Aqui, focamos em retomar o auto-scroll
+                if (dragOccurredDuringItemHold) {
+                    handleInteractionPause(); // Retoma com delay após um arrasto
+                } else {
+                    // Se não houve arrasto (foi um clique/toque rápido ou só segurou sem mover)
+                    // Retomar imediatamente se não estiver pausado por hover no container/botão
+                    if (!container.matches(":hover") && !prevButton.matches(":hover") && !nextButton.matches(":hover")) {
+                         clearTimeout(resumeAutoSlideTimeout); // Limpa qualquer timeout pendente de handleInteractionPause
+                         isManuallyPaused = false; // Garante que não está manualmente pausado
+                         startContinuousScroll(); // Retoma imediatamente
+                    }
+                }
+                dragOccurredDuringItemHold = false; // Reset para a próxima interação
+            }
+    
+    });
+    
+   
+
+    function initializeCarousel() {
+      items.forEach((item, index) => {
+        item.addEventListener('mouseenter', () => {
+            // Remove existing highlights
+            items.forEach(i => {
+                i.classList.remove('hovered-main', 'hovered-next');
+            });
+    
+            item.classList.add('hovered-main');
+            if (items[index + 1]) {
+                items[index + 1].classList.add('hovered-next');
+            }
+        });
+    
+        item.addEventListener('mouseleave', () => {
+            item.classList.remove('hovered-main');
+            if (items[index + 1]) {
+                items[index + 1].classList.remove('hovered-next');
+            }
+        });
+    });
+    
+        itemWidth = calculateItemWidth();
+        if (itemWidth <= 0) {
+            console.warn("Item width could not be calculated on init, retrying...");
+            setTimeout(initializeCarousel, 100);
+            return;
+        }
+        updatePosition(false);
+        track.style.visibility = 'visible';
+        startContinuousScroll();
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            stopContinuousScroll(true);
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                itemWidth = calculateItemWidth();
+                updatePosition(false);
+                if (!isDragging) startContinuousScroll();
+            }, 250);
+        });
+    }
+    
+    setTimeout(initializeCarousel, 150);
+});
+// --- Carousel Fitrite End ---
+</script>
+<!-- Your existing scripts -->
+<script>
+  const container = document.querySelector('.horizontal-carousel-container');
+
+  let lastScrollLeft = container.scrollLeft;
+  let lastTime = Date.now();
+
+  container.addEventListener('scroll', () => {
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const now = Date.now();
+    const deltaTime = now - lastTime || 1;
+    const deltaScroll = Math.abs(container.scrollLeft - lastScrollLeft);
+    const velocity = deltaScroll / deltaTime;
+
+    lastScrollLeft = container.scrollLeft;
+    lastTime = now;
+
+    const baseDistance = 40;
+    const baseDuration = 1000;
+    const intensity = Math.min(velocity * baseDistance * 2.5, baseDistance);  // max ~40px
+    const duration = Math.min(velocity * baseDuration * 3, 3000);  // max ~3000ms
+    const MIN_INTENSITY = 10; // Minimum bounce to trigger
+
+    if (intensity < MIN_INTENSITY) return; // 🚫 Skip bounce if not strong enough
+
+    // BOUNCE AT START
+    if (container.scrollLeft <= 0) {
+      container.animate([
+        { transform: 'translateX(0)' },
+        { transform: `translateX(${intensity}px)` },
+        { transform: `translateX(${-intensity / 2}px)` },
+        { transform: `translateX(${intensity / 4}px)` },
+        { transform: 'translateX(0)' }
+      ], {
+        duration,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+      });
+    }
+
+    // BOUNCE AT END
+    if (container.scrollLeft >= maxScroll - 1) {
+      container.animate([
+        { transform: 'translateX(0)' },
+        { transform: `translateX(-${intensity}px)` },
+        { transform: `translateX(${intensity / 2}px)` },
+        { transform: `translateX(-${intensity / 4}px)` },
+        { transform: 'translateX(0)' }
+      ], {
+        duration,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+      });
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const navUl = document.querySelector('header nav ul');
+    const menuOverlay = document.querySelector('.menu-overlay');
+
+    if (hamburgerMenu && navUl && menuOverlay) {
+      hamburgerMenu.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent click from bubbling up to document
+        hamburgerMenu.classList.toggle('active');
+        navUl.classList.toggle('show');
+        menuOverlay.classList.toggle('show');
+      });
+
+      // Close menu when clicking on a menu item (link)
+      navUl.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (navUl.classList.contains('show')) {
+            hamburgerMenu.classList.remove('active');
+            navUl.classList.remove('show');
+            menuOverlay.classList.remove('show');
+          }
+        });
+      });
+
+      // Close menu when clicking on the overlay
+      menuOverlay.addEventListener('click', () => {
+        if (navUl.classList.contains('show')) {
+          hamburgerMenu.classList.remove('active');
+          navUl.classList.remove('show');
+          menuOverlay.classList.remove('show');
+        }
+      });
+
+      // Close menu when clicking anywhere outside the menu (but not on the hamburger itself)
+      document.addEventListener('click', (event) => {
+        if (navUl.classList.contains('show') && 
+            !navUl.contains(event.target) && 
+            !hamburgerMenu.contains(event.target) && 
+            event.target !== hamburgerMenu) {
+          hamburgerMenu.classList.remove('active');
+          navUl.classList.remove('show');
+          menuOverlay.classList.remove('show');
+        }
+      });
+    }
+
+    // Fallback for the user's original HTML structure if provided
+    const toggleById = document.getElementById('menuToggle');
+    const navById = document.getElementById('mobileNav');
+
+    if (toggleById && navById) {
+      toggleById.addEventListener('click', (event) => {
+        event.stopPropagation();
+        navById.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (event) => {
+        if (
+          navById.classList.contains('active') &&
+          !navById.contains(event.target) &&
+          !toggleById.contains(event.target) &&
+          event.target !== toggleById
+        ) {
+          navById.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>
