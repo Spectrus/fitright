@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bags - Fitrite</title>
+  <!-- Google Font for header and heading -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Reset and Box Model Standardization */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header: Transparent, Special Elite, black text */
+    header {
+      position: relative;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: transparent;
+      width: 100%;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: black;
+    }
+    
+    header .logo h1 {
+      margin: 0;
+      font-size: 1.5em;
+      font-weight: normal;
+    }
+    
+    header .logo p {
+      margin: 3px 0 0;
+      font-size: 0.8em;
+      font-style: italic;
+    }
+    
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 20;
+      position: relative; /* enable absolute bars */
+    }
+    
+    .menu-toggle span {
+      display: block;
+      position: absolute;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: #000; /* darker black like other pages */
+      border-radius: 3px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .menu-toggle span:nth-child(1) { top: 0; }
+    .menu-toggle span:nth-child(2) { top: 9px; }
+    .menu-toggle span:nth-child(3) { top: 18px; }
+    /* X transformation when menu is open */
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    
+    header nav {
+      padding-right: 0;
+    }
+    
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header nav ul li a {
+      color: black;
+      text-decoration: none;
+      font-weight: normal;
+      transition: color 0.3s;
+      pointer-events: auto;
+      padding: 5px 10px;
+      display: block;
+    }
+    
+    header nav ul li a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+    
+    /* Main Content Section */
+    main {
+      flex: 1;
+      width: 100%;
+    }
+    
+    /* Search Bar: Transparent background */
+    #search-bar {
+      background-color: transparent;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      width: 100%;
+    }
+    
+    #searchInput {
+      width: 90%;
+      max-width: 600px;
+      padding: 10px 15px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      outline: none;
+    }
+    
+    #searchInput:focus {
+      border-color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Products Section - Responsive grid like bargains page */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Default to 4 columns for desktop */
+      gap: 20px;
+      padding: 20px;
+      background-color: #f4f4f4;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    /* Product Box: Remove fixed height so it wraps content exactly */
+    .product {
+      box-sizing: border-box;
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      touch-action: manipulation;
+      position: relative;
+    }
+    
+    .product:hover {
+      transform: scale(1.02);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+    }
+    
+    .product img {
+      width: 100%;
+      max-height: none;
+      object-fit: contain;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 5px;
+    }
+    
+    /* Apply Special Elite to product names and prices */
+    .product p {
+      margin: 5px 0;
+      font-weight: bold;
+      font-size: 1.1em;
+      font-family: 'Special Elite', monospace;
+    }
+    
+    /* Heading "AVAILABLE BAGS" in Special Elite, uppercase */
+    #bags h2 {
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      background-color: transparent;
+      color: #333;
+      font-size: 0.9em;
+      margin: 20px 0;
+      padding: 15px;
+      width: 100%;
+    }
+    
+    footer p {
+      margin: 5px 0;
+    }
+    
+    /* Modal Styles - Responsive */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto; /* Allow scrolling within modal */
+      padding: 20px; /* Add padding for better mobile view */
+    }
+    
+    .modal.show {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .modal-content {
+      background-color: #ffffff;
+      margin: 20px auto; /* Changed from 5% to fixed pixels */
+      padding: 1.5rem;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 15px;
+      text-align: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .modal.show .modal-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @keyframes fadeInSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    
+    .close-btn:hover {
+      color: red;
+    }
+    
+    #modalProductImage {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    
+    .modal-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 15px;
+      transition: background-color 0.3s;
+      touch-action: manipulation;
+      width: 100%;
+      display: block;
+    }
+    
+    .modal-btn:hover {
+      background-color: #333;
+    }
+    
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 10000;
+    }
+    
+    #toast.show {
+      opacity: 1;
+    }
+    
+    /* Discount Tag Styles - ADDED FOR DISCOUNT SYSTEM */
+    .discount-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-weight: bold;
+      z-index: 5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    /* Red Tag (≤ 55%) */
+    .discount-tag.red {
+      background-color: #ff0000;
+      color: #fff;
+      font-size: 0.9em;
+    }
+    
+    /* Gold Tag (> 55%) */
+    .discount-tag.gold {
+      background-color: gold;
+      color: #333;
+      font-size: 0.95em;
+      padding: 6px 10px;
+      font-weight: bold;
+    }
+    
+    /* Price Display for Discounted Products */
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 5px;
+    }
+    
+    .new-price {
+      color: green;
+      font-weight: bold;
+    }
+    
+    /* Media Queries for Responsive Design - Adapting like bargains page */
+    /* Large screens */
+    @media (max-width: 1200px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+      }
+    }
+    
+    /* Medium screens */
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+      }
+      
+      header {
+        padding: 20px;
+      }
+      
+      header .logo h1 {
+        font-size: 1.8em;
+      }
+      
+      header .logo p {
+        font-size: 0.9em;
+        margin: 5px 0 0;
+      }
+      
+      #search-bar {
+        padding: 20px 15px;
+      }
+      
+      #searchInput {
+        width: 80%;
+      }
+      
+      .product img {
+        max-height: none;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+        max-width: 350px;
+      }
+    }
+    
+    /* Smartphone displays - 2 per line as requested */
+    @media (max-width: 600px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        padding: 10px;
+      }
+      
+      .product {
+        min-height: 250px;
+        padding: 10px;
+      }
+      
+      .product img {
+        max-height: none;
+      }
+      
+      .modal-content {
+        max-width: 300px;
+      }
+    }
+    
+    /* Very small screens - 1 per line */
+    @media (max-width: 400px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+      
+      header .logo h1 {
+        font-size: 1.5em;
+      }
+    }
+    
+    /* Mobile Navigation */
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 2001; /* above drawer */
+      }
+      
+      header nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: white;
+        z-index: 100;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        padding: 80px 20px 20px;
+      }
+      
+      header nav.active {
+        right: 0;
+      }
+      
+      header nav ul {
+        flex-direction: column;
+      }
+      
+      header nav ul li {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+    
+    /* Basket Dropdown Styles */
+    #basketDropdown {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: block;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    #basketDropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    .basket-fade-out {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    /* Hide/show basket button for desktop/mobile */
+    .basket-desktop { display: block; }
+    .basket-mobile { display: none; }
+    @media (max-width: 767px) {
+      .basket-desktop { display: none !important; }
+      .basket-mobile { display: block !important; }
+      #basketDropdown {
+        position: static !important;
+        right: auto !important;
+        left: auto !important;
+        min-width: unset !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 0 0 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 0 15px 15px !important;
+        z-index: 1 !important;
+        padding: 0 0 10px 0 !important;
+        max-height: 250px !important;
+        overflow-y: auto !important;
+      }
+      #basketDropdown.show {
+        box-shadow: none !important;
+      }
+    }
+    
+    /* Basket Dropdown Animation */
+    #basketDropdown {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: block; /* Always block for animation, hide with opacity */
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    #basketDropdown.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    /* Fade animation for basket product row */
+    .basket-fade-out {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .basket-fade-in {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+    /* Hide minus button by default, show on hover (desktop only) */
+    .basket-row .basket-minus-btn {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .basket-row:hover .basket-minus-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (max-width: 767px) {
+      .basket-row .basket-minus-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+    
+    /* Highlight basket button in mobile menu on hover like other links */
+    .basket-mobile-btn:hover span:first-child {
+      text-decoration: underline;
+      color: black;
+    }
+    
+    /* Only add border-bottom to basket rows except the last */
+    .basket-row:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Clear Basket Button Slide-up Animation */
+    #basketDropdownFooter {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #basketDropdown:hover #basketDropdownFooter {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    #clearBasketBtn {
+      transition: all 0.2s ease;
+    }
+    
+    #clearBasketBtn:hover {
+      background: #a00 !important;
+      transform: scale(1.05);
+    }
+    
+    #basketDropdownFooterMobile {
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #basketDropdownMobile:hover #basketDropdownFooterMobile {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    #clearBasketBtnMobile {
+      transition: all 0.2s ease;
+    }
+    
+    #clearBasketBtnMobile:hover {
+      background: #a00 !important;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      <h1>FITRITE</h1>
+      <p>Bags</p>
+    </div>
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="mobileNav">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="page2.html">FITTING ROOM</a></li>
+        <li><a href="page3.html">CHECKOUT</a></li>
+        <li class="basket-desktop">
+          <button id="basketDropdownBtn" style="background:none;border:none;cursor:pointer;position:relative;">
+            🛒
+            <span id="basketCount" style="font-size:0.8em;background:#000;color:#fff;border-radius:50%;padding:2px 6px;position:absolute;top:-8px;right:-10px;display:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+                          <div id="basketDropdown" style="display:none;position:absolute;right:0;top:40px;min-width:300px;max-width:350px;background:#fff;border:1px solid #ddd;border-radius:15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:2000;padding:15px 10px 10px 10px;">
+        <div id="basketDropdownContent" style="padding-top:20px;">Your basket is empty.</div>
+        <div id="basketDropdownFooter" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+            <button id="clearBasketBtn" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+        </div>
+    </div>
+        </li>
+        <li class="basket-mobile" style="display:none;width:100%;">
+          <button id="basketDropdownBtnMobile" class="basket-mobile-btn" style="background:none;border:none;cursor:pointer;width:100%;padding:5px 10px;text-align:left;display:block;">
+            <span style="font-family:'Special Elite',monospace;font-size:1.2em;letter-spacing:0.04em;vertical-align:middle;">BASKET</span>
+            <span id="basketCountMobile" style="font-size:1em;background:#000;color:#fff;border-radius:50%;padding:2px 8px;margin-left:10px;vertical-align:middle;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">0</span>
+          </button>
+          <div id="basketDropdownMobile" style="display:none;position:absolute;top:100%;left:0;right:0;width:auto;max-width:95vw;margin:0 auto;background:#fff;border:1px solid #ddd;border-radius:0 0 15px 15px;box-shadow:0 4px 16px rgba(0,0,0,0.15);z-index:2000;padding:15px 10px 10px 10px;max-height:250px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;">
+            <div id="basketDropdownContentMobile" style="padding-top:20px;">Your basket is empty.</div>
+            <div id="basketDropdownFooterMobile" style="margin-top:15px;padding-top:15px;border-top:1px solid #eee;text-align:center;display:none;">
+                <button id="clearBasketBtnMobile" style="background:#c00;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:'Special Elite',monospace;font-size:0.9em;text-transform:uppercase;">Clear Basket</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main>
+    <!-- Search Bar -->
+    <section id="search-bar">
+      <input type="text" id="searchInput" placeholder="Search bags by name or price..." onkeyup="filterProducts()" />
+    </section>
+
+    <!-- Products Section -->
+    <section id="bags">
+      <h2>AVAILABLE BAGS</h2>
+      <div class="products" id="products-container">
+        <!-- Products will be populated by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Fitrite. All rights reserved.</p>
+    <p>Contact: info@fitrite.com</p>
+  </footer>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <img id="modalProductImage" src="" alt="Product Image">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductPrice"></p>
+      <button class="modal-btn" onclick="addToBasketFromModal()">Add to Basket</button>
+      <button class="modal-btn" onclick="goToPaymentPage()">Go to Payment Page</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">Product added to basket!</div>
+
+  <!-- Basket Dropdown -->
+  <div id="basketDropdown" class="basket-dropdown">
+    <button id="basketDropdownBtn" class="basket-dropdown-btn">
+      <span id="basketCountMobile">0</span>
+    </button>
+    <div id="basketDropdownContent">
+      <!-- Basket content will be dynamically populated -->
+    </div>
+  </div>
+
+  <script>
+    // Discount Products Data (hardcoded to avoid CORS issues)
+    const discountedProducts = [
+      {
+        "id": "bag1",
+        "name": "Retro Ringer",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.08_b69df63d.jpg",
+        "price": 20,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "bag3",
+        "name": "Parisian Window",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.21_2e3941ce.jpg",
+        "price": 26,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "bag5",
+        "name": "Parisian Window",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.21_3a87fda4.jpg",
+        "price": 32,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "bag10",
+        "name": "Crimson Allure",
+        "category": "bags",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.20_713aac16.jpg",
+        "price": 62,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "belt1",
+        "name": "belt1",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+1",
+        "price": 50,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "belt3",
+        "name": "belt3",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+3",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "belt5",
+        "name": "belt5",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+5",
+        "price": 70,
+        "discount": true,
+        "discountPercent": 65
+      },
+      {
+        "id": "belt7",
+        "name": "belt7",
+        "category": "belts",
+        "imagePath": "https://via.placeholder.com/150?text=Belt+7",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "cap/hat1",
+        "name": "cap/hat1",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_92c05268.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 20
+      },
+      {
+        "id": "cap/hat3",
+        "name": "cap/hat3",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_0d3af0f4.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "cap/hat5",
+        "name": "cap/hat5",
+        "category": "hats",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_4bcc7afc.jpg",
+        "price": 10,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "footwear1",
+        "name": "footwear1",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.06_f2708529.jpg",
+        "price": 120,
+        "discount": true,
+        "discountPercent": 50
+      },
+      {
+        "id": "footwear2",
+        "name": "footwear2",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_65068fa5.jpg",
+        "price": 25,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "footwear3",
+        "name": "footwear3",
+        "category": "footwear",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_ec433eab.jpg",
+        "price": 35,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "glove1",
+        "name": "glove1",
+        "category": "gloves",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202025-02-05%20at%2010.56.21_c4614d2d.jpg",
+        "price": 35,
+        "discount": true,
+        "discountPercent": 45
+      },
+      {
+        "id": "leather_jacket1",
+        "name": "leather_jacket1",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_4f9bf797.jpg",
+        "price": 200,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "leather_jacket3",
+        "name": "leather_jacket3",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_30f60707.jpg",
+        "price": 120,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "leather_jacket5",
+        "name": "leather_jacket5",
+        "category": "leather jackets",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.36.08_697b5895.jpg",
+        "price": 140,
+        "discount": true,
+        "discountPercent": 70
+      },
+      {
+        "id": "scarf1",
+        "name": "scarf1",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+1",
+        "price": 50,
+        "discount": true,
+        "discountPercent": 35
+      },
+      {
+        "id": "scarf3",
+        "name": "scarf3",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+3",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 40
+      },
+      {
+        "id": "scarf5",
+        "name": "scarf5",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+5",
+        "price": 70,
+        "discount": true,
+        "discountPercent": 60
+      },
+      {
+        "id": "scarf7",
+        "name": "scarf7",
+        "category": "scarves",
+        "imagePath": "https://via.placeholder.com/150?text=Scarf+7",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "sunglasses1",
+        "name": "sunglasses1",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.07_15f0a57a.jpg",
+        "price": 80,
+        "discount": true,
+        "discountPercent": 55
+      },
+      {
+        "id": "sunglasses2",
+        "name": "sunglasses2",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_0cecf64c.jpg",
+        "price": 55,
+        "discount": true,
+        "discountPercent": 30
+      },
+      {
+        "id": "sunglasses3",
+        "name": "sunglasses3",
+        "category": "sunglasses",
+        "imagePath": "https://assets.onecompiler.app/42mhv938c/42mn3wcty/WhatsApp%20Image%202024-12-11%20at%2015.41.22_03d2784a.jpg",
+        "price": 60,
+        "discount": true,
+        "discountPercent": 65
+      },
+      {
+        "id": "wallet1",
+        "name": "wallet1",
+        "category": "wallets",
+        "imagePath": "https://via.placeholder.com/300x300?text=Wallet+1",
+        "price": 40,
+        "discount": true,
+        "discountPercent": 25
+      },
+      {
+        "id": "wallet2",
+        "name": "wallet2",
+        "category": "wallets",
+        "imagePath": "https://via.placeholder.com/300x300?text=Wallet+2",
+        "price": 45,
+        "discount": true,
+        "discountPercent": 70
+      }
+    ];
+    
+    // Create a map of discounted products for easy lookup
+    const discountMap = {};
+    discountedProducts.forEach(product => {
+      discountMap[product.id] = product;
+    });
+    
+    // Bags Data
+    const bags = [
+      {
+        id: "bag1",
+        name: "Retro Ringer",
+        price: 20,
+        imgUrl: "Bag1.jpg"
+      },
+      {
+        id: "bag2",
+        name: "Clock Styled",
+        price: 35,
+        imgUrl: "Bag2.jpg"
+      },
+      {
+        id: "bag3",
+        name: "Parisian Window",
+        price: 26,
+        imgUrl: "Bag3.jpg"
+      },
+      
+     
+     
+      {
+        id: "bag18",
+        name: "Crimson Hour",
+        price: 78,
+        imgUrl: "Bag11.jpg"
+      },
+      {
+        id: "bag10",
+        name: "Crimson Allure",
+        price: 62,
+        imgUrl: "Bag5.jpg"
+      },
+      {
+        id: "bag11",
+        name: "Crocodile Skin Pattern Ladies Handbag",
+        price: 50,
+        imgUrl: "Bag6.jpg"
+      },
+      {
+        id: "bag12",
+        name: "Noir Essence",
+        price: 64,
+        imgUrl: "Bag7.jpg"
+      },
+      {
+        id: "bag13",
+        name: "Taupe Belle",
+        price: 68,
+        imgUrl: "Bag8.jpg"
+      },
+      {
+        id: "bag14",
+        name: "Verdant Vogue",
+        price: 66,
+        imgUrl: "Bag9.jpg"
+      },
+      {
+        id: "bag15",
+        name: "Vintage Hour",
+        price: 85,
+        imgUrl: "Bag10.jpg"
+      },
+     
+      {
+        id: "bag21",
+        name: "Midnight Dial",
+        price: 85,
+        imgUrl: "Bag13.jpg"
+      },
+     
+      {
+        id: "bag20",
+        name: "Teal Ticker",
+        price: 80,
+        imgUrl: "Bag12.jpg"
+      },
+      {
+        id: "bag9",
+        name: "Ivory Grace",
+        price: 58,
+        imgUrl: "Bag4.jpg"
+      },
+      {
+        id: "bag22",
+        name: "Caramel Fold",
+        price: 83,
+        imgUrl: "Bag14.jpg"
+      },
+      {
+        id: "bag23",
+        name: "Vanilla Fold",
+        price: 72,
+        imgUrl: "Bag15.jpg"
+      },
+      {
+        id: "bag24",
+        name: "Midnight Fold",
+        price: 78,
+        imgUrl: "Bag16.jpg"
+      },
+      {
+        id: "bag25",
+        name: "Ivory Weave",
+        price: 88,
+        imgUrl: "Bag17.jpg"
+      },
+      {
+        id: "bag26",
+        name: "Jet Tote",
+        price: 102,
+        imgUrl: "Bag18.jpg"
+      },
+      {
+        id: "bag27",
+        name: "Midnight Weave",
+        price: 99,
+        imgUrl: "Bag19.jpg"
+      },
+      {
+        id: "bag28",
+        name: "Hazel Weave",
+        price: 97,
+        imgUrl: "Bag20.jpg"
+      },
+      {
+        id: "bag29",
+        name: "Suede Mocha Mini",
+        price: 104,
+        imgUrl: "Bag21.jpg"
+      },
+      {
+        id: "bag30",
+        name: "Cocoa Suede Mini",
+        price: 113,
+        imgUrl: "Bag22.jpg"
+      },
+      {
+        id: "bag33",
+        name: "Black Bag",
+        price: 210,
+        imgUrl: "Black.jpg"
+      },
+      {
+        id: "bag34",
+        name: "Sports Bag",
+        price: 250,
+        imgUrl: "SportsBag.jpg"
+      }
+    ];
+    
+    // Populate Products
+    function populateProducts() {
+      const productsContainer = document.getElementById("products-container");
+      productsContainer.innerHTML = '';
+      
+      bags.forEach(bag => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        
+        // Check if this bag is in the discounted products
+        const discountInfo = discountMap[bag.id];
+        let productHTML = '';
+        let priceDisplay = '';
+        let modalParams = '';
+        
+        if (discountInfo && discountInfo.discount) {
+          // Calculate discounted price
+          const discountedPrice = bag.price * (1 - discountInfo.discountPercent / 100);
+          const formattedOriginalPrice = `£${bag.price}`;
+          const formattedDiscountedPrice = `£${discountedPrice.toFixed(2)}`;
+          
+          // Determine tag type based on discount percentage
+          const tagType = discountInfo.discountPercent > 55 ? 'gold' : 'red';
+          const tagText = tagType === 'gold' 
+            ? `★★ ${discountInfo.discountPercent}% OFF – Bargain of the Day ★★`
+            : `★ ${discountInfo.discountPercent}% OFF ★`;
+          
+          // Add discount tag
+          productHTML += `<div class="discount-tag ${tagType}">${tagText}</div>`;
+          
+          // Price display with original and new price
+          priceDisplay = `<p><span class="original-price">${formattedOriginalPrice}</span> <span class="new-price">${formattedDiscountedPrice}</span></p>`;
+          
+          // Modal parameters for discounted product
+          modalParams = `'${bag.name}', '${formattedDiscountedPrice}', '${bag.imgUrl}', true, '${formattedOriginalPrice}'`;
+        } else {
+          // Regular price display
+          priceDisplay = `<p>£${bag.price}</p>`;
+          
+          // Modal parameters for regular product
+          modalParams = `'${bag.name}', '£${bag.price}', '${bag.imgUrl}'`;
+        }
+        
+        // Check if it's a placeholder image
+        const isPlaceholder = bag.imgUrl.includes('placeholder.com');
+        const imgStyle = isPlaceholder ? 'style="opacity: 0;"' : '';
+        
+        // Extra spacing between image and name for specific items
+        let breaksBetween = '';
+        if (bag.name === "Crimson Hour") {
+          breaksBetween = '<div style="height:1.7em"></div>';
+        } else if (bag.name === "Ivory Grace") {
+          breaksBetween = '<div style="height:1.3em"></div>';
+        }
+        
+        // Complete product HTML
+        if (bag.name === "Sports Bag" || bag.name === "Verdant Vogue" || bag.name === "Ivory Grace") {
+          productHTML += `
+            <br><br><br>
+            <img src="${bag.imgUrl}" alt="${bag.name}" ${imgStyle}>
+            ${breaksBetween}
+            <p>${bag.name}</p>
+            <br>
+            ${priceDisplay}
+          `;
+        } else {
+          productHTML += `
+            <img src="${bag.imgUrl}" alt="${bag.name}" ${imgStyle}>
+            ${breaksBetween}
+            <p>${bag.name}</p>
+            ${priceDisplay}
+          `;
+        }
+        
+        productDiv.innerHTML = productHTML;
+        productDiv.setAttribute('onclick', `openProductModal(${modalParams})`);
+        
+        productsContainer.appendChild(productDiv);
+      });
+    }
+    
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+    
+    if (menuToggle && mobileNav) {
+      menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        mobileNav.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest("#mobileNav") && !event.target.closest("#menuToggle")) {
+          if (mobileNav.classList.contains("active")) {
+            mobileNav.classList.remove("active");
+            menuToggle.classList.remove("active");
+          }
+        }
+      });
+    }
+
+    // Product Modal Functions
+    const modal = document.getElementById('productModal');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalProductPrice = document.getElementById('modalProductPrice');
+    const modalProductImage = document.getElementById('modalProductImage');
+    
+    function openProductModal(name, price, imageUrl, isDiscounted = false, originalPrice = null) {
+      modalProductName.textContent = name;
+      
+      if (isDiscounted && originalPrice) {
+        modalProductPrice.innerHTML = `<span class="original-price">${originalPrice}</span> <span class="new-price">${price}</span>`;
+      } else {
+        modalProductPrice.textContent = price;
+      }
+      
+      modalProductImage.src = imageUrl;
+      
+      // Show modal with fade in effect
+      modal.style.display = 'flex';
+      // Trigger reflow
+      modal.offsetHeight;
+      modal.classList.add('show');
+    }
+    
+    function closeModal() {
+      // Start fade out animation
+      modal.classList.remove('show');
+      
+      // Wait for animation to complete before hiding
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300); // Match this with the CSS transition duration
+    }
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // Update basket counter display
+    function updateBasketCounter() {
+      let basket = JSON.parse(localStorage.getItem("basket")) || [];
+      const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      
+      // Update desktop counter
+      if (basketCount) {
+        basketCount.textContent = totalCount;
+        basketCount.style.display = totalCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Update mobile counter
+      if (basketCountMobile) {
+        basketCountMobile.textContent = totalCount;
+        basketCountMobile.style.display = totalCount > 0 ? 'inline-block' : 'none';
+      }
+    }
+
+    // Firebase Cart Integration
+    let currentProductData = null;
+    
+    // Function to extract product data from modal
+    function extractProductFromModal() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imgUrl = modalProductImage.src;
+      
+      // Convert price to cents (preserve decimals)
+      const numericPrice = parseFloat(price.replace(/[£,]/g, ''));
+      const priceInCents = Number.isFinite(numericPrice) ? Math.round(numericPrice * 100) : 0;
+      
+      return {
+        id: name.toLowerCase().replace(/\s+/g, '-'),
+        name: name,
+        price: priceInCents,
+        image: imgUrl,
+        category: 'bags'
+      };
+    }
+    
+    // Firebase cart function
+    async function addToBasketFirebase() {
+      try {
+        if (!window.FitRightFirebase) {
+          console.error('FitRightFirebase not loaded');
+          return;
+        }
+        
+        const productData = extractProductFromModal();
+        await window.FitRightFirebase.addProductToCart(productData, 1);
+        showToast("Product added to basket!");
+        console.log("Product added to Firebase cart:", productData);
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        showToast("Error adding to basket: " + error.message);
+      }
+    }
+    
+    // Basket Handling & Toast Notification
+    function addToBasket(name, price, imgUrl, size, showMessage = true) {
+      let basket = JSON.parse(localStorage.getItem("basket")) || [];
+      const existingIndex = basket.findIndex(item => item.name === name);
+      if (existingIndex !== -1) {
+        const item = basket[existingIndex];
+        item.quantity = (item.quantity || 1) + 1;
+        localStorage.setItem("basket", JSON.stringify(basket));
+        window.basket = basket;
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product quantity updated in basket!");
+      } else {
+        basket.push({ name, newPrice: price, imgUrl, size, quantity: 1 });
+        localStorage.setItem("basket", JSON.stringify(basket));
+        window.basket = basket;
+        
+        // Immediately update the basket counter
+        const totalCount = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        basketCount.textContent = totalCount;
+        basketCount.style.display = 'inline-block';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = totalCount;
+          basketCountMobile.style.display = 'inline-block';
+        }
+        
+        updateBasketDropdown();
+        if (showMessage) showToast("Product added to basket!");
+      }
+    }
+
+    function showToast(message) {
+      const toastEl = document.getElementById("toast");
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      setTimeout(() => { toastEl.classList.remove("show"); }, 2000);
+    }
+
+    // Modal functions for adding to basket and proceeding to payment
+    function addToBasketFromModal() {
+      if (window.FitRightFirebase) {
+        addToBasketFirebase();
+        closeModal();
+      } else {
+        const name = modalProductName.textContent;
+        const priceElement = modalProductPrice.querySelector(".new-price");
+        const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+        const imgUrl = modalProductImage.src;
+        addToBasket(name, price, imgUrl, "default", true); // Assuming a default size for non-discounted
+        closeModal();
+      }
+    }
+
+    function goToPaymentPage() {
+      const name = modalProductName.textContent;
+      const priceElement = modalProductPrice.querySelector(".new-price");
+      const price = priceElement ? priceElement.textContent : modalProductPrice.textContent;
+      const imageUrl = modalProductImage.src;
+      const queryString = `?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&imgUrl=${encodeURIComponent(imageUrl)}`;
+      window.location.href = "page3.html" + queryString;
+    }
+
+    // Basket Dropdown Logic
+    const basketDropdownBtn = document.getElementById('basketDropdownBtn');
+    const basketDropdownBtnMobile = document.getElementById('basketDropdownBtnMobile');
+    const basketDropdown = document.getElementById('basketDropdown');
+    const basketDropdownContent = document.getElementById('basketDropdownContent');
+    const basketCount = document.getElementById('basketCount');
+    const basketCountMobile = document.getElementById('basketCountMobile');
+
+    // Firebase cart rendering
+    function renderCart() {
+      if (!window.FitRightFirebase) return;
+      
+      const cartItems = window.FitRightFirebase.getCartItems();
+      const cartCount = window.FitRightFirebase.getCartCount();
+      
+      // Update counters
+      basketCount.textContent = cartCount;
+      basketCount.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = cartCount;
+        basketCountMobile.style.display = cartCount > 0 ? 'inline-block' : 'none';
+      }
+      
+      // Update dropdown content
+      if (cartItems.length === 0) {
+        basketDropdownContent.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        
+        // Hide clear basket buttons when basket is empty
+        const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+        const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+        if (basketDropdownFooter) basketDropdownFooter.style.display = 'none';
+        if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'none';
+        return;
+      }
+      
+      basketDropdownContent.innerHTML = cartItems.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.productImage || item.image || item.imgUrl}" alt="${item.productName || item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;text-transform:uppercase;">${item.productName || item.name}</div>
+            <div style="font-size:1em;font-weight:bold;font-family:'Special Elite',monospace;">${(window.FitRightFirebase && window.FitRightFirebase.formatPrice && (item.productPrice != null || typeof item.price === 'number')) ? window.FitRightFirebase.formatPrice((item.productPrice ?? item.price)) : (item.newPrice || '£0.00')}</div>
+            <div style="font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;">QTY: <span class="basket-qty" data-id="${item.id || item.productId || idx}">${item.quantity || 1}</span></div>
+            ${ (() => { const s = (item.selectedSize || item.size || '').toString(); return s && s.toLowerCase() !== 'standard' ? `<div style=\\\"font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;\\\">SIZE: ${s}</div>` : '' })() }
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" data-id="${item.id || item.productId || idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+        </div>
+      `).join('');
+      
+      // Show clear basket buttons when basket has items
+      const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+      const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+      if (basketDropdownFooter) basketDropdownFooter.style.display = 'block';
+      if (basketDropdownFooterMobile) basketDropdownFooterMobile.style.display = 'block';
+      
+
+    }
+    
+    // Basket data storage
+    window.basket = JSON.parse(localStorage.getItem("basket")) || [];
+    
+    // Add event delegation for minus buttons (Firebase and localStorage)
+    document.addEventListener('click', async function(e) {
+      const btn = e.target.closest('.basket-minus-btn');
+      if (!btn) return;
+      e.stopPropagation();
+      e.preventDefault();
+
+      const row = btn.closest('.basket-row');
+      const itemId = btn.getAttribute('data-id');
+
+      try {
+        // If logged in, update Firebase cart
+        if (window.FitRightFirebase && typeof window.FitRightFirebase.isLoggedIn === 'function' && window.FitRightFirebase.isLoggedIn()) {
+          const items = window.FitRightFirebase.getCartItems();
+          const item = items.find(it => (it.id || it.productId) == itemId);
+          const currentQty = item ? (item.quantity || 1) : 1;
+          if (currentQty > 1) {
+            await window.FitRightFirebase.updateQuantity(item.id || item.productId, currentQty - 1);
+          } else {
+            if (row) row.classList.add('basket-fade-out');
+            setTimeout(async () => {
+              await window.FitRightFirebase.removeFromCart(item.id || item.productId);
+            }, 300);
+          }
+          return;
+        }
+
+        // Guest mode: localStorage fallback
+        const idx = parseInt(btn.getAttribute('data-index'));
+        let currentBasket = JSON.parse(localStorage.getItem('basket')) || [];
+        if (currentBasket[idx] && (currentBasket[idx].quantity || 1) > 1) {
+          currentBasket[idx].quantity = (currentBasket[idx].quantity || 1) - 1;
+          localStorage.setItem('basket', JSON.stringify(currentBasket));
+          window.basket = currentBasket;
+          updateBasketDropdown();
+          // Keep dropdown open
+          const dd = document.getElementById('basketDropdown');
+          if (dd) { dd.style.display = 'block'; dd.classList.add('show'); }
+        } else if (currentBasket[idx]) {
+          if (row) row.classList.add('basket-fade-out');
+          setTimeout(() => {
+            currentBasket.splice(idx, 1);
+            localStorage.setItem('basket', JSON.stringify(currentBasket));
+            window.basket = currentBasket;
+            updateBasketDropdown();
+            const dd = document.getElementById('basketDropdown');
+            if (dd) { dd.style.display = 'block'; dd.classList.add('show'); }
+          }, 300);
+        }
+      } catch (err) {
+        console.error('Error updating cart item:', err);
+      }
+    });
+    
+    // Listen for cart updates
+    window.addEventListener('cartUpdated', renderCart);
+    
+    // Load cart on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.FitRightFirebase) {
+        window.FitRightFirebase.loadCart().then(() => {
+          renderCart();
+        });
+      }
+    });
+    
+    function updateBasketDropdown() {
+      if (window.FitRightFirebase) {
+        renderCart();
+        return;
+      }
+      
+      // Fallback to localStorage
+      let basket = JSON.parse(localStorage.getItem("basket")) || [];
+      if (basket.length === 0) {
+        basketDropdownContent.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        
+        // Also update mobile basket
+        const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+        if (basketDropdownContentMobile) {
+          basketDropdownContentMobile.innerHTML = '<div style="text-align:center;color:#888;">Your basket is empty.</div>';
+        }
+        
+        basketCount.style.display = 'none';
+        if (basketCountMobile) {
+          basketCountMobile.textContent = '0';
+          basketCountMobile.style.display = 'none';
+        }
+        
+        // Hide clear basket button when empty
+        const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+        const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+        if (basketDropdownFooter) {
+          basketDropdownFooter.style.display = 'none';
+        }
+        if (basketDropdownFooterMobile) {
+          basketDropdownFooterMobile.style.display = 'none';
+        }
+        
+        return;
+      }
+      basketCount.textContent = basket.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      basketCount.style.display = 'inline-block';
+      if (basketCountMobile) {
+        basketCountMobile.textContent = basketCount.textContent;
+        basketCountMobile.style.display = (basketCount.textContent === '0') ? 'none' : 'inline-block';
+      }
+      const basketHTML = basket.map((item, idx) => `
+        <div class="basket-row" data-index="${idx}" data-id="${item.id}" style="display:flex;align-items:center;margin-bottom:12px;padding-bottom:8px;position:relative;">
+          <div style="width:48px;height:48px;background:#fafafa;border-radius:10px;margin-right:12px;display:flex;align-items:center;justify-content:center;">
+            <img src="${item.imgUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;color:#999;font-size:12px;text-align:center;line-height:1.2;">📦</div>
+          </div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-family:'Special Elite',monospace;font-size:1em;text-transform:uppercase;">${item.name}</div>
+            <div style="font-size:1em;font-weight:bold;font-family:'Special Elite',monospace;">${(window.FitRightFirebase && window.FitRightFirebase.formatPrice && (typeof item.price === 'number')) ? window.FitRightFirebase.formatPrice(item.price) : (item.newPrice || '£0.00')}</div>
+            <div style="font-size:0.95em;color:#555;font-family:'Special Elite',monospace;text-transform:uppercase;">QTY: <span class="basket-qty" data-id="${item.id}">${item.quantity || 1}</span></div>
+          </div>
+          <button class="basket-minus-btn" data-index="${idx}" style="background:#000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:1em;display:flex;align-items:center;justify-content:center;cursor:pointer;position:absolute;top:8px;right:8px;">&minus;</button>
+        </div>
+      `).join('');
+      
+      basketDropdownContent.innerHTML = basketHTML;
+      
+      // Also populate mobile basket
+      const basketDropdownContentMobile = document.getElementById('basketDropdownContentMobile');
+      if (basketDropdownContentMobile) {
+        basketDropdownContentMobile.innerHTML = basketHTML;
+      }
+
+      // Show clear basket button when there are items
+      const basketDropdownFooter = document.getElementById('basketDropdownFooter');
+      const basketDropdownFooterMobile = document.getElementById('basketDropdownFooterMobile');
+      if (basketDropdownFooter) {
+        basketDropdownFooter.style.display = 'block';
+      }
+      if (basketDropdownFooterMobile) {
+        basketDropdownFooterMobile.style.display = 'block';
+      }
+
+
+    }
+
+    basketDropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      updateBasketDropdown();
+      if (basketDropdown.classList.contains('show')) {
+        basketDropdown.classList.remove('show');
+        setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+      } else {
+        basketDropdown.style.display = 'block';
+        setTimeout(() => { basketDropdown.classList.add('show'); }, 10);
+      }
+    });
+    if (basketDropdownBtnMobile) {
+      basketDropdownBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        updateBasketDropdown();
+        // On mobile, move the dropdown right after the mobile basket button
+        if (window.innerWidth <= 767) {
+          const basketMobileLi = basketDropdownBtnMobile.closest('li');
+          if (basketMobileLi && basketMobileLi.nextSibling !== basketDropdown) {
+            basketMobileLi.parentNode.insertBefore(basketDropdown, basketMobileLi.nextSibling);
+          }
+        }
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        } else {
+          basketDropdown.style.display = 'block';
+          setTimeout(() => { basketDropdown.classList.add('show'); }, 10);
+        }
+      });
+    }
+    document.addEventListener('click', function(e) {
+      if (!basketDropdown.contains(e.target) && e.target !== basketDropdownBtn && !e.target.classList.contains('basket-minus-btn')) {
+        if (basketDropdown.classList.contains('show')) {
+          basketDropdown.classList.remove('show');
+          setTimeout(() => { basketDropdown.style.display = 'none'; }, 300);
+        }
+      }
+    });
+
+    // Clear basket button functionality
+    const clearBasketBtn = document.getElementById('clearBasketBtn');
+    const clearBasketBtnMobile = document.getElementById('clearBasketBtnMobile');
+
+    function clearBasket() {
+      if (window.FitRightFirebase && window.FitRightFirebase.isLoggedIn()) {
+        // Firebase mode
+        window.FitRightFirebase.clearCart().then(() => {
+          updateBasketDropdown();
+          showToast("Basket cleared!");
+        }).catch(error => {
+          console.error("Error clearing Firebase cart:", error);
+          showToast("Error clearing basket: " + error.message);
+        });
+      } else {
+        // localStorage mode
+        localStorage.removeItem("basket");
+        window.basket = [];
+        updateBasketDropdown();
+        showToast("Basket cleared!");
+      }
+    }
+
+    if (clearBasketBtn) {
+      clearBasketBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+
+    if (clearBasketBtnMobile) {
+      clearBasketBtnMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm("Are you sure you want to clear your basket?")) {
+          clearBasket();
+        }
+      });
+    }
+    
+    // Update basket count on page load
+    updateBasketDropdown();
+    // Update basket count when basket changes (listen to storage event for multi-tab)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'basket') {
+        updateBasketDropdown();
+      }
+    });
+
+    // Load basket items from localStorage on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      populateProducts();
+      updateBasketDropdown();
+    });
+
+    // Filter products based on search input
+    function filterProducts() {
+      const searchInput = document.getElementById('searchInput');
+      const filter = searchInput.value.toUpperCase();
+      const products = document.querySelectorAll('.product');
+      
+      products.forEach(product => {
+        const name = product.querySelector('p:first-of-type').textContent;
+        const price = product.querySelector('p:last-of-type').textContent;
+        
+        if (name.toUpperCase().indexOf(filter) > -1 || price.toUpperCase().indexOf(filter) > -1) {
+          product.style.display = '';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+  <!-- Firebase Cart System -->
+  <script type="module" src="./firebase.js?v=2"></script>
+  <script type="module" src="./fitright-cart-only.js?v=2"></script>
+  <script src="./shared-basket-dropdown.js"></script>
+  
+  <!-- Basket Button Fix -->
+
+</body>
+</html>

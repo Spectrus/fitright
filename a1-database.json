@@ -1,0 +1,346 @@
+{
+  "database": [
+    {
+      "id": "image1",
+      "filename": "image1_man_in_grey_suit_carrying_a_black_leather_briefcase_bag.jpg",
+      "title": "Man in grey suit carrying a black leather briefcase",
+      "description": "Man in grey suit carrying a black leather briefcase",
+      "keyword": "bag",
+      "tags": ["man", "grey", "suit", "black", "leather", "briefcase", "bag", "business", "professional"]
+    },
+    {
+      "id": "image2",
+      "filename": "image2_seated_man_in_striped_suit_and_sunglasses_posing_confidently_sunglasses.jpg",
+      "title": "Seated man in striped suit and sunglasses",
+      "description": "Seated man in striped suit and sunglasses, posing confidently",
+      "keyword": "sunglasses",
+      "tags": ["man", "seated", "striped", "suit", "sunglasses", "confident", "pose", "fashion"]
+    },
+    {
+      "id": "image3",
+      "filename": "image3_president_john_f_kennedy_smiling_on_a_yacht_wearing_a_dark_presidential_windbreaker_and_sunglasses_sunglasses.jpg",
+      "title": "President John F. Kennedy on yacht",
+      "description": "President John F. Kennedy smiling on a yacht, wearing a dark presidential windbreaker and sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["john", "f", "kennedy", "president", "yacht", "smiling", "dark", "windbreaker", "sunglasses", "jfk"]
+    },
+    {
+      "id": "image4",
+      "filename": "image4_a_tan_hermès_birkin_bag_resting_on_a_carpet_by_a_white_wall_bag.jpg",
+      "title": "Tan Hermès Birkin bag",
+      "description": "A tan Hermès Birkin bag resting on a carpet by a white wall",
+      "keyword": "bag",
+      "tags": ["tan", "hermes", "birkin", "bag", "carpet", "white", "wall", "luxury", "fashion"]
+    },
+    {
+      "id": "image5",
+      "filename": "image5_elvis_presley_in_sunglasses_and_a_leather_coat_leather_jacket.jpg",
+      "title": "Elvis Presley in sunglasses and leather coat",
+      "description": "Elvis Presley in sunglasses and a leather coat",
+      "keyword": "leather jacket",
+      "tags": ["elvis", "presley", "sunglasses", "leather", "coat", "jacket", "music", "icon"]
+    },
+    {
+      "id": "image6",
+      "filename": "image6_studio-shot_of_a_soft_black_leather_handbag_with_curved_handle_bag.jpg",
+      "title": "Studio shot of a soft black leather handbag",
+      "description": "Studio shot of a soft black leather handbag with curved handle",
+      "keyword": "bag",
+      "tags": ["studio", "black", "leather", "handbag", "curved", "handle", "bag", "fashion", "accessory"]
+    },
+    {
+      "id": "image7",
+      "filename": "image7_two_older_men_in_dark_suits_and_black_glasses_sunglasses.jpg",
+      "title": "Two older men in dark suits and black glasses",
+      "description": "Two older men in dark suits and black glasses",
+      "keyword": "sunglasses",
+      "tags": ["two", "older", "men", "dark", "suits", "black", "glasses", "sunglasses", "formal"]
+    },
+    {
+      "id": "image8",
+      "filename": "image8_clint_eastwood_wearing_a_cowboy_hat_and_rugged_coat_with_a_cigar_in_mouth_hat.jpg",
+      "title": "Clint Eastwood wearing cowboy hat",
+      "description": "Clint Eastwood wearing a cowboy hat and rugged coat, with a cigar in mouth",
+      "keyword": "hat",
+      "tags": ["clint", "eastwood", "cowboy", "hat", "rugged", "coat", "cigar", "mouth", "western"]
+    },
+    {
+      "id": "image9",
+      "filename": "image9_woman_in_a_riding_outfit_with_a_horse_wearing_a_brimmed_hat_hat.jpg",
+      "title": "Woman in riding outfit with horse",
+      "description": "Woman in a riding outfit with a horse wearing a brimmed hat",
+      "keyword": "hat",
+      "tags": ["woman", "riding", "outfit", "horse", "brimmed", "hat", "elegant"]
+    },
+    {
+      "id": "image10",
+      "filename": "image10_jack_nicholson_sitting_on_an_oscar_statue_wearing_a_tuxedo_and_sunglasses_sunglasses.jpg",
+      "title": "Jack Nicholson sitting on Oscar statue",
+      "description": "Jack Nicholson sitting on an Oscar statue wearing a tuxedo and sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["jack", "nicholson", "oscar", "statue", "tuxedo", "sunglasses", "actor", "award", "formal"]
+    },
+    {
+      "id": "image11",
+      "filename": "image11_john_f_kennedy_at_a_baseball_game_in_a_suit_wearing_sunglasses_sunglasses.jpg",
+      "title": "John F. Kennedy at baseball game",
+      "description": "John F. Kennedy at a baseball game in a suit wearing sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["john", "f", "kennedy", "baseball", "game", "suit", "sunglasses", "president", "jfk"]
+    },
+    {
+      "id": "image12",
+      "filename": "image12_pair_of_black_leather_gloves_on_a_flat_lay_gloves.jpg",
+      "title": "Black leather gloves on flat lay",
+      "description": "Pair of black leather gloves on a flat lay",
+      "keyword": "gloves",
+      "tags": ["black", "leather", "gloves", "flat", "lay", "pair", "accessory"]
+    },
+    {
+      "id": "image13",
+      "filename": "image13_man_in_dark_suit_seated_with_heavy-framed_sunglasses_sunglasses.jpg",
+      "title": "Man in dark suit with heavy-framed sunglasses",
+      "description": "Man in dark suit seated with heavy-framed sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["man", "dark", "suit", "seated", "heavy", "framed", "sunglasses", "formal"]
+    },
+    {
+      "id": "image14",
+      "filename": "image14_man_standing_beside_a_jeep_in_a_bomber_jacket_and_jeans_wearing_sunglasses_sunglasses.jpg",
+      "title": "Man beside jeep in bomber jacket",
+      "description": "Man standing beside a jeep in a bomber jacket and jeans wearing sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["man", "jeep", "bomber", "jacket", "jeans", "sunglasses", "casual", "outdoor"]
+    },
+    {
+      "id": "image15",
+      "filename": "image15_woman_lounging_on_a_beach_chair_wearing_a_headscarf_and_white-framed_sunglasses_sunglasses.jpg",
+      "title": "Woman lounging on beach chair",
+      "description": "Woman lounging on a beach chair wearing a headscarf and white-framed sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["woman", "lounging", "beach", "chair", "headscarf", "white", "framed", "sunglasses", "relaxed"]
+    },
+    {
+      "id": "image16",
+      "filename": "image16_man_in_brown_leather_bomber_jacket_styled_like_a_wwii_pilot_leather_jacket.jpg",
+      "title": "Man in WWII-style bomber jacket",
+      "description": "Man in brown leather bomber jacket styled like a WWII pilot",
+      "keyword": "leather jacket",
+      "tags": ["man", "brown", "leather", "bomber", "jacket", "wwii", "pilot", "vintage", "military"]
+    },
+    {
+      "id": "image17",
+      "filename": "image17_man_in_a_racing_suit_on_a_motorcycle_wearing_boots_and_gloves_boots.jpg",
+      "title": "Man in racing suit on motorcycle",
+      "description": "Man in a racing suit on a motorcycle wearing boots and gloves",
+      "keyword": "boots",
+      "tags": ["man", "racing", "suit", "motorcycle", "boots", "gloves", "sport", "speed"]
+    },
+    {
+      "id": "image18",
+      "filename": "image18_sleek_black_leather_briefcase_carried_over_the_shoulder_by_a_suited_man_bag.jpg",
+      "title": "Sleek black leather briefcase",
+      "description": "Sleek black leather briefcase carried over the shoulder by a suited man",
+      "keyword": "bag",
+      "tags": ["sleek", "black", "leather", "briefcase", "shoulder", "suited", "man", "bag", "business"]
+    },
+    {
+      "id": "image19",
+      "filename": "image19_man_in_formal_suit_and_tie_looking_sideways_in_dark_sunglasses_sunglasses.jpg",
+      "title": "Man in formal suit looking sideways",
+      "description": "Man in formal suit and tie looking sideways in dark sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["man", "formal", "suit", "tie", "sideways", "dark", "sunglasses", "professional"]
+    },
+    {
+      "id": "image20",
+      "filename": "image20_elvis_presley_in_a_belted_leather_jacket_with_gloves_in_hand_leather_jacket.jpg",
+      "title": "Elvis Presley in belted leather jacket",
+      "description": "Elvis Presley in a belted leather jacket with gloves in hand",
+      "keyword": "leather jacket",
+      "tags": ["elvis", "presley", "belted", "leather", "jacket", "gloves", "hand", "music", "icon"]
+    },
+    {
+      "id": "image21",
+      "filename": "image21_man_with_thick-frame_sunglasses_and_styled_hair_at_an_outdoor_event_sunglasses.jpg",
+      "title": "Man with thick-frame sunglasses",
+      "description": "Man with thick-frame sunglasses and styled hair at an outdoor event",
+      "keyword": "sunglasses",
+      "tags": ["man", "thick", "frame", "sunglasses", "styled", "hair", "outdoor", "event"]
+    },
+    {
+      "id": "image22",
+      "filename": "image22_bob_dylan_with_curly_hair_and_dark_rectangular_sunglasses_sunglasses.jpg",
+      "title": "Bob Dylan with curly hair",
+      "description": "Bob Dylan with curly hair and dark rectangular sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["bob", "dylan", "curly", "hair", "dark", "rectangular", "sunglasses", "music", "icon"]
+    },
+    {
+      "id": "image23",
+      "filename": "image23_man_sitting_outdoors_wearing_round_sunglasses_and_a_sweater_sunglasses.jpg",
+      "title": "Man sitting outdoors in sweater",
+      "description": "Man sitting outdoors wearing round sunglasses and a sweater",
+      "keyword": "sunglasses",
+      "tags": ["man", "sitting", "outdoors", "round", "sunglasses", "sweater", "casual"]
+    },
+    {
+      "id": "image24",
+      "filename": "image24_man_on_set_in_rugged_attire_and_boots_seated_beside_a_camera_crane_boots.jpg",
+      "title": "Man on set in rugged attire",
+      "description": "Man on set in rugged attire and boots seated beside a camera crane",
+      "keyword": "boots",
+      "tags": ["man", "set", "rugged", "attire", "boots", "camera", "crane", "filming"]
+    },
+    {
+      "id": "image25",
+      "filename": "image25_pair_of_brown_leather_boots_photographed_against_a_neutral_background_boots.jpg",
+      "title": "Brown leather boots on neutral background",
+      "description": "Pair of brown leather boots photographed against a neutral background",
+      "keyword": "boots",
+      "tags": ["brown", "leather", "boots", "neutral", "background", "pair", "footwear"]
+    },
+    {
+      "id": "image26",
+      "filename": "image26_man_with_tousled_hair_wearing_square_sunglasses_and_a_robe_sunglasses.jpg",
+      "title": "Man with tousled hair in robe",
+      "description": "Man with tousled hair wearing square sunglasses and a robe",
+      "keyword": "sunglasses",
+      "tags": ["man", "tousled", "hair", "square", "sunglasses", "robe", "casual", "relaxed"]
+    },
+    {
+      "id": "image27",
+      "filename": "image27_woman_in_vintage_pilot_attire_with_flight_helmet_and_goggles_hat.jpg",
+      "title": "Woman in vintage pilot attire",
+      "description": "Woman in vintage pilot attire with flight helmet and goggles",
+      "keyword": "hat",
+      "tags": ["woman", "vintage", "pilot", "attire", "flight", "helmet", "goggles", "hat", "aviation"]
+    },
+    {
+      "id": "image28",
+      "filename": "image28_woman_walking_with_a_coffee_cup_wearing_large_black_sunglasses_sunglasses.jpg",
+      "title": "Woman walking with coffee cup",
+      "description": "Woman walking with a coffee cup wearing large black sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["woman", "walking", "coffee", "cup", "large", "black", "sunglasses", "casual"]
+    },
+    {
+      "id": "image29",
+      "filename": "image29_marilyn_monroe_wearing_cat-eye_sunglasses_and_a_dark_blazer_sunglasses.jpg",
+      "title": "Marilyn Monroe in cat-eye sunglasses",
+      "description": "Marilyn Monroe wearing cat-eye sunglasses and a dark blazer",
+      "keyword": "sunglasses",
+      "tags": ["marilyn", "monroe", "cat", "eye", "sunglasses", "dark", "blazer", "icon", "actress"]
+    },
+    {
+      "id": "image30",
+      "filename": "image30_john_lennon_in_suit_and_tie_adjusting_his_small-frame_sunglasses_sunglasses.jpg",
+      "title": "John Lennon adjusting sunglasses",
+      "description": "John Lennon in suit and tie adjusting his small-frame sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["john", "lennon", "suit", "tie", "adjusting", "small", "frame", "sunglasses", "music", "icon"]
+    },
+    {
+      "id": "image31",
+      "filename": "image31_man_in_tailored_brown_suit_and_newsboy_cap_on_a_london_street_hat.jpg",
+      "title": "Man in tailored brown suit",
+      "description": "Man in tailored brown suit and newsboy cap on a London street",
+      "keyword": "hat",
+      "tags": ["man", "tailored", "brown", "suit", "newsboy", "cap", "london", "street", "hat", "elegant"]
+    },
+    {
+      "id": "image32",
+      "filename": "image32_woman_in_red_leather_gloves_and_tailored_jacket_resting_her_head_gloves.jpg",
+      "title": "Woman in red leather gloves",
+      "description": "Woman in red leather gloves and tailored jacket resting her head",
+      "keyword": "gloves",
+      "tags": ["woman", "red", "leather", "gloves", "tailored", "jacket", "resting", "head", "elegant"]
+    },
+    {
+      "id": "image33",
+      "filename": "image33_man_in_trench_coat_and_wide-brimmed_fedora_face_partially_shadowed_hat.jpg",
+      "title": "Man in trench coat and fedora",
+      "description": "Man in trench coat and wide-brimmed fedora, face partially shadowed",
+      "keyword": "hat",
+      "tags": ["man", "trench", "coat", "wide", "brimmed", "fedora", "shadowed", "hat", "mysterious"]
+    },
+    {
+      "id": "image34",
+      "filename": "image34_black_leather_gloves_with_fluffy_fur_cuffs_displayed_on_flat_lay_gloves.jpg",
+      "title": "Black leather gloves with fur cuffs",
+      "description": "Black leather gloves with fluffy fur cuffs displayed on flat lay",
+      "keyword": "gloves",
+      "tags": ["black", "leather", "gloves", "fluffy", "fur", "cuffs", "flat", "lay", "luxury"]
+    },
+    {
+      "id": "image35",
+      "filename": "image35_man_in_dark_suit_and_large_oval_sunglasses_looking_sideways_sunglasses.jpg",
+      "title": "Man in dark suit with oval sunglasses",
+      "description": "Man in dark suit and large oval sunglasses looking sideways",
+      "keyword": "sunglasses",
+      "tags": ["man", "dark", "suit", "large", "oval", "sunglasses", "sideways", "formal"]
+    },
+    {
+      "id": "image36",
+      "filename": "image36_man_in_light_suit_wearing_sunglasses_seated_next_to_a_man_using_binoculars_sunglasses.jpg",
+      "title": "Man in light suit with sunglasses",
+      "description": "Man in light suit wearing sunglasses seated next to a man using binoculars",
+      "keyword": "sunglasses",
+      "tags": ["man", "light", "suit", "sunglasses", "seated", "binoculars", "outdoor"]
+    },
+    {
+      "id": "image37",
+      "filename": "image37_man_in_overcoat_and_suit_walking_through_an_airport_reading_a_newspaper_while_wearing_sunglasses_sunglasses.jpg",
+      "title": "Man walking through airport",
+      "description": "Man in overcoat and suit walking through an airport reading a newspaper while wearing sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["man", "overcoat", "suit", "airport", "reading", "newspaper", "sunglasses", "travel"]
+    },
+    {
+      "id": "image38",
+      "filename": "image38_woman_seated_at_an_outdoor_café_table_wearing_dotted_mesh_gloves_and_a_black_beret_gloves.jpg",
+      "title": "Woman at outdoor café",
+      "description": "Woman seated at an outdoor café table wearing dotted mesh gloves and a black beret",
+      "keyword": "gloves",
+      "tags": ["woman", "outdoor", "cafe", "table", "dotted", "mesh", "gloves", "black", "beret", "elegant"]
+    },
+    {
+      "id": "image39",
+      "filename": "image39_clint_eastwood_in_cowboy_hat_shown_in_profile_with_a_cigar_in_his_mouth_hat.jpg",
+      "title": "Clint Eastwood in cowboy hat profile",
+      "description": "Clint Eastwood in cowboy hat, shown in profile with a cigar in his mouth",
+      "keyword": "hat",
+      "tags": ["clint", "eastwood", "cowboy", "hat", "profile", "cigar", "mouth", "western", "actor"]
+    },
+    {
+      "id": "image40",
+      "filename": "image40_man_in_suit_and_tie_wearing_wraparound_sunglasses_sunglasses.jpg",
+      "title": "Man in suit with wraparound sunglasses",
+      "description": "Man in suit and tie wearing wraparound sunglasses",
+      "keyword": "sunglasses",
+      "tags": ["man", "suit", "tie", "wraparound", "sunglasses", "formal", "modern"]
+    },
+    {
+      "id": "image41",
+      "filename": "image41_man_smiling_on_stage_in_jeans_and_a_brown_leather_jacket_holding_a_microphone_leather_jacket.jpg",
+      "title": "Man smiling on stage",
+      "description": "Man smiling on stage in jeans and a brown leather jacket holding a microphone",
+      "keyword": "leather jacket",
+      "tags": ["man", "smiling", "stage", "jeans", "brown", "leather", "jacket", "microphone", "performance"]
+    },
+    {
+      "id": "image42",
+      "filename": "image42_man_in_quilted_jacket_and_leather_gloves_smiling_beside_a_motorcycle_gloves.jpg",
+      "title": "Man in quilted jacket beside motorcycle",
+      "description": "Man in quilted jacket and leather gloves smiling beside a motorcycle",
+      "keyword": "gloves",
+      "tags": ["man", "quilted", "jacket", "leather", "gloves", "smiling", "motorcycle", "casual"]
+    }
+  ],
+  "metadata": {
+    "total_images": 42,
+    "description": "A1 Database - Curated Collection of Executive Images",
+    "categories": ["sunglasses", "bags", "leather jackets", "hats", "gloves", "boots"],
+    "version": "1.0"
+  }
+} 
